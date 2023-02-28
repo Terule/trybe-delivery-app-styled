@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [input, setInput] = useState({ email: '', password: '' });
+
+  const history = useHistory();
 
   const onChangeHandler = ({ target }) => {
     setInput({
@@ -62,6 +65,7 @@ function Login() {
         <button
           data-testid="common_login__button-register"
           type="button"
+          onClick={ () => history.push('/register') }
         >
           Register
         </button>
