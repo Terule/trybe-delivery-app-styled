@@ -17,6 +17,15 @@ const { createToken } = require('../../utils/jwt')
         return { user, token }
 }
 
+ const registerUser = async ( name, email, password, role ) => {
+    const user = await Users.findOne({
+        where: { email }
+    })  
+    if (user) {
+        
+    }
+ }
+
 
 module.exports = {
     loginUser
