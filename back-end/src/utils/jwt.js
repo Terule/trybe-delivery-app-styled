@@ -2,7 +2,8 @@ const fs = require('fs')
 const jwt = require('jsonwebtoken');
 const errorHandler = require('../middleware/error.middleware');
 
-const secret = fs.readFileSync('../jwt.evaluation.key')
+const secret = fs.readFileSync('jwt.evaluation.key', 'utf-8').trim();
+console.log(secret)
 
 const createToken = (data) => {
     const token = jwt.sign({data}, secret, {
@@ -24,5 +25,6 @@ const verifyToken = (token) => {
 }
 
 module.exports = {
-    createToken
+    createToken,
+    verifyToken
 }
