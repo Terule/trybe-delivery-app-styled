@@ -29,8 +29,8 @@ const ConflictError = require('../../utils/errors/conflictError');
     if (user) {
         throw new ConflictError('Conflict');
     }
-    if (!validate(email) || password.length < 6) {
-        throw new ConflictError('Invalid email or password');
+    if (!validate(email) || password.length < 6 || name.length < 12) {
+        throw new ConflictError('Invalid email, password or name');
       }
     const encryptedPassword = bcrypt.hashSync(password);
 
