@@ -18,4 +18,13 @@ const userLogin = async ({ email, password }) => {
   }
 };
 
-export default userLogin;
+const createUser = async ({ name, email, password }) => {
+  try {
+    const result = await api.post('/register', { name, email, password });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+export { userLogin, createUser };

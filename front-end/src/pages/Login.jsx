@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import userLogin from '../utils/fetchApi';
+import { userLogin } from '../utils/fetchApi';
 
 const ROUTE = 'common_login';
 const ELEMENT = 'element-invalid-email';
