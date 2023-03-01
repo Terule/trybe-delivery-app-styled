@@ -29,9 +29,24 @@ function Login() {
     return disabled;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = input;
+
+    const response = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    console.log(response);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={ handleSubmit }>
         <span data-testid="common_login__element-invalid-email">aa</span>
         <label htmlFor="email">
           Email:
@@ -57,7 +72,7 @@ function Login() {
         </label>
         <button
           data-testid="common_login__button-login"
-          type="button"
+          type="submit"
           disabled={ validateInputs() }
         >
           Login
