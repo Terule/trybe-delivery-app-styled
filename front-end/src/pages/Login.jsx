@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import userLogin from '../utils/fetchApi';
+
+const ROUTE = 'common_login';
+const ELEMENT = 'element-invalid-email';
 
 function Login() {
   const [input, setInput] = useState({ email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
   const history = useHistory();
 
@@ -33,21 +38,22 @@ function Login() {
     e.preventDefault();
     const { email, password } = input;
 
-    const response = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    console.log(response);
+    const result = await userLogin({ email, password });
+    if (result.message) {
+      setErrorMessage({ isError: true, message: 'Usuário e/ou senha incorretos' });
+    } else {
+      setErrorMessage({ isError: false, message: '' });
+      history.push('/customer/products');
+    }
   };
 
   return (
     <div>
       <form onSubmit={ handleSubmit }>
-        <span data-testid="common_login__element-invalid-email">aa</span>
+        { errorMessage.isError
+        && (
+          <p data-testid={ `${ROUTE}__${ELEMENT}` }>{ errorMessage.message }</p>
+        )}
         <label htmlFor="email">
           Email:
           <input
