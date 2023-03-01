@@ -1,4 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { createUser } from '../utils/fetchApi';
+
+const ROUTE = 'common_register';
+const ELEMENT = 'element-invalid_register';
 
 function Register() {
   const [registerInputs, setRegisterInputs] = React.useState({
@@ -6,6 +11,10 @@ function Register() {
     email: '',
     password: '',
   });
+  const [disabled, setDisabled] = useState(true);
+  const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
+
+  const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -14,7 +23,6 @@ function Register() {
 
   const validateInputs = () => {
     const { name, email, password } = registerInputs;
-    let disabled = true;
     const PASSWORD_LENGTH = 6;
     const NAME_LENGTH = 12;
     const validator = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -25,14 +33,37 @@ function Register() {
       validator.test(email),
     ];
     if (inputValidations.every((validation) => validation === true)) {
-      disabled = false;
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
-    return disabled;
+  };
+
+  useEffect(() => {
+    validateInputs();
+  }, [registerInputs.name, registerInputs.email, registerInputs.password]); // eslint-disable-line
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password, name } = registerInputs;
+
+    const result = await createUser({ email, password, name });
+    console.log(result);
+    if (result.message) {
+      setErrorMessage({ isError: true, message: 'Email já cadastrado' });
+    } else {
+      setErrorMessage({ isError: false, message: '' });
+      history.push('/customer/products');
+    }
   };
 
   return (
     <div>
-      <form>
+      <form onSubmit={ handleSubmit }>
+        { errorMessage.isError
+        && (
+          <p data-testid={ `${ROUTE}__${ELEMENT}` }>{ errorMessage.message }</p>
+        )}
         <label htmlFor="name">
           Nome:
           <input
@@ -68,8 +99,8 @@ function Register() {
         </label>
         <button
           data-testid="common_register__button-register"
-          type="button"
-          disabled={ validateInputs() }
+          type="submit"
+          disabled={ disabled }
         >
           Submit
         </button>

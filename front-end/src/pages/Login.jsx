@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { userLogin } from '../utils/fetchApi';
+
+const ROUTE = 'common_login';
+const ELEMENT = 'element-invalid-email';
 
 function Login() {
   const [input, setInput] = useState({ email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
   const history = useHistory();
 
@@ -29,10 +34,26 @@ function Login() {
     return disabled;
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = input;
+
+    const result = await userLogin({ email, password });
+    if (result.message) {
+      setErrorMessage({ isError: true, message: 'Usuário e/ou senha incorretos' });
+    } else {
+      setErrorMessage({ isError: false, message: '' });
+      history.push('/customer/products');
+    }
+  };
+
   return (
     <div>
-      <form>
-        <span data-testid="common_login__element-invalid-email">aa</span>
+      <form onSubmit={ handleSubmit }>
+        { errorMessage.isError
+        && (
+          <p data-testid={ `${ROUTE}__${ELEMENT}` }>{ errorMessage.message }</p>
+        )}
         <label htmlFor="email">
           Email:
           <input
@@ -57,7 +78,7 @@ function Login() {
         </label>
         <button
           data-testid="common_login__button-login"
-          type="button"
+          type="submit"
           disabled={ validateInputs() }
         >
           Login

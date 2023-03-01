@@ -5,6 +5,7 @@ const InvalidToken = require('./errors/invalidToken');
 const secret = fs.readFileSync('jwt.evaluation.key', 'utf-8').trim();
 
 const createToken = (data) => {
+  console.log(data);
     const token = jwt.sign({ data }, secret, { 
         algorithm: 'HS256',
         expiresIn: '7d',

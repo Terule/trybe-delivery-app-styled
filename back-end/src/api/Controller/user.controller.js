@@ -3,8 +3,8 @@ const userService = require('../Service/user.service');
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const { user } = await userService.loginUser(email, password);
-        return res.status(201).json(user);
+        const { token } = await userService.loginUser(email, password);
+        return res.status(200).json({ token });
     } catch (error) {
         next(error);
     }
@@ -13,8 +13,8 @@ const login = async (req, res, next) => {
 const register = async (req, res, next) => {
     try {
         const { email, password, role, name } = req.body;
-        await userService.registerUser(email, password, role, name);
-        res.status(201).json({ message: 'Created' });
+        const { token } = await userService.registerUser({ email, password, role, name });
+        return res.status(201).json({ token });
     } catch (error) {
         next(error);
     }

@@ -1,9 +1,7 @@
 class InvalidToken extends Error {
-    statusCode;
-
     constructor(message) {
-        super(message)
-        this.statusCode = 401
+        super(message);
+        this.statusCode = 401;
     }
 }
 
