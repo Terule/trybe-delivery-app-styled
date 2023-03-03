@@ -38,4 +38,13 @@ const getProducts = async (token) => {
   }
 };
 
-export { userLogin, createUser, getProducts };
+const getAllSales = async () => {
+  try {
+    const result = await api.get('/customer/orders');
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+export { userLogin, createUser, getProducts, getAllSales };

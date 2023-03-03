@@ -5,9 +5,10 @@ import usePersistState from '../hooks/usePersistState';
 
 function Provider({ children }) {
   const [user, setUser] = usePersistState('user', undefined);
+  const [cart, setCart] = usePersistState('cart', []);
 
   const contextValue = useMemo(() => (
-    { user, setUser }), [setUser, user]);
+    { user, setUser, cart, setCart }), [setUser, user, cart, setCart]);
 
   return (
     <AppContext.Provider value={ contextValue }>

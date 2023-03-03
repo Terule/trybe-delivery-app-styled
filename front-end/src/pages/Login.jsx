@@ -44,9 +44,10 @@ function Login() {
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Usuário e/ou senha incorretos' });
     } else {
-      const { name, role } = result.user;
+      const { name, role, id } = result.user;
       setErrorMessage({ isError: false, message: '' });
       setUser({
+        id,
         name,
         email,
         role,
