@@ -28,7 +28,11 @@ function ProductCards() {
   const productsHtmlElements = productsData.map((product) => (
     <div key={ product.id }>
       <div>
-        <span data-testid={ `${ROUTE}${CARD_PRICE}-${product.id}` }>{product.price}</span>
+        <span
+          data-testid={ `${ROUTE}${CARD_PRICE}-${product.id}` }
+        >
+          {product.price.replace('.', ',')}
+        </span>
         <img
           src={ product.urlImage }
           data-testid={ `${ROUTE}${CARD_IMAGE}-${product.id}` }
@@ -43,7 +47,11 @@ function ProductCards() {
         >
           Remove
         </button>
-        <input type="text" data-testid={ `${ROUTE}${CARD_INPUT}-${product.id}` } />
+        <input
+          type="text"
+          data-testid={ `${ROUTE}${CARD_INPUT}-${product.id}` }
+          value="0"
+        />
         <button
           type="button"
           data-testid={ `${ROUTE}${CARD_ADD}-${product.id}` }
