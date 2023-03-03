@@ -4,15 +4,10 @@ import AppContext from './AppContext';
 import usePersistState from '../hooks/usePersistState';
 
 function Provider({ children }) {
-  const [userData, setUserData] = usePersistState('userData', {
-    name: '',
-    email: '',
-    role: '',
-    token: '',
-  });
+  const [user, setUser] = usePersistState('user', undefined);
 
   const contextValue = useMemo(() => (
-    { userData, setUserData }), [setUserData, userData]);
+    { user, setUser }), [setUser, user]);
 
   return (
     <AppContext.Provider value={ contextValue }>

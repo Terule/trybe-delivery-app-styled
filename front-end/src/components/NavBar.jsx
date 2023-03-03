@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 
-const ROUTE = 'costumer_products';
+const ROUTE = 'customer_products';
 const ELEMENT = 'element-navbar';
 
 function NavBar() {
-  const { userData, setUserData } = useContext(AppContext);
-
-  console.log(userData);
+  const { user, setUser } = useContext(AppContext);
 
   return (
     <div>
@@ -29,17 +27,13 @@ function NavBar() {
       <div
         data-testid={ `${ROUTE}__${ELEMENT}-user-full-name` }
       >
-        { userData.name }
+        { user.name }
       </div>
 
       <Link
         data-testid={ `${ROUTE}__${ELEMENT}-link-logout` }
         to="/"
-        onClick={ () => setUserData({
-          name: '',
-          email: '',
-          role: '',
-          token: '' }) }
+        onClick={ () => setUser(undefined) }
       >
         Sair
       </Link>
