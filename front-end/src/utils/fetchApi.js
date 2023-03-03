@@ -27,4 +27,15 @@ const createUser = async ({ name, email, password }) => {
   }
 };
 
-export { userLogin, createUser };
+const getProducts = async (token) => {
+  try {
+    const result = await api.get('/customer/products', { headers: {
+      Authorization: token,
+    } });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+export { userLogin, createUser, getProducts };

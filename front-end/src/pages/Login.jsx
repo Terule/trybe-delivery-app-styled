@@ -7,7 +7,7 @@ const ROUTE = 'common_login';
 const ELEMENT = 'element-invalid-email';
 
 function Login() {
-  const { setUserData } = useContext(AppContext);
+  const { setUser } = useContext(AppContext);
   const [input, setInput] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
@@ -46,7 +46,7 @@ function Login() {
     } else {
       const { name, role } = result.user;
       setErrorMessage({ isError: false, message: '' });
-      setUserData({
+      setUser({
         name,
         email,
         role,
