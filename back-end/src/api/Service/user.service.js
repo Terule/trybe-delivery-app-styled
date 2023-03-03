@@ -20,7 +20,8 @@ const ConflictError = require('../../utils/errors/conflictError');
             throw new NotFoundError('Not Found');
         }
         const token = createToken({ email, role: user.role, name: user.name });
-        return { user: user.dataValues, token };
+        const { password: _, ...userWithoutPassword } = user.dataValues;
+        return { user: userWithoutPassword, token };
 };
 
  const registerUser = async ({ email, password, role = 'client', name }) => {

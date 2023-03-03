@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 import { userLogin } from '../utils/fetchApi';
 
 const ROUTE = 'common_login';
 const ELEMENT = 'element-invalid-email';
 
 function Login() {
+  const { setUser } = useContext(AppContext);
   const [input, setInput] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
@@ -42,7 +44,14 @@ function Login() {
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Usuário e/ou senha incorretos' });
     } else {
+      const { name, role } = result.user;
       setErrorMessage({ isError: false, message: '' });
+      setUser({
+        name,
+        email,
+        role,
+        token: result.token,
+      });
       history.push('/customer/products');
     }
   };

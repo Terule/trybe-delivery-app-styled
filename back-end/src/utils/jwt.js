@@ -1,12 +1,11 @@
-const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const jwtKey = require('fs')
+  .readFileSync('./jwt.evaluation.key', { encoding: 'utf-8' });
+
 const InvalidToken = require('./errors/invalidToken');
 
-const secret = fs.readFileSync('jwt.evaluation.key', 'utf-8').trim();
-
 const createToken = (data) => {
-  console.log(data);
-    const token = jwt.sign({ data }, secret, { 
+    const token = jwt.sign(data, jwtKey, { 
         algorithm: 'HS256',
         expiresIn: '7d',
     });
@@ -16,7 +15,8 @@ const createToken = (data) => {
 
 const verifyToken = (token) => {
     try {
-        const payload = jwt.verify(token, secret);
+        const payload = jwt.verify(token, jwtKey);
+        console.log(payload);
         return payload;
     } catch (e) {
         throw new InvalidToken('Invalid token');
