@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React from 'react';
+import { shape, number, string, func } from 'prop-types';
 // import { useHistory } from 'react-router-dom';
-import AppContext from '../context/AppContext';
-import { getProducts } from '../utils/fetchApi';
 
 const ROUTE = 'customer_products_';
 const CARD_TITLE = '_element-card-title';
@@ -11,23 +10,10 @@ const CARD_ADD = '_button-card-add-item';
 const CARD_REMOVE = '_button-card-rm-item';
 const CARD_INPUT = '_input-card-quantity';
 
-function ProductCards() {
-  const [productsData, setProductsData] = useState([]);
-  const { user } = useContext(AppContext);
-  // const history = useHistory();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProducts(user.token);
-      setProductsData(products);
-      return products;
-    };
-    fetchProducts();
-  }, []);
-
-  const productsHtmlElements = productsData.map((product) => (
-    <div key={ product.id }>
-      <div>
+function ProductCard({ product, minusClick, plusClick, handleChange }) {
+  return (
+    <>
+      <div id={ product.id }>
         <span
           data-testid={ `${ROUTE}${CARD_PRICE}-${product.id}` }
         >
@@ -44,29 +30,39 @@ function ProductCards() {
         <button
           type="button"
           data-testid={ `${ROUTE}${CARD_REMOVE}-${product.id}` }
+          onClick={ () => minusClick(product.id) }
         >
-          Remove
+          -
         </button>
         <input
           type="text"
           data-testid={ `${ROUTE}${CARD_INPUT}-${product.id}` }
-          value="0"
+          value={ product.quantity }
+          onChange={ (e) => handleChange(e, product.id) }
         />
         <button
           type="button"
           data-testid={ `${ROUTE}${CARD_ADD}-${product.id}` }
+          onClick={ () => plusClick(product.id) }
         >
-          Add
+          +
         </button>
       </div>
-    </div>
-  ));
-
-  return (
-    <div>
-      { productsHtmlElements }
-    </div>
+    </>
   );
 }
 
-export default ProductCards;
+ProductCard.propTypes = {
+  product: shape({
+    id: number,
+    name: string,
+    price: string,
+    urlImage: string,
+    quantity: number,
+  }).isRequired,
+  minusClick: func.isRequired,
+  plusClick: func.isRequired,
+  handleChange: func.isRequired,
+};
+
+export default ProductCard;
