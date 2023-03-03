@@ -84,7 +84,11 @@ function CustomerProducts() {
           data-testid="customer_products__button-cart"
         >
           {'Ver Carrinho: R$ '}
-          <span data-testid={ `${ROUTE}__${CHECKOUT_VALUE}` }>{ total.toFixed(2) }</span>
+          <span
+            data-testid={ `${ROUTE}__${CHECKOUT_VALUE}` }
+          >
+            { total.toFixed(2).replace('.', ',') }
+          </span>
 
         </button>
       </div>
