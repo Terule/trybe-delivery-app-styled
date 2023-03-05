@@ -27,6 +27,15 @@ const createUser = async ({ name, email, password }) => {
   }
 };
 
+const getSeller = async () => {
+  try {
+    const result = await api.get('/user');
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 const getProducts = async (token) => {
   try {
     const result = await api.get('/customer/products', { headers: {
@@ -38,4 +47,22 @@ const getProducts = async (token) => {
   }
 };
 
-export { userLogin, createUser, getProducts };
+// const createSale = async ({
+//   sellerName,
+//   deliveryAddress,
+//   deliveryNumber, userId, totalPrice, sellerId }) => {
+//   try {
+//     const result = await api.post('/checkout', {
+//       sellerName,
+//       deliveryAddress,
+//       deliveryNumber,
+//       userId,
+//       totalPrice,
+//       sellerId });
+//     return result.data;
+//   } catch (error) {
+//     return error.toJSON();
+//   }
+// };
+
+export { userLogin, createUser, getProducts, getSeller };
