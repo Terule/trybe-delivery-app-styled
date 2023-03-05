@@ -41,11 +41,13 @@ export default function DeliveryForm({ seller, cart }) {
     <div>
       <h2>Detalhes e Endereço para Entrega</h2>
       <form onSubmit={ mandarTrem }>
-        <label htmlFor="sellerName">
+        <label
+          htmlFor="sellerName"
+        >
           <select
-            data-testid=" customer_checkout__select-seller"
             name="sellerName"
             value={ inputData.sellerName }
+            data-testid="customer_checkout__select-seller"
             onChange={ (e) => setInputData(
               { ...inputData, sellerName: e.target.value },
             ) }
@@ -53,6 +55,7 @@ export default function DeliveryForm({ seller, cart }) {
             P. Vendedora Responsável:
             {seller.map((person) => (
               <option
+                data-testid="customer_checkout__select-seller"
                 key={ person.name }
               >
                 {person.name}

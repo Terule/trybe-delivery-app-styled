@@ -36,13 +36,13 @@ export default function CheckoutTable({
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-unit-price-${index}` }
               >
-                {product.price}
+                {product.price.replace('.', ',')}
 
               </td>
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-sub-total-${index}` }
               >
-                {(product.price * product.quantity).toFixed(2)}
+                {(product.price * product.quantity).toFixed(2).replace('.', ',')}
 
               </td>
               {buttOn && (
@@ -61,7 +61,7 @@ export default function CheckoutTable({
 
       </table>
       <span data-testid={ `${ROUTE}__element-order-total-price` }>
-        {`Total: R$ ${total.toFixed(2)}`}
+        {total.toFixed(2).replace('.', ',')}
       </span>
     </div>
   );

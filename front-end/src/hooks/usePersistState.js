@@ -18,7 +18,7 @@ export default (storageKey, initialState) => {
     if (storageInBrowser) {
       setInternalState(storageInBrowser);
     }
-  }, []);
+  }, []);// eslint-disable-line
 
   // Create a replacement method that will set the state like normal, but that also saves the new state into the store.
   const setState = (newState) => {
