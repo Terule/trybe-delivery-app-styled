@@ -3,6 +3,7 @@ const cors = require('cors');
 const errorHandler = require('../middleware/error.middleware');
 const userRouter = require('./Routes/user.router');
 const productRouter = require('./Routes/product.router');
+const saleRouter = require('./Routes/sale.router');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.static('public'));
 
 app.use(userRouter);
 app.use(productRouter);
+app.use(saleRouter);
 
 app.get('/coffee', (_req, res) => res.status(418).end());
 

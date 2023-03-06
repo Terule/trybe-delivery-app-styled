@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import { newSale } from '../utils/fetchApi';
 import verifyToken from '../utils/verifyToken';
 
 export default function DeliveryForm({ seller, cart }) {
-  console.log(seller);
+  const history = useHistory();
   const { user } = useContext(AppContext);
   const [inputData, setInputData] = useState({
     sellerName: '',
@@ -22,20 +24,19 @@ export default function DeliveryForm({ seller, cart }) {
     setInputData({ ...inputData, [name]: value });
   };
 
-  const mandarTrem = (e) => {
+  const mandarTrem = async (e) => {
     e.preventDefault();
     const { deliveryAddress, deliveryNumber } = inputData;
-    console.log(deliveryAddress);
     const costumer = verifyToken(user.token);
-    console.log(seller[0].id);
     const objToDB = {
       deliveryAddress,
       deliveryNumber,
       userId: costumer.id,
       totalPrice: total,
-      sellerId: seller.id,
+      sellerId: seller[0].id,
     };
-    return objToDB;
+    const saleId = await newSale(objToDB, user.token);
+    history.push(`orders/${saleId}`);
   };
 
   return (
