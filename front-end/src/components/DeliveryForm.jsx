@@ -35,7 +35,12 @@ export default function DeliveryForm({ seller, cart }) {
       totalPrice: total,
       sellerId: seller[0].id,
     };
-    const saleId = await newSale(objToDB, user.token);
+    const saleId = await newSale(
+      { saleData: objToDB,
+        token: user.token,
+        products: cart.map((product) => ({ id: product.id, quantity: product.quantity })),
+      },
+    );
     history.push(`orders/${saleId}`);
   };
 

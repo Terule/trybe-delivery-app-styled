@@ -47,18 +47,10 @@ const getProducts = async (token) => {
   }
 };
 
-const newSale = async ({
-  sellerName,
-  deliveryAddress,
-  deliveryNumber, userId, totalPrice, sellerId }, token) => {
+const newSale = async ({ saleData, token, products }) => {
   try {
     const result = await api.post('/sales', {
-      sellerName,
-      deliveryAddress,
-      deliveryNumber,
-      userId,
-      totalPrice,
-      sellerId }, { headers: { Authorization: token } });
+      saleData, products }, { headers: { Authorization: token } });
     return result.data;
   } catch (error) {
     return error.toJSON();

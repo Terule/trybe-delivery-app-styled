@@ -4,11 +4,12 @@ const saleService = require('../Service/sale.service');
 const newSale = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    console.log(req.headers);
     verifyToken(token);
-    const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber } = req.body;
+    const { saleData: { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber,
+    }, products } = req.body;
     const sale = await saleService.newSale(
       { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber },
+      products,
       );
     return res.status(201).json(sale);
   } catch (error) {
