@@ -4,6 +4,7 @@ import AppContext from '../context/AppContext';
 import verifyToken from '../utils/verifyToken';
 
 export default function DeliveryForm({ seller, cart }) {
+  console.log(seller);
   const { user } = useContext(AppContext);
   const [inputData, setInputData] = useState({
     sellerName: '',
@@ -26,6 +27,7 @@ export default function DeliveryForm({ seller, cart }) {
     const { deliveryAddress, deliveryNumber } = inputData;
     console.log(deliveryAddress);
     const costumer = verifyToken(user.token);
+    console.log(seller[0].id);
     const objToDB = {
       deliveryAddress,
       deliveryNumber,
@@ -33,7 +35,6 @@ export default function DeliveryForm({ seller, cart }) {
       totalPrice: total,
       sellerId: seller.id,
     };
-    console.log(objToDB);
     return objToDB;
   };
 
@@ -44,6 +45,7 @@ export default function DeliveryForm({ seller, cart }) {
         <label
           htmlFor="sellerName"
         >
+          P. Vendedora Responsável:
           <select
             name="sellerName"
             value={ inputData.sellerName }
@@ -52,7 +54,6 @@ export default function DeliveryForm({ seller, cart }) {
               { ...inputData, sellerName: e.target.value },
             ) }
           >
-            P. Vendedora Responsável:
             {seller.map((person) => (
               <option
                 data-testid="customer_checkout__select-seller"
@@ -105,6 +106,7 @@ DeliveryForm.propTypes = {
     name: PropTypes.string,
     password: PropTypes.string,
     role: PropTypes.string,
+    id: PropTypes.number,
   })).isRequired,
   cart: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
