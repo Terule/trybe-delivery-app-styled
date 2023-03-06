@@ -46,14 +46,17 @@ export default function CheckoutTable({
 
               </td>
               {isCheckout && (
-                <button
-                  type="button"
-                  data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }
-                  onClick={ () => remove(product.id) }
-                >
-                  remover
+                <td>
+                  <button
+                    type="button"
+                    data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }
+                    onClick={ () => remove(product.id) }
+                  >
+                    remover
 
-                </button>)}
+                  </button>
+                </td>
+              )}
             </tr>
           ))}
 
