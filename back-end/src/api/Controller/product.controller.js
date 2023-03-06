@@ -1,11 +1,11 @@
 const { verifyToken } = require('../../utils/jwt');
-const customerService = require('../Service/customer.service');
+const productService = require('../Service/product.service');
 
 const getAllProducts = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
         verifyToken(token);
-        const products = await customerService.findAllProducts();
+        const products = await productService.findAllProducts();
         return res.status(200).json(products);
     } catch (error) {
         next(error);
