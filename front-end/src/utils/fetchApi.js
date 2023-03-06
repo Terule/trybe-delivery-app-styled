@@ -47,23 +47,15 @@ const getProducts = async (token) => {
   }
 };
 
-// const createSale = async ({
-//   sellerName,
-//   deliveryAddress,
-//   deliveryNumber, userId, totalPrice, sellerId }) => {
-//   try {
-//     const result = await api.post('/checkout', {
-//       sellerName,
-//       deliveryAddress,
-//       deliveryNumber,
-//       userId,
-//       totalPrice,
-//       sellerId });
-//     return result.data;
-//   } catch (error) {
-//     return error.toJSON();
-//   }
-// };
+const newSale = async ({ saleData, token, products }) => {
+  try {
+    const result = await api.post('/sales', {
+      saleData, products }, { headers: { Authorization: token } });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
 
 const getAllSales = async () => {
   try {
@@ -74,4 +66,4 @@ const getAllSales = async () => {
   }
 };
 
-export { userLogin, createUser, getProducts, getSeller, getAllSales };
+export { userLogin, createUser, getProducts, getSeller, getAllSales, newSale };

@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import { newSale } from '../utils/fetchApi';
 import verifyToken from '../utils/verifyToken';
 
 export default function DeliveryForm({ seller, cart }) {
+  const history = useHistory();
   const { user } = useContext(AppContext);
   const [inputData, setInputData] = useState({
     sellerName: '',
@@ -21,29 +24,34 @@ export default function DeliveryForm({ seller, cart }) {
     setInputData({ ...inputData, [name]: value });
   };
 
-  const mandarTrem = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { deliveryAddress, deliveryNumber } = inputData;
-    console.log(deliveryAddress);
     const costumer = verifyToken(user.token);
     const objToDB = {
       deliveryAddress,
       deliveryNumber,
       userId: costumer.id,
       totalPrice: total,
-      sellerId: seller.id,
+      sellerId: seller[0].id,
     };
-    console.log(objToDB);
-    return objToDB;
+    const saleId = await newSale(
+      { saleData: objToDB,
+        token: user.token,
+        products: cart.map((product) => ({ id: product.id, quantity: product.quantity })),
+      },
+    );
+    history.push(`orders/${saleId}`);
   };
 
   return (
     <div>
       <h2>Detalhes e Endereço para Entrega</h2>
-      <form onSubmit={ mandarTrem }>
+      <form onSubmit={ handleSubmit }>
         <label
           htmlFor="sellerName"
         >
+          P. Vendedora Responsável:
           <select
             name="sellerName"
             value={ inputData.sellerName }
@@ -52,7 +60,6 @@ export default function DeliveryForm({ seller, cart }) {
               { ...inputData, sellerName: e.target.value },
             ) }
           >
-            P. Vendedora Responsável:
             {seller.map((person) => (
               <option
                 data-testid="customer_checkout__select-seller"
@@ -105,6 +112,7 @@ DeliveryForm.propTypes = {
     name: PropTypes.string,
     password: PropTypes.string,
     role: PropTypes.string,
+    id: PropTypes.number,
   })).isRequired,
   cart: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
