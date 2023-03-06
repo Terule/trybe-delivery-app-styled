@@ -19,7 +19,7 @@ const ConflictError = require('../../utils/errors/conflictError');
         if (decryptPassword !== user.password) {
             throw new NotFoundError('Not Found');
         }
-        const token = createToken({ email, role: user.role, name: user.name });
+        const token = createToken({ email, role: user.role, name: user.name, id: user.id });
         const { password: _, ...userWithoutPassword } = user.dataValues;
         return { user: userWithoutPassword, token };
 };
