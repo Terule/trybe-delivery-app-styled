@@ -14,6 +14,17 @@ const newSale = async (
    return sale.id;
 };
 
+const getSaleById = async (id) => {
+  const sale = await Sale.findOne({
+    where: { id },
+    include: [
+      { model: SaleProduct, as: 'products', attributes: ['name', 'quantity', 'url_image'] },
+    ],
+  });
+  return sale;
+};
+
 module.exports = {
   newSale,
+  getSaleById,
 };
