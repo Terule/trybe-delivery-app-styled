@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const ELEMENT = 'element-order-table';
 
 export default function CheckoutTable({
-  tableColumns, cart, remove, buttOn, ROUTE }) {
+  tableColumns, cart, remove, isCheckout, ROUTE }) {
   const total = cart.reduce((acc, { price, quantity }) => {
     const totalValue = price * quantity;
     return acc + totalValue;
@@ -45,7 +45,7 @@ export default function CheckoutTable({
                 {(product.price * product.quantity).toFixed(2).replace('.', ',')}
 
               </td>
-              {buttOn && (
+              {isCheckout && (
                 <button
                   type="button"
                   data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }
@@ -79,6 +79,6 @@ CheckoutTable.propTypes = {
     url: PropTypes.string,
   })).isRequired,
   remove: PropTypes.func.isRequired,
-  buttOn: PropTypes.bool.isRequired,
+  isCheckout: PropTypes.bool.isRequired,
   ROUTE: PropTypes.string.isRequired,
 };

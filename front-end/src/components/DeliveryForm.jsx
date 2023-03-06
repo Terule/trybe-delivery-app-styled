@@ -24,7 +24,7 @@ export default function DeliveryForm({ seller, cart }) {
     setInputData({ ...inputData, [name]: value });
   };
 
-  const mandarTrem = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { deliveryAddress, deliveryNumber } = inputData;
     const costumer = verifyToken(user.token);
@@ -47,7 +47,7 @@ export default function DeliveryForm({ seller, cart }) {
   return (
     <div>
       <h2>Detalhes e Endereço para Entrega</h2>
-      <form onSubmit={ mandarTrem }>
+      <form onSubmit={ handleSubmit }>
         <label
           htmlFor="sellerName"
         >

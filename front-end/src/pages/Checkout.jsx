@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import CheckoutTable from '../components/CheckoutTable';
 import DeliveryForm from '../components/DeliveryForm';
 import NavBar from '../components/NavBar';
@@ -9,7 +9,6 @@ const ROUTE = 'customer_checkout';
 
 export default function Checkout() {
   const { cart, setCart, seller, setSeller } = useContext(AppContext);
-  const [buttOn, setButtOn] = useState(true);
   const remove = (id) => {
     setCart(
       cart.filter((element) => element.id !== Number(id)),
@@ -27,7 +26,6 @@ export default function Checkout() {
       }];
       setSeller(sellerResp);
     };
-    setButtOn(true);
     fetchSeller();
   }, []); // eslint-disable-line
 
@@ -47,7 +45,7 @@ export default function Checkout() {
         tableColumns={ tableColumns }
         cart={ cart }
         remove={ remove }
-        buttOn={ buttOn }
+        isCheckout
         ROUTE={ ROUTE }
       />
       <DeliveryForm seller={ seller } cart={ cart } />
