@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
+/* import NavBar from '../components/NavBar'; */
 import ClientOrder from '../components/ClientOrder';
 import { getAllSales } from '../utils/fetchApi';
 
@@ -21,16 +21,17 @@ function Orders() {
       key={ sale.id }
       order={ sale.id }
       status={ sale.status }
-      price={ sale.price }
-      date={ sale.date }
+      price={ sale.totalPrice }
+      date={ sale.saleDate }
+      isSeller={ false }
     />
   ));
 
   return (
     <>
-      <nav>
+      {/* <nav>
         <NavBar />
-      </nav>
+      </nav> */}
       <main>
         { clientOrderHtml }
       </main>

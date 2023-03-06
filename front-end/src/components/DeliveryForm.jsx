@@ -97,7 +97,7 @@ export default function DeliveryForm({ seller, cart }) {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
-          onClick={ mandarTrem }
+          onClick={ handleSubmit }
         >
           FINALIZAR PEDIDO
         </button>
