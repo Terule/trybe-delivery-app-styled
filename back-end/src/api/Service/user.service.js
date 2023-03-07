@@ -58,5 +58,5 @@ const ConflictError = require('../../utils/errors/conflictError');
 module.exports = {
     loginUser,
     registerUser,
-    getSeller
+    getSeller,
 };
