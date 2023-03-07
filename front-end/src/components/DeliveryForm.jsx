@@ -88,7 +88,7 @@ export default function DeliveryForm({ seller, cart }) {
           <input
             data-testid="customer_checkout__input-address-number"
             type="text"
-            required="true"
+            required
             name="deliveryNumber"
             value={ inputData.deliveryNumber }
             onChange={ handleChange }
@@ -96,8 +96,8 @@ export default function DeliveryForm({ seller, cart }) {
         </label>
         <button
           data-testid="customer_checkout__button-submit-order"
-          type="button"
           onClick={ handleSubmit }
+          type="submit"
         >
           FINALIZAR PEDIDO
         </button>

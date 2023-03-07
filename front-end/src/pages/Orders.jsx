@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-/* import NavBar from '../components/NavBar'; */
+import NavBar from '../components/NavBar';
 import ClientOrder from '../components/ClientOrder';
 import { getAllSales } from '../utils/fetchApi';
 
@@ -29,9 +29,9 @@ function Orders() {
 
   return (
     <>
-      {/* <nav>
+      <nav>
         <NavBar />
-      </nav> */}
+      </nav>
       <main>
         { clientOrderHtml }
       </main>

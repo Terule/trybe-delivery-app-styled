@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const ROUTE = 'customer_orders_';
 const CARD_ORDER = '_element-order-id-';
@@ -23,10 +24,10 @@ function ClientOrder({ order, status, price, date, adress, isSeller }) {
               {status}
             </p>
             <p data-testid={ `${ROUTE}${CARD_DATE}${order}` }>
-              {date}
+              {moment(date).format('DD/MM/YYYY')}
             </p>
             <p data-testid={ `${ROUTE}${CARD_PRICE}${order}` }>
-              {price}
+              {price.replace('.', ',')}
             </p>
             { (
               <span>
