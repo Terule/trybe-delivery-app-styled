@@ -43,7 +43,6 @@ const getSaleBySellerId = async (sellerId) => {
   return sale;
 };
 
-
 module.exports = {
   newSale,
   getAllSales,
