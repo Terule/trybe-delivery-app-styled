@@ -11,8 +11,14 @@ function Orders() {
   useEffect(() => {
     const fetchSales = async () => {
       const sales = await getAllSales();
-      const orders = sales.filter((sale) => user.id === sale.userId);
-      setClientOrders(orders);
+      if (user.role === 'customer') {
+        const orders = sales.filter((sale) => user.id === sale.userId);
+        setClientOrders(orders);
+      }
+      if (user.role === 'seller') {
+        const orders = sales.filter((sale) => user.id === sale.sellerId);
+        setClientOrders(orders);
+      }
     };
     fetchSales();
   }, []); // eslint-disable-line
@@ -24,7 +30,7 @@ function Orders() {
       status={ sale.status }
       price={ sale.totalPrice }
       date={ sale.saleDate }
-      isSeller={ false }
+      isSeller={ user.role === 'seller' }
     />
   ));
 
