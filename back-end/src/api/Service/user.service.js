@@ -6,7 +6,6 @@ const NotFoundError = require('../../utils/errors/notFoundError');
 const ConflictError = require('../../utils/errors/conflictError');
 
  const loginUser = async (email, password) => {
-    console.log(email);
         const user = await User.findOne({
             where: { email },
         });  

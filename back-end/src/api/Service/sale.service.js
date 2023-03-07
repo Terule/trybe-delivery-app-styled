@@ -1,4 +1,4 @@
-const { Sale, SaleProduct } = require('../../database/models');
+const { Sale, SaleProduct, Product, User } = require('../../database/models');
 
 const newSale = async (
   { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber }, products) => {
@@ -15,14 +15,21 @@ const newSale = async (
 
 
 const getSaleById = async (id) => {
-  const sale = await Sale.findOne({
-    where: { id },
-    include: [
-      { model: SaleProduct, as: 'products', attributes: ['name', 'quantity', 'url_image'] },
-    ],
-  });
-  return sale;
-}
+
+  try {
+    const sale = await Sale.findOne({
+      where: { id },
+      include: [
+        { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+        { model: User, as: 'seller', attributes: ['name'] },
+      ],
+    });
+    return sale.dataValues;
+  } catch (error) {
+    console.log(error);
+  }
+
+};
 
 const getAllSales = async () => {
   const sales = await Sale.findAll();
