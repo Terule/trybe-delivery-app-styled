@@ -11,9 +11,8 @@ const CHECKOUT_VALUE = 'checkout-bottom-value';
 function CustomerProducts() {
   const [productsData, setProductsData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const { setCart } = useContext(AppContext);
+  const { user, setCart } = useContext(AppContext);
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     const fetchProducts = async () => {

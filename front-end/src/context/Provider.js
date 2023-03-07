@@ -4,7 +4,10 @@ import AppContext from './AppContext';
 import usePersistState from '../hooks/usePersistState';
 
 function Provider({ children }) {
-  const [user, setUser] = usePersistState('user', undefined);
+  const [user, setUser] = usePersistState(
+    'user',
+    JSON.parse(localStorage.getItem('user')) || {},
+  );
   const [cart, setCart] = usePersistState('cart', []);
   const [seller, setSeller] = usePersistState('seller', []);
 
