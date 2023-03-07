@@ -7,7 +7,7 @@ const ROUTE = 'common_login';
 const ELEMENT = 'element-invalid-email';
 
 function Login() {
-  const { setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
   const [input, setInput] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
@@ -15,11 +15,22 @@ function Login() {
 
   useEffect(() => {
     const loggedIn = async () => {
-      const loginCreated = JSON.parse(localStorage.getItem('user'));
-      if (loginCreated) history.push('/customer/products');
+      /* const logged = JSON.parse(localStorage.getItem('user')); */
+      if (user) {
+        switch (user.role) {
+        case 'customer':
+          history.push('/customer/products');
+          break;
+        case 'seller':
+          history.push('/seller/orders');
+          break;
+        default:
+          history.push('/login');
+        }
+      }
     };
     loggedIn();
-  }, [history]);
+  }, []);
 
   const onChangeHandler = ({ target }) => {
     setInput({
@@ -61,7 +72,8 @@ function Login() {
         role,
         token: result.token,
       });
-      history.push('/customer/products');
+      if (result.user.role === 'customer') history.push('/customer/products');
+      if (result.user.role === 'seller') history.push('/seller/orders');
     }
   };
 
