@@ -6,7 +6,7 @@ import usePersistState from '../hooks/usePersistState';
 function Provider({ children }) {
   const [user, setUser] = usePersistState(
     'user',
-    JSON.parse(localStorage.getItem('user')) || {},
+    JSON.parse(localStorage.getItem('user')) || undefined,
   );
   const [cart, setCart] = usePersistState('cart', []);
   const [seller, setSeller] = usePersistState('seller', []);

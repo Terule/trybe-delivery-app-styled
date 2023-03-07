@@ -11,20 +11,30 @@ function NavBar() {
 
   return (
     <div>
-      <Link
-        data-testid={ `${ROUTE}__${ELEMENT}-link-products` }
-        to="/customer/products"
-      >
-        Produtos
-      </Link>
+      { user.role === 'customer' && (
+        <Link
+          data-testid={ `${ROUTE}__${ELEMENT}-link-products` }
+          to="/customer/products"
+        >
+          Produtos
+        </Link>
+      )}
 
-      <Link
-        data-testid={ `${ROUTE}__${ELEMENT}-link-orders` }
-        to="/customer/orders"
-      >
-        Meus Pedidos
-      </Link>
+      { user.role === 'customer' && (
+        <Link
+          data-testid={ `${ROUTE}__${ELEMENT}-link-orders` }
+          to="/customer/orders"
+        >
+          Meus Pedidos
+        </Link>)}
 
+      { user.role === 'seller' && (
+        <Link
+          data-testid={ `${ROUTE}__${ELEMENT}-link-orders` }
+          to="/seller/orders"
+        >
+          Pedidos
+        </Link>)}
       <div
         data-testid={ `${ROUTE}__${ELEMENT}-user-full-name` }
       >
