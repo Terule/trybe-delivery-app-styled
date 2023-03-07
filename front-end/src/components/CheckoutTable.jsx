@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 const ELEMENT = 'element-order-table';
 
 export default function CheckoutTable({
-  tableColumns, cart, remove, isCheckout, ROUTE }) {
+  tableColumns, cart, remove, isCheckout, ROUTE, totalValue }) {
   const total = cart.reduce((acc, product) => {
-    if (isCheckout) {
-      const totalValue = product.price * product.quantity;
-      return acc + totalValue;
-    }
-    const totalValue = product.price * product.SaleProduct.quantity;
-    return acc + totalValue;
+    const value = product.price * product.quantity;
+    return acc + value;
   }, 0);
 
   return (
@@ -73,7 +69,8 @@ export default function CheckoutTable({
 
       </table>
       <span data-testid={ `${ROUTE}__element-order-total-price` }>
-        {total.toFixed(2).replace('.', ',')}
+        {isCheckout ? total.toFixed(2).replace('.', ',')
+          : totalValue.toFixed(2).replace('.', ',')}
       </span>
     </div>
   );
@@ -90,7 +87,12 @@ CheckoutTable.propTypes = {
     quantity: PropTypes.number,
     url: PropTypes.string,
   })).isRequired,
+  totalValue: PropTypes.number,
   remove: PropTypes.func.isRequired,
   isCheckout: PropTypes.bool.isRequired,
   ROUTE: PropTypes.string.isRequired,
+};
+
+CheckoutTable.defaultProps = {
+  totalValue: 0,
 };

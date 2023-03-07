@@ -92,6 +92,7 @@ export default function OrderDetails() {
           remove={ remove }
           isCheckout={ false }
           ROUTE={ ROUTE }
+          totalValue={ +sale.totalPrice }
         />
       ) : 'teste' }
 
