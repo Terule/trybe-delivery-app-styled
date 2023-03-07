@@ -57,7 +57,6 @@ const newSale = async ({ saleData, token, products }) => {
   }
 };
 
-
 const getAllSales = async () => {
   try {
     const result = await api.get('/customer/orders');
@@ -77,6 +76,12 @@ const getSaleById = async ({ id, token }) => {
   }
 };
 
-
-export { userLogin, createUser, getProducts, getSeller, getAllSales, newSale, getSaleById };
-
+export {
+  userLogin,
+  createUser,
+  getProducts,
+  getSeller,
+  getAllSales,
+  newSale,
+  getSaleById,
+};
