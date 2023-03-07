@@ -22,7 +22,8 @@ const getSaleById = async (req, res, next) => {
   const { id } = req.params;
   try {
     verifyToken(token);
-    const sale = await saleService.getSaleById(+id);
+    const sale = await saleService.getSaleById(id);
+    console.log(sale);
     return res.status(200).json(sale);
   } catch (error) {
     next(error);
