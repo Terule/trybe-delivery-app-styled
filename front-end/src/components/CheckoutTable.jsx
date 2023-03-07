@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 const ELEMENT = 'element-order-table';
 
 export default function CheckoutTable({
-  tableColumns, cart, remove, isCheckout, ROUTE }) {
-  const total = cart.reduce((acc, { price, quantity }) => {
-    const totalValue = price * quantity;
-    return acc + totalValue;
+  tableColumns, cart, remove, isCheckout, ROUTE, totalValue }) {
+  const total = cart.reduce((acc, product) => {
+    const value = product.price * product.quantity;
+    return acc + value;
   }, 0);
 
   return (
@@ -30,7 +30,9 @@ export default function CheckoutTable({
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-quantity-${index}` }
               >
-                {product.quantity}
+                {isCheckout
+                  ? (product.quantity)
+                  : (product.SaleProduct.quantity)}
 
               </td>
               <td
@@ -42,7 +44,10 @@ export default function CheckoutTable({
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-sub-total-${index}` }
               >
-                {(product.price * product.quantity).toFixed(2).replace('.', ',')}
+                {isCheckout
+                  ? (product.price * product.quantity).toFixed(2).replace('.', ',')
+                  : (product.price * product.SaleProduct.quantity)
+                    .toFixed(2).replace('.', ',')}
 
               </td>
               {isCheckout && (
@@ -64,7 +69,8 @@ export default function CheckoutTable({
 
       </table>
       <span data-testid={ `${ROUTE}__element-order-total-price` }>
-        {total.toFixed(2).replace('.', ',')}
+        {isCheckout ? total.toFixed(2).replace('.', ',')
+          : totalValue.toFixed(2).replace('.', ',')}
       </span>
     </div>
   );
@@ -81,7 +87,12 @@ CheckoutTable.propTypes = {
     quantity: PropTypes.number,
     url: PropTypes.string,
   })).isRequired,
+  totalValue: PropTypes.number,
   remove: PropTypes.func.isRequired,
   isCheckout: PropTypes.bool.isRequired,
   ROUTE: PropTypes.string.isRequired,
+};
+
+CheckoutTable.defaultProps = {
+  totalValue: 0,
 };
