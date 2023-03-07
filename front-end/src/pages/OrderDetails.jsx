@@ -5,13 +5,24 @@ import NavBar from '../components/NavBar';
 import AppContext from '../context/AppContext';
 import { getSaleById } from '../utils/fetchApi';
 
-const ROUTE = 'customer_order_details';
-const ELEMENT = 'element-order-details';
+const getRoute = (role) => {
+  if (role === 'customer') {
+    return {
+      route: 'customer_order_details', element: 'element-order-details',
+    };
+  }
+  return {
+    route: 'seller_order_details', element: 'element-order-details',
+  };
+};
 
 export default function OrderDetails() {
   const [sale, setSale] = useState(undefined);
   const { id } = useParams();
   const { user } = useContext(AppContext);
+
+  const ROUTE = getRoute(user.role).route;
+  const ELEMENT = getRoute(user.role).element;
 
   const remove = () => {
     console.log();
@@ -32,7 +43,7 @@ export default function OrderDetails() {
       setSale(saleData);
     };
     fetchData();
-  }, []);
+  }, []); // eslint-disable-line
 
   const tableColumns = [
     { head: 'Item' },
@@ -41,6 +52,7 @@ export default function OrderDetails() {
     { head: 'Valor Unitário' },
     { head: 'Sub-total' },
   ];
+
   return (
     <div>
       <NavBar />
@@ -53,13 +65,16 @@ export default function OrderDetails() {
         >
           {sale && `PEDIDO: ${sale.id}`}
         </div>
-        <div
-          data-testid={
-            `${ROUTE}__${ELEMENT}-label-seller-name`
-          }
-        >
-          {sale && `P.Vend: ${sale.seller.name}`}
-        </div>
+        { sale && user.role === 'customer'
+          ? (
+            <div
+              data-testid={
+                `${ROUTE}__${ELEMENT}-label-seller-name`
+              }
+            >
+              {sale && `P.Vend: ${sale.seller.name}`}
+            </div>)
+          : null }
         <div
           data-testid={
             `${ROUTE}__${ELEMENT}-label-order-date`
@@ -74,15 +89,36 @@ export default function OrderDetails() {
         >
           {sale && sale.status}
         </div>
-        <button
-          type="button"
-          data-testid={
-            `${ROUTE}__button-delivery-check`
-          }
-          disabled
-        >
-          marcar como entregue
-        </button>
+        { sale && user.role === 'seller' ? (
+          <button
+            type="button"
+            data-testid={
+              `${ROUTE}__button-preparing-check`
+            }
+            disabled={ sale.status !== 'Pendente' }
+          >
+            preparar pedido
+          </button>) : null}
+        { sale && user.role === 'seller' ? (
+          <button
+            type="button"
+            data-testid={
+              `${ROUTE}__button-dispatch-check`
+            }
+            disabled={ sale.status !== 'Preparando' }
+          >
+            saiu para entrega
+          </button>) : null}
+        { sale && user.role === 'customer' ? (
+          <button
+            type="button"
+            data-testid={
+              `${ROUTE}__button-delivery-check`
+            }
+            disabled={ sale.status !== 'Em Trânsito' }
+          >
+            marcar como entregue
+          </button>) : null}
       </div>
       { console.log(sale) }
       { sale ? (

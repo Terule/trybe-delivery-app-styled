@@ -13,7 +13,7 @@ function ClientOrder({ order, status, price, date, adress, isSeller }) {
   return (
     <main>
       <div>
-        <Link to={ `localhost:3000/customer/orders/${order}` }>
+        <Link to={ `/seller/orders/${order}` }>
           <div>
             <span data-testid={ `${ROUTE}${CARD_ORDER}${order}` }>
               {order}
