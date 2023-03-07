@@ -47,7 +47,16 @@ const ConflictError = require('../../utils/errors/conflictError');
     return { newUser, token };
  };
 
+ const getSeller = async () => {
+    const sellerList = await User.findAll({
+        where: { role: 'seller' },
+    });
+
+    return sellerList;
+ };
+
 module.exports = {
     loginUser,
     registerUser,
+    getSeller
 };

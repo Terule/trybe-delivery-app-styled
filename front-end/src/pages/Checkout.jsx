@@ -1,14 +1,15 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CheckoutTable from '../components/CheckoutTable';
 import DeliveryForm from '../components/DeliveryForm';
 import NavBar from '../components/NavBar';
 import AppContext from '../context/AppContext';
-// import { getSeller } from '../utils/fetchApi';
+import { getSeller } from '../utils/fetchApi';
 
 const ROUTE = 'customer_checkout';
 
 export default function Checkout() {
-  const { cart, setCart, seller, setSeller } = useContext(AppContext);
+  const { cart, setCart } = useContext(AppContext);
+  const [seller, setSeller] = useState([]);
   const remove = (id) => {
     setCart(
       cart.filter((element) => element.id !== Number(id)),
@@ -17,14 +18,8 @@ export default function Checkout() {
 
   useEffect(() => {
     const fetchSeller = async () => {
-      const sellerResp = [{
-        name: 'Fulana Pereira',
-        email: 'fulana@deliveryapp.com',
-        password: '3c28d2b0881bf46457a853e0b07531c6', // fulana@123
-        role: 'seller',
-        id: 2,
-      }];
-      setSeller(sellerResp);
+      const sellerList = await getSeller();
+      setSeller(sellerList);
     };
     fetchSeller();
   }, []); // eslint-disable-line
