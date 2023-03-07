@@ -4,8 +4,12 @@ const ELEMENT = 'element-order-table';
 
 export default function CheckoutTable({
   tableColumns, cart, remove, isCheckout, ROUTE }) {
-  const total = cart.reduce((acc, { price, quantity }) => {
-    const totalValue = price * quantity;
+  const total = cart.reduce((acc, product) => {
+    if (isCheckout) {
+      const totalValue = product.price * product.quantity;
+      return acc + totalValue;
+    }
+    const totalValue = product.price * product.SaleProduct.quantity;
     return acc + totalValue;
   }, 0);
 
@@ -30,7 +34,9 @@ export default function CheckoutTable({
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-quantity-${index}` }
               >
-                {product.quantity}
+                {isCheckout
+                  ? (product.quantity)
+                  : (product.SaleProduct.quantity)}
 
               </td>
               <td
@@ -42,7 +48,10 @@ export default function CheckoutTable({
               <td
                 data-testid={ `${ROUTE}__${ELEMENT}-sub-total-${index}` }
               >
-                {(product.price * product.quantity).toFixed(2).replace('.', ',')}
+                {isCheckout
+                  ? (product.price * product.quantity).toFixed(2).replace('.', ',')
+                  : (product.price * product.SaleProduct.quantity)
+                    .toFixed(2).replace('.', ',')}
 
               </td>
               {isCheckout && (
