@@ -20,11 +20,12 @@ const CARD_DATE = '_element-order-date-';
 const CARD_PRICE = '_element-card-price-';
 
 function ClientOrder({ order, status, price, date, adress, isSeller }) {
+  console.log(isSeller);
   const ROUTE = getRoute(isSeller).route;
   return (
     <main>
       <div>
-        <Link to={ `/seller/orders/${order}` }>
+        <Link to={ isSeller ? `/seller/orders/${order}` : `/customer/orders/${order}` }>
           <div>
             <span
               data-testid={ `${ROUTE}${CARD_ORDER}${order}` }

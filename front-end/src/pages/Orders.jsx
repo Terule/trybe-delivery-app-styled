@@ -30,7 +30,7 @@ function Orders() {
       status={ sale.status }
       price={ sale.totalPrice }
       date={ sale.saleDate }
-      isSeller
+      isSeller={ user.role === 'seller' }
     />
   ));
 
