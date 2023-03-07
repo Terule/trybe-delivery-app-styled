@@ -6,7 +6,8 @@ const ROUTE = 'customer_products';
 const ELEMENT = 'element-navbar';
 
 function NavBar() {
-  const { user, setUser } = useContext(AppContext);
+  const { setUser } = useContext(AppContext);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { userLogin } from '../utils/fetchApi';
@@ -12,6 +12,14 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
   const history = useHistory();
+
+  useEffect(() => {
+    const loggedIn = async () => {
+      const loginCreated = JSON.parse(localStorage.getItem('user'));
+      if (loginCreated) history.push('/customer/products');
+    };
+    loggedIn();
+  }, [history]);
 
   const onChangeHandler = ({ target }) => {
     setInput({
@@ -44,9 +52,10 @@ function Login() {
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Usuário e/ou senha incorretos' });
     } else {
-      const { name, role } = result.user;
+      const { name, role, id } = result.user;
       setErrorMessage({ isError: false, message: '' });
       setUser({
+        id,
         name,
         email,
         role,

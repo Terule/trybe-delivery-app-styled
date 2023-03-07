@@ -96,6 +96,7 @@ export default function DeliveryForm({ seller, cart }) {
         </label>
         <button
           data-testid="customer_checkout__button-submit-order"
+          onClick={ handleSubmit }
           type="submit"
         >
           FINALIZAR PEDIDO

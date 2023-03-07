@@ -57,13 +57,31 @@ const newSale = async ({ saleData, token, products }) => {
   }
 };
 
-const getSaleById = async ({ id, token }) => {
+const getAllSales = async () => {
   try {
-    const result = await api.get(`/sales/${id}`, { headers: { Authorization: token } });
+    const result = await api.get('/customer/orders');
     return result.data;
   } catch (error) {
     return error.toJSON();
   }
 };
 
-export { userLogin, createUser, getProducts, getSeller, newSale, getSaleById };
+const getSaleById = async ({ id, token }) => {
+  try {
+    const result = await api.get(`/sales/${id}`, { headers: { Authorization: token } });
+
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+export {
+  userLogin,
+  createUser,
+  getProducts,
+  getSeller,
+  getAllSales,
+  newSale,
+  getSaleById,
+};

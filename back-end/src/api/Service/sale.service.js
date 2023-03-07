@@ -28,7 +28,13 @@ const getSaleById = async (id) => {
   }
 };
 
+const getAllSales = async () => {
+  const sales = await Sale.findAll();
+  return sales;
+};
+
 module.exports = {
   newSale,
+  getAllSales,
   getSaleById,
 };
