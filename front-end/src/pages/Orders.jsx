@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import NavBar from '../components/NavBar';
 import ClientOrder from '../components/ClientOrder';
 import { getAllSales } from '../utils/fetchApi';
+import AppContext from '../context/AppContext';
 
 function Orders() {
   const [clientOrders, setClientOrders] = useState([]);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     const fetchSales = async () => {
       const sales = await getAllSales();
-      const userData = JSON.parse(localStorage.getItem('user'));
-      const orders = sales.filter((sale) => userData.id === sale.userId);
+      const orders = sales.filter((sale) => user.id === sale.userId);
       setClientOrders(orders);
     };
     fetchSales();
-  }, []);
+  }, []); // eslint-disable-line
 
   const clientOrderHtml = clientOrders.map((sale) => (
     <ClientOrder
