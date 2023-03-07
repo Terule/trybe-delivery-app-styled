@@ -29,7 +29,7 @@ const createUser = async ({ name, email, password }) => {
 
 const getSeller = async () => {
   try {
-    const result = await api.get('/user');
+    const result = await api.get('/seller');
     return result.data;
   } catch (error) {
     return error.toJSON();
