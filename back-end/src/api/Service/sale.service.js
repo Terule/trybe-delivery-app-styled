@@ -13,9 +13,7 @@ const newSale = async (
    return sale.id;
 };
 
-
 const getSaleById = async (id) => {
-
   try {
     const sale = await Sale.findOne({
       where: { id },
@@ -28,7 +26,6 @@ const getSaleById = async (id) => {
   } catch (error) {
     console.log(error);
   }
-
 };
 
 const getAllSales = async () => {

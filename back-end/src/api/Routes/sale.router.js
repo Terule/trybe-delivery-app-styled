@@ -1,5 +1,5 @@
 const Router = require('express');
-const { newSale, getAllSales, getSaleById  } = require('../Controller/sale.controller');
+const { newSale, getAllSales, getSaleById } = require('../Controller/sale.controller');
 
 const route = Router();
 
