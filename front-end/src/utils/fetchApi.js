@@ -57,4 +57,13 @@ const newSale = async ({ saleData, token, products }) => {
   }
 };
 
-export { userLogin, createUser, getProducts, getSeller, newSale };
+const getSaleById = async ({ id, token }) => {
+  try {
+    const result = await api.get(`/sales/${id}`, { headers: { Authorization: token } });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+export { userLogin, createUser, getProducts, getSeller, newSale, getSaleById };

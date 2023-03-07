@@ -16,7 +16,6 @@ const createToken = (data) => {
 const verifyToken = (token) => {
     try {
         const payload = jwt.verify(token, jwtKey);
-        console.log(payload);
         return payload;
     } catch (e) {
         throw new InvalidToken('Invalid token');
