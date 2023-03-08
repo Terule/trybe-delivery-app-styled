@@ -1,7 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { User } = require('../../../database/models');
-const jwtToken = require('../../../utils/jwt');
 const userService = require('../../../api/Service/user.service');
 const { findUserSuccessfulRes, loginUserSuccessfulRes, customerEmail, customerPassword, customerWrongEmail, customerWrongPassword, registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes } = require('../mocks/user.mock');
 
