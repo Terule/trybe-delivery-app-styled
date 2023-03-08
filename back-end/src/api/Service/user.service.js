@@ -8,7 +8,7 @@ const ConflictError = require('../../utils/errors/conflictError');
  const loginUser = async (email, password) => {
         const user = await User.findOne({
             where: { email },
-        });  
+        });
         if (!user) {
             throw new NotFoundError('Not Found');
         }
@@ -26,7 +26,7 @@ const ConflictError = require('../../utils/errors/conflictError');
  const registerUser = async ({ email, password, role = 'client', name }) => {
      const user = await User.findOne({
          where: { email },
-        });  
+        });
     if (user) throw new ConflictError('Conflict');
     
     if (!validate(email) || password.length < 6 || name.length < 12) {
