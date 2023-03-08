@@ -76,6 +76,19 @@ const getSaleById = async ({ id, token }) => {
   }
 };
 
+const updateSaleStatus = async ({ id, status, token }) => {
+  try {
+    const result = await api.put(
+      `/sales/${id}`,
+      { status },
+      { headers: { Authorization: token } },
+    );
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 export {
   userLogin,
   createUser,
@@ -84,4 +97,5 @@ export {
   getAllSales,
   newSale,
   getSaleById,
+  updateSaleStatus,
 };
