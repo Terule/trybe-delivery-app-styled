@@ -23,7 +23,7 @@ const ConflictError = require('../../utils/errors/conflictError');
         return { user: userWithoutPassword, token };
 };
 
- const registerUser = async ({ email, password, role = 'client', name }) => {
+ const registerUser = async ({ email, password, role = 'customer', name }) => {
      const user = await User.findOne({
          where: { email },
         });  

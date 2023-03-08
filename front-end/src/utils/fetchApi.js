@@ -18,9 +18,24 @@ const userLogin = async ({ email, password }) => {
   }
 };
 
-const createUser = async ({ name, email, password }) => {
+const createUser = async ({ name, email, password, role }) => {
   try {
-    const result = await api.post('/register', { name, email, password });
+    const result = await api.post('/register', { name, email, password, role });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+const createUserByAdmin = async (token, { name, email, password, role }) => {
+  try {
+    const result = await api.post(
+      '/admin/manage',
+      { name, email, password, role },
+      { headers: {
+        Authorization: token,
+      } },
+    );
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -98,4 +113,5 @@ export {
   newSale,
   getSaleById,
   updateSaleStatus,
+  createUserByAdmin,
 };
