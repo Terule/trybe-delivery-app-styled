@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import CheckoutTable from '../components/CheckoutTable';
 import NavBar from '../components/NavBar';
 import AppContext from '../context/AppContext';
-import { getSaleById } from '../utils/fetchApi';
+import { getSaleById, updateSaleStatus } from '../utils/fetchApi';
 
 const getRoute = (role) => {
   if (role === 'customer') {
@@ -53,6 +53,13 @@ export default function OrderDetails() {
     { head: 'Sub-total' },
   ];
 
+  const handleStatus = async (status) => {
+    const result = await updateSaleStatus({ id, status, token: user.token });
+    if (result.message) {
+      console.log(result.message);
+    }
+  };
+
   return (
     <div>
       <NavBar />
@@ -96,6 +103,7 @@ export default function OrderDetails() {
               `${ROUTE}__button-preparing-check`
             }
             disabled={ sale.status !== 'Pendente' }
+            onClick={ () => handleStatus('Preparando') }
           >
             preparar pedido
           </button>) : null}
@@ -106,6 +114,7 @@ export default function OrderDetails() {
               `${ROUTE}__button-dispatch-check`
             }
             disabled={ sale.status !== 'Preparando' }
+            onClick={ () => handleStatus('Em Trânsito') }
           >
             saiu para entrega
           </button>) : null}
@@ -116,6 +125,7 @@ export default function OrderDetails() {
               `${ROUTE}__button-delivery-check`
             }
             disabled={ sale.status !== 'Em Trânsito' }
+            onClick={ () => handleStatus('Entregue') }
           >
             marcar como entregue
           </button>) : null}

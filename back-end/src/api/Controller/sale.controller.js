@@ -49,9 +49,23 @@ const getSaleBySellerId = async (req, res, next) => {
   }
 };
 
+const updateSaleStatus = async (req, res, next) => {
+  const token = req.headers.authorization;
+  try {
+    verifyToken(token);
+    const { id } = req.params;
+    const { status } = req.body;
+    await saleService.updateSaleStatus(id, status);
+    res.status(200).json({ message: 'Status atualizado com sucesso!' });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
     newSale,
     getAllSales,
     getSaleById,
     getSaleBySellerId,
+    updateSaleStatus,
 };
