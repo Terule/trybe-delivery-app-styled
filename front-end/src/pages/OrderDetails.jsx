@@ -58,6 +58,7 @@ export default function OrderDetails() {
     if (result.message) {
       console.log(result.message);
     }
+    setSale({ ...sale, status });
   };
 
   return (
