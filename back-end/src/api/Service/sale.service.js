@@ -1,4 +1,5 @@
 const { Sale, SaleProduct, Product, User } = require('../../database/models');
+const NotFoundError = require('../../utils/errors/notFoundError');
 
 const newSale = async (
   { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber }, products) => {
@@ -14,7 +15,6 @@ const newSale = async (
 };
 
 const getSaleById = async (id) => {
-  try {
     const sale = await Sale.findOne({
       where: { id },
       include: [
@@ -22,10 +22,10 @@ const getSaleById = async (id) => {
         { model: User, as: 'seller', attributes: ['name'] },
       ],
     });
-    return sale.dataValues;
-  } catch (error) {
-    console.log(error);
+    if (!sale) {
+      throw new NotFoundError('Not Found');
   }
+  return sale.dataValues;
 };
 
 const getAllSales = async () => {
@@ -33,15 +33,15 @@ const getAllSales = async () => {
   return sales;
 };
 
-const getSaleBySellerId = async (sellerId) => {
-  const sale = await Sale.findOne({
-    where: { sellerId },
-    include: [
-      { model: Product, as: 'products', attributes: ['name', 'price', 'url_image'] },
-    ],
-  });
-  return sale;
-};
+// const getSaleBySellerId = async (sellerId) => {
+//   const sale = await Sale.findOne({
+//     where: { sellerId },
+//     include: [
+//       { model: Product, as: 'products', attributes: ['name', 'price', 'url_image'] },
+//     ],
+//   });
+//   return sale;
+// };
 
 const updateSaleStatus = async (id, status) => {
   await Sale.update({ status }, { where: { id } });
@@ -51,6 +51,5 @@ module.exports = {
   newSale,
   getAllSales,
   getSaleById,
-  getSaleBySellerId,
   updateSaleStatus,
 };
