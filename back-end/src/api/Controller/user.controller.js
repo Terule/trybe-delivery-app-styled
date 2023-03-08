@@ -1,5 +1,5 @@
 const userService = require('../Service/user.service');
-const { verifyToken } = require('../../utils/jwt')
+const { verifyToken } = require('../../utils/jwt');
 
 const login = async (req, res, next) => {
     try {

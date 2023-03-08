@@ -45,7 +45,10 @@ function Register() {
 
   useEffect(() => {
     validateInputs();
-  }, [registerInputs.name, registerInputs.email, registerInputs.password, registerInputs.role]); // eslint-disable-line
+  }, [registerInputs.name,
+    registerInputs.email,
+    registerInputs.password,
+    registerInputs.role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
