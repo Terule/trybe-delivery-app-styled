@@ -16,6 +16,6 @@ route.get('/sales/:id', getSaleById);
 
 route.get('/customer/orders', getAllSales);
 
-route.put('/sales/:id', updateSaleStatus)
+route.put('/sales/:id', updateSaleStatus);
 
 module.exports = route;

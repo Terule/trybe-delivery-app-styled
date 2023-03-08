@@ -52,5 +52,5 @@ module.exports = {
   getAllSales,
   getSaleById,
   getSaleBySellerId,
-  updateSaleStatus
+  updateSaleStatus,
 };
