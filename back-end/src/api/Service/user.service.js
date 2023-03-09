@@ -1,5 +1,6 @@
 const { validate } = require('email-validator');
 const md5 = require('md5');
+const { Op } = require('sequelize');
 const { User } = require('../../database/models');
 const { createToken } = require('../../utils/jwt');
 const NotFoundError = require('../../utils/errors/notFoundError');
@@ -55,8 +56,22 @@ const ConflictError = require('../../utils/errors/conflictError');
     return sellerList;
  };
 
+ const getUsers = async () => {
+    const users = await User.findAll({
+        where: {
+            [Op.or]: [
+                { role: 'seller' },
+                { role: 'customer' },
+              ],
+        },
+    });
+
+    return users;
+ };
+
 module.exports = {
     loginUser,
     registerUser,
     getSeller,
+    getUsers,
 };

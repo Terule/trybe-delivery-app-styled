@@ -51,6 +51,16 @@ const getSeller = async () => {
   }
 };
 
+const getUsers = async () => {
+  try {
+    const result = await api.get('/admin/manage');
+    // console.log(result.data);
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 const getProducts = async (token) => {
   try {
     const result = await api.get('/customer/products', { headers: {
@@ -114,4 +124,5 @@ export {
   getSaleById,
   updateSaleStatus,
   createUserByAdmin,
+  getUsers,
 };

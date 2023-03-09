@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { createUser, createUserByAdmin } from '../utils/fetchApi';
-import NavBar from '../components/NavBar';
 
 const EMAIL_ERROR = 'Email já cadastrado';
 
@@ -107,9 +106,6 @@ function Register() {
 
   return (
     <div>
-      { user && user.role === 'administrator' && (
-        <NavBar />
-      )}
       <form
         onSubmit={
           user && user.role === 'administrator' ? handleSubmitAdmin : handleSubmit
