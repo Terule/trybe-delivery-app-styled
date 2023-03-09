@@ -51,10 +51,23 @@ const getUsers = async (_req, res, next) => {
     }
 };
 
+const deleteUser = async (req, res, next) => {
+    try {
+        const adminToken = req.headers.authorization;
+        verifyToken(adminToken);
+        // const { id } = req.params;
+        await userService.deleteUser(req.params.id);
+        return res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     login,
     register,
     getSeller,
     registerByAdmin,
     getUsers,
+    deleteUser,
 };

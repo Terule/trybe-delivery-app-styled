@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { getUsers } from '../utils/fetchApi';
+import React, { useContext, useEffect, useState } from 'react';
+import AppContext from '../context/AppContext';
+import { getUsers, deleteUser } from '../utils/fetchApi';
 
 const ROUTE = 'admin_manage';
 const ELEMENT = 'element-user-table';
 
 function UsersTable() {
   const [users, setUsers] = useState([]);
+  const { user } = useContext(AppContext);
 
   // useEffect(() => {
   //   const fetchApiData = async () => {
@@ -22,7 +24,11 @@ function UsersTable() {
     const result = await getUsers();
     setUsers(result);
   }, []);
-  console.log(users);
+
+  const removeUser = async (id) => {
+    const { token } = user;
+    await deleteUser(token, id);
+  };
 
   return (
     <div>
@@ -37,22 +43,27 @@ function UsersTable() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={ user.name }>
+          {users.map((element, index) => (
+            <tr key={ element.name }>
               <td data-testid={ `${ROUTE}__${ELEMENT}-item-number-${index}` }>
                 { index + 1 }
               </td>
               <td data-testid={ `${ROUTE}__${ELEMENT}-name-${index}` }>
-                { user.name }
+                { element.name }
               </td>
               <td data-testid={ `${ROUTE}__${ELEMENT}-email-${index}` }>
-                { user.email }
+                { element.email }
               </td>
               <td data-testid={ `${ROUTE}__${ELEMENT}-role-${index}` }>
-                { user.role }
+                { element.role }
               </td>
               <td data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }>
-                <button type="button">Excluir</button>
+                <button
+                  type="button"
+                  onClick={ () => removeUser(element.id) }
+                >
+                  Excluir
+                </button>
               </td>
             </tr>
           ))}

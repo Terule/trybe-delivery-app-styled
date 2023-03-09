@@ -54,7 +54,6 @@ const getSeller = async () => {
 const getUsers = async () => {
   try {
     const result = await api.get('/admin/manage');
-    // console.log(result.data);
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -114,6 +113,20 @@ const updateSaleStatus = async ({ id, status, token }) => {
   }
 };
 
+const deleteUser = async (token, id) => {
+  try {
+    const result = await api.delete(
+      `/admin/${id}`,
+      { headers: {
+        Authorization: token,
+      } },
+    );
+    return result;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 export {
   userLogin,
   createUser,
@@ -125,4 +138,5 @@ export {
   updateSaleStatus,
   createUserByAdmin,
   getUsers,
+  deleteUser,
 };

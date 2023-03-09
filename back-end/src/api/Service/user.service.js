@@ -69,9 +69,20 @@ const ConflictError = require('../../utils/errors/conflictError');
     return users;
  };
 
+ const deleteUser = async (id) => {
+    const result = await User.destroy({
+        where: { id },
+    });
+    console.log(result);
+    if (result === 0) {
+        throw new NotFoundError('Not Found');
+    }
+ };
+
 module.exports = {
     loginUser,
     registerUser,
     getSeller,
     getUsers,
+    deleteUser,
 };
