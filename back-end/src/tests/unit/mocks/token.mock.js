@@ -1,0 +1,3 @@
+const tokenMock = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsIm5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJpZCI6MywiaWF0IjoxNjc4MTQyNTU1LCJleHAiOjE2Nzg3NDczNTV9.PCjSuB5gVCBPJix2ifXD6acf17Z3j-OylrYKoV3pI3o';
+
+module.exports = { tokenMock };

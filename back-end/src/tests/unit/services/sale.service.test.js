@@ -4,7 +4,7 @@ const { Sale } = require('../../../database/models');
 const saleService = require('../../../api/Service/sale.service');
 const { newSaleMock, productsOfNewSaleMock, newSaleSuccessfulRes, getSaleByIdSuccessfulRes } = require('../mocks/sale.mock');
 
-describe('User Service', function () {
+describe('Sale Service', function () {
   describe('Testes de registro de uma nova venda', function () {
 
     afterEach(sinon.restore);
