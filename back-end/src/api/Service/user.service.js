@@ -52,6 +52,8 @@ const ConflictError = require('../../utils/errors/conflictError');
         where: { role: 'seller' },
     });
 
+    if (!sellerList) throw new Error('Server internal error');
+
     return sellerList;
  };
 

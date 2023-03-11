@@ -25,6 +25,12 @@ const registerUserSuccessfulReq = {
   password: '$#maria#$',
 }
 
+const registerUserAlreadyExistsReq = {
+  name: "Cliente Maria",
+  email: "maria@email.com",
+  password: '$#maria#$',
+}
+
 const registerUserSuccessfulModelRes = {
   id: 4,
   name: "Cliente Maria",
@@ -68,4 +74,4 @@ const customerWrongPassword = '$#zebiri#$';
 module.exports = { 
   findUserSuccessfulRes, loginUserSuccessfulRes, customerEmail, 
   customerPassword, customerWrongEmail, customerWrongPassword, 
-  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes, loginUserServiceSuccessfulRes };
+  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes, loginUserServiceSuccessfulRes, registerUserAlreadyExistsReq };

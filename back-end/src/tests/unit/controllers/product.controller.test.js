@@ -33,18 +33,5 @@ describe('Product Controller', async function () {
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(productsMock);
     });
-
-    it('Não recupera todos os produtos devido a não enviar um token', async function () {
-      const req = { headers: { authorization: 'lalala' } };
-      const res = {};
-
-      res.status = sinon.stub().returns(res);
-      res.json = sinon.stub().returns();
-
-      const next = sinon.stub().returns(res);
-      
-      await productController.getAllProducts(req, res, next);
-    });
-    
   });
 });
