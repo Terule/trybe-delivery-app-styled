@@ -49,13 +49,23 @@ const getSellerSuccessfulModelRes = [
   }
 ]
 
-const customerEmail = 'customer@email.com';
+const loginUserServiceSuccessfulRes = {
+  "user": {
+    "id": 3,
+    "name": "Cliente Zé Birita",
+    "email": "zebirita@email.com",
+    "role": "customer"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsIm5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJpZCI6MywiaWF0IjoxNjc4NDkwOTI0LCJleHAiOjE2NzkwOTU3MjR9.wfLqmYeClDe-UrVEEb81wbuTiOnxecX-UwEtrnmxuxQ"
+}
+
+const customerEmail = 'zebirita@email.com';
 const customerPassword = '$#zebirita#$';
 
-const customerWrongEmail = 'customer@email.com';
+const customerWrongEmail = 'zebiritaemail.com';
 const customerWrongPassword = '$#zebiri#$';
 
 module.exports = { 
   findUserSuccessfulRes, loginUserSuccessfulRes, customerEmail, 
   customerPassword, customerWrongEmail, customerWrongPassword, 
-  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes };
+  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes, loginUserServiceSuccessfulRes };
