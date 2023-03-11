@@ -11,6 +11,7 @@ const newSale = async (req, res, next) => {
       { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber },
       products,
       );
+      console.log(sale);
     return res.status(201).json(sale);
   } catch (error) {
     next(error);

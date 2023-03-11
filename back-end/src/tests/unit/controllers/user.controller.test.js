@@ -8,7 +8,6 @@ chai.use(sinonChai);
 
 const userController = require('../../../api/Controller/user.controller');
 const userService = require('../../../api/Service/user.service');
-const { productsMock } = require('../mocks/product.mock');
 const { tokenMock } = require('../mocks/token.mock');
 const InvalidToken = require('../../../utils/errors/invalidToken');
 const { customerEmail, customerPassword, loginUserServiceSuccessfulRes, customerWrongEmail, registerUserSuccessfulReq, getSellerSuccessfulModelRes } = require('../mocks/user.mock');

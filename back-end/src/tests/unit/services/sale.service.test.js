@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const { Sale } = require('../../../database/models');
 const saleService = require('../../../api/Service/sale.service');
-const { newSaleMock, productsOfNewSaleMock, newSaleSuccessfulRes, getSaleByIdSuccessfulRes } = require('../mocks/sale.mock');
+const { newSaleMock, productsOfNewSaleMock, newSaleSuccessfulRes, getSaleByIdSuccessfulRes, getAllSalesMock } = require('../mocks/sale.mock');
 
 describe('Sale Service', function () {
   describe('Testes de registro de uma nova venda', function () {
@@ -50,11 +50,11 @@ describe('Sale Service', function () {
     afterEach(sinon.restore);
 
     it('Recupera todas as vendas com sucesso', async function () {
-      sinon.stub(Sale, 'findAll').resolves(getSaleByIdSuccessfulRes);
+      sinon.stub(Sale, 'findAll').resolves(getAllSalesMock);
       
 
       const response = await saleService.getAllSales();
-      expect(response).to.be.deep.equal(getSaleByIdSuccessfulRes);
+      expect(response).to.be.deep.equal(getAllSalesMock);
     });
   
   });
