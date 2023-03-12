@@ -1,17 +1,34 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {
+  Card,
+  Container,
+  Typography,
+  Link,
+  CardMedia,
+  CardHeader,
+} from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Key from '@mui/icons-material/Key';
 import AppContext from '../context/AppContext';
 import { userLogin } from '../utils/fetchApi';
+import logo from '../assets/beer_logo.svg';
 
-const ROUTE = 'common_login';
-const ELEMENT = 'element-invalid-email';
+import CommonButton from '../components/common/CommonButton/CommomButton';
+import OutlinedInput from '../components/common/CommonOutlinedInput/CommonOutlinedInput';
 
 function Login() {
   const { user, setUser } = useContext(AppContext);
   const [input, setInput] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
 
-  const history = useHistory();
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedIn = async () => {
@@ -19,26 +36,31 @@ function Login() {
       if (user) {
         switch (user.role) {
         case 'customer':
-          history.push('/customer/products');
+          navigate('/customer/products');
           break;
         case 'seller':
-          history.push('/seller/orders');
+          navigate('/seller/orders');
           break;
         case 'administrator':
-          history.push('/admin/manage');
+          navigate('/admin/manage');
           break;
         default:
-          history.push('/login');
+          navigate('/login');
         }
       }
     };
     loggedIn();
-  }, []);
+  }, []); // eslint-disable-line
 
   const onChangeHandler = ({ target }) => {
     setInput({
       ...input,
       [target.name]: target.value,
+    });
+    setErrorMessage({
+      ...errorMessage,
+      isError: false,
+      message: '',
     });
   };
 
@@ -75,57 +97,92 @@ function Login() {
         role,
         token: result.token,
       });
-      if (result.user.role === 'customer') history.push('/customer/products');
-      if (result.user.role === 'seller') history.push('/seller/orders');
-      if (result.user.role === 'administrator') history.push('/admin/manage');
+      if (result.user.role === 'customer') navigate('/customer/products');
+      if (result.user.role === 'seller') navigate('/seller/orders');
+      if (result.user.role === 'administrator') navigate('/admin/manage');
     }
   };
 
   return (
-    <div>
-      <form onSubmit={ handleSubmit }>
-        { errorMessage.isError
-        && (
-          <p data-testid={ `${ROUTE}__${ELEMENT}` }>{ errorMessage.message }</p>
+    <Container
+      sx={ {
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '80px 0 0 0' } }
+    >
+      <Card
+        sx={ {
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: '300px',
+          padding: '20px',
+        } }
+      >
+        <CardMedia
+          image={ logo }
+          component="img"
+          width="150px"
+          sx={ { alignSelf: 'center' } }
+        />
+        <CardHeader
+          title="Entrar"
+          sx={ { alignSelf: 'center' } }
+        />
+        <OutlinedInput
+          onChange={ onChangeHandler }
+          value={ input.email }
+          name="email"
+          type="email"
+          error={ errorMessage.isError }
+          sx={ { margin: '5px 0' } }
+          iconStart={ <EmailIcon /> }
+          placeholder="Email"
+          size="small"
+        />
+        <OutlinedInput
+          onChange={ onChangeHandler }
+          value={ input.password }
+          name="password"
+          type={ showPassword ? 'text' : 'password' }
+          error={ errorMessage.isError }
+          sx={ errorMessage.isError
+            ? { margin: '5px 0 0 0' } : { margin: '5px 0 10px 0' } }
+          iconStart={ <Key /> }
+          iconEnd={ showPassword ? <VisibilityOff /> : <Visibility /> }
+          onClick={ handleClickShowPassword }
+          placeholder="Senha"
+          size="small"
+
+        />
+        {errorMessage.isError && (
+          <Typography
+            variant="caption"
+            display="block"
+            color="error"
+            sx={ { marginBottom: '10px' } }
+          >
+            {errorMessage.message}
+
+          </Typography>
         )}
-        <label htmlFor="email">
-          Email:
-          <input
-            data-testid="common_login__input-email"
-            type="text"
-            id="email"
-            name="email"
-            value={ input.email }
-            onChange={ onChangeHandler }
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            data-testid="common_login__input-password"
-            type="text"
-            id="password"
-            name="password"
-            value={ input.password }
-            onChange={ onChangeHandler }
-          />
-        </label>
-        <button
-          data-testid="common_login__button-login"
-          type="submit"
+        <CommonButton
           disabled={ validateInputs() }
+          onClick={ handleSubmit }
+          marginTop="20px"
         >
-          Login
-        </button>
-        <button
-          data-testid="common_login__button-register"
-          type="button"
-          onClick={ () => history.push('/register') }
+          Entrar
+        </CommonButton>
+        <Typography
+          variant="caption"
+          display="block"
+          sx={ { alignSelf: 'center', marginTop: '10px' } }
         >
-          Register
-        </button>
-      </form>
-    </div>
+          Ainda não é cliente?
+          {' '}
+          <Link rel="noreferrer" href="/register">Cadastre-se aqui</Link>
+        </Typography>
+      </Card>
+    </Container>
   );
 }
 

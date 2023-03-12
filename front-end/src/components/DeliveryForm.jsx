@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { newSale } from '../utils/fetchApi';
 import verifyToken from '../utils/verifyToken';
 
 export default function DeliveryForm({ seller, cart }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { user } = useContext(AppContext);
   const [inputData, setInputData] = useState({
     sellerName: '',
@@ -41,7 +41,7 @@ export default function DeliveryForm({ seller, cart }) {
         products: cart.map((product) => ({ id: product.id, quantity: product.quantity })),
       },
     );
-    history.push(`orders/${saleId}`);
+    navigate(`orders/${saleId}`);
   };
 
   return (

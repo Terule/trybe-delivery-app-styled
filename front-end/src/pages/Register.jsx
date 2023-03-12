@@ -1,9 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, Container, CardHeader, IconButton, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EmailIcon from '@mui/icons-material/Email';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Person from '@mui/icons-material/Person';
+import Key from '@mui/icons-material/Key';
 import AppContext from '../context/AppContext';
-import { createUser, createUserByAdmin } from '../utils/fetchApi';
-
-const EMAIL_ERROR = 'Email já cadastrado';
+import { createUser } from '../utils/fetchApi';
+import CommonButton from '../components/common/CommonButton/CommomButton';
+import OutlinedInput from '../components/common/CommonOutlinedInput/CommonOutlinedInput';
 
 function Register() {
   const { user, setUser } = useContext(AppContext);
@@ -14,14 +21,21 @@ function Register() {
     password: '',
     role: 'customer',
   });
-  const [disabled, setDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
+  const [showPassword, setShowPassword] = React.useState(false);
 
-  const history = useHistory();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const navigate = useNavigate();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setRegisterInputs({ ...registerInputs, [name]: value });
+    setErrorMessage({
+      ...errorMessage,
+      isError: false,
+      message: '',
+    });
   };
 
   const validateInputs = () => {
@@ -35,19 +49,8 @@ function Register() {
       password.length >= PASSWORD_LENGTH,
       validator.test(email),
     ];
-    if (inputValidations.every((validation) => validation === true)) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    return !inputValidations.every((validation) => validation === true);
   };
-
-  useEffect(() => {
-    validateInputs();
-  }, [registerInputs.name,
-    registerInputs.email,
-    registerInputs.password,
-    registerInputs.role]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,114 +69,108 @@ function Register() {
     });
     console.log(user);
     setErrorMessage({ isError: false, message: '' });
-    history.push('/customer/products');
+    navigate('/customer/products');
   };
 
-  const handleSubmitAdmin = async (e) => {
-    e.preventDefault();
-    const { token } = user;
-    const { email, password, name, role } = registerInputs;
+  // const handleSubmitAdmin = async (e) => {
+  //   e.preventDefault();
+  //   const { token } = user;
+  //   const { email, password, name, role } = registerInputs;
 
-    const result = await createUserByAdmin(token, { email, password, name, role });
-    console.log(result);
-    if (user && user.role === 'administrator' && result.message) {
-      return setErrorMessage({ isError: true, message: EMAIL_ERROR });
-    }
-    if (user && user.role === 'administrator') {
-      setErrorMessage({ isError: false, message: '' });
-      setRegisterInputs({
-        name: '',
-        email: '',
-        password: '',
-        role: 'customer',
-      });
-    }
-  };
-
-  const getRoute = (role) => {
-    if (user && role.role === 'administrator') {
-      return {
-        route: 'admin_manage', element: 'element-invalid-register',
-      };
-    }
-    return {
-      route: 'common_register', element: 'element-invalid_register',
-    };
-  };
-
-  const ROUTE = getRoute(user).route;
-  const ELEMENT = getRoute(user).element;
+  //   const result = await createUserByAdmin(token, { email, password, name, role });
+  //   console.log(result);
+  //   if (user && user.role === 'administrator' && result.message) {
+  //     return setErrorMessage({ isError: true, message: EMAIL_ERROR });
+  //   }
+  //   if (user && user.role === 'administrator') {
+  //     setErrorMessage({ isError: false, message: '' });
+  //     setUser({
+  //       id,
+  //       name,
+  //       email,
+  //       role,
+  //       token: result.token,
+  //     });
+  //     navigate('/customer/products');
+  //   }
+  // };
 
   return (
-    <div>
-      <form
-        onSubmit={
-          user && user.role === 'administrator' ? handleSubmitAdmin : handleSubmit
-        }
+    <Container sx={ { display: 'flex', justifyContent: 'center', padding: '80px' } }>
+      <Card
+        sx={ {
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: '300px',
+          padding: '0 20px 20px',
+        } }
       >
-        { errorMessage.isError
-        && (
-          <p data-testid={ `${ROUTE}__${ELEMENT}` }>{ errorMessage.message }</p>
-        )}
-        <label htmlFor="name">
-          Nome:
-          <input
-            data-testid={ `${ROUTE}__input-name` }
-            type="text"
-            id="name"
-            name="name"
-            onChange={ handleChange }
-            value={ registerInputs.name }
-          />
-        </label>
-        <label htmlFor="email">
-          Email:
-          <input
-            data-testid={ `${ROUTE}__input-email` }
-            type="text"
-            id="email"
-            name="email"
-            onChange={ handleChange }
-            value={ registerInputs.email }
-          />
-        </label>
-        <label htmlFor="password">
-          Password:
-          <input
-            data-testid={ `${ROUTE}__input-password` }
-            type="text"
-            id="password"
-            name="password"
-            onChange={ handleChange }
-            value={ registerInputs.password }
-          />
-        </label>
-
-        { user && user.role === 'administrator' && (
-          <label htmlFor="type">
-            <select
-              name="admin_manage__select-role"
-              data-testid="admin_manage__select-role"
-              value={ registerInputs.role }
-              onChange={ ({ target: { value } }) => setRegisterInputs(
-                (prevSelect) => ({ ...prevSelect, role: value }),
-              ) }
+        <CardHeader
+          title="Registrar"
+          sx={ { alignSelf: 'center', width: '100%' } }
+          action={
+            <IconButton
+              edge="end"
+              onClick={ () => navigate('/login') }
+              sx={ { paddingRight: '15px' } }
             >
-              <option value="customer">Cliente</option>
-              <option value="seller">Vendedor</option>
-            </select>
-          </label>
-        )}
+              <ArrowBackIcon />
+            </IconButton>
+          }
+        />
+        <OutlinedInput
+          placeholder="Nome"
+          name="name"
+          type="text"
+          value={ registerInputs.name }
+          iconStart={ <Person /> }
+          sx={ { margin: '5px 0' } }
+          error={ errorMessage.isError }
+          onChange={ handleChange }
+        />
+        <OutlinedInput
+          placeholder="Email"
+          name="email"
+          type="email"
+          value={ registerInputs.email }
+          iconStart={ <EmailIcon /> }
+          sx={ { margin: '5px 0' } }
+          error={ errorMessage.isError }
+          onChange={ handleChange }
+        />
+        <OutlinedInput
+          placeholder="Senha"
+          name="password"
+          type="password"
+          value={ registerInputs.password }
+          error={ errorMessage.isError }
+          iconStart={ <Key /> }
+          iconEnd={ showPassword ? <VisibilityOff /> : <Visibility /> }
+          sx={ errorMessage.isError
+            ? { margin: '5px 0 0 0' } : { margin: '5px 0 10px 0' } }
+          onChange={ handleChange }
+          onClick={ handleClickShowPassword }
+        />
+        {errorMessage.isError && (
+          <Typography
+            variant="caption"
+            display="block"
+            color="error"
+            sx={ { marginBottom: '10px' } }
+          >
+            {errorMessage.message}
 
-        <button
-          data-testid={ `${ROUTE}__button-register` }
-          type="submit"
-          disabled={ disabled }
+          </Typography>
+        )}
+        <CommonButton
+          disabled={ validateInputs() }
+          onClick={ handleSubmit }
+          marginTop="20px"
         >
-          Submit
-        </button>
-      </form>
-    </div>
+          Registrar
+        </CommonButton>
+      </Card>
+    </Container>
   );
 }
 

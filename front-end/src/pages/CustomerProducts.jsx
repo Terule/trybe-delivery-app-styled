@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ProductCard from '../components/ProductCard';
 import AppContext from '../context/AppContext';
@@ -12,7 +12,7 @@ function CustomerProducts() {
   const [productsData, setProductsData] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
   const { user, setCart } = useContext(AppContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -70,7 +70,7 @@ function CustomerProducts() {
   const onSubmit = () => {
     const products = productsData.filter((product) => product.quantity > 0);
     setCart(products);
-    history.push('/customer/checkout');
+    navigate('/customer/checkout');
   };
 
   return (
