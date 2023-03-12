@@ -4,8 +4,6 @@ const chaiHttp = require('chai-http');
 const { Product } = require('../../../database/models')
 const app = require('../../../api/app');
 
-// const jwt = require('../../../utils/jwt');
-const { findUserSuccessfulRes, customerEmail, customerPassword, registerUserSuccessfulReq, registerUserSuccessfulModelRes, registerUserAlreadyExistsReq, customerWrongEmail, getSellerSuccessfulModelRes} = require('../../unit/mocks/user.mock');
 const { tokenMock } = require('../../unit/mocks/token.mock');
 const { productsMock } = require('../../unit/mocks/product.mock');
 

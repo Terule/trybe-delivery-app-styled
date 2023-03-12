@@ -64,6 +64,7 @@ describe('Sale Service', function () {
     afterEach(sinon.restore);
 
     it('Atualiza uma venda com sucesso', async function () {
+      sinon.stub(Sale, 'update').resolves();
       const status = 'Preparando'
       await saleService.updateSaleStatus('1', status);
     });

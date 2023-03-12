@@ -6,6 +6,7 @@ const newSale = async (
    const sale = await Sale.create({
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente',
    });
+   if (!sale) throw new Error('Server internal error');
    products.forEach(async (product) => {
       await SaleProduct.create(
         { saleId: sale.id, productId: product.id, quantity: product.quantity },
