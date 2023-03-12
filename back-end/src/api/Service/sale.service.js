@@ -31,6 +31,7 @@ const getSaleById = async (id) => {
 
 const getAllSales = async () => {
   const sales = await Sale.findAll();
+  if (!sales) throw new Error('Server internal error');
   return sales;
 };
 
@@ -45,6 +46,10 @@ const getAllSales = async () => {
 // };
 
 const updateSaleStatus = async (id, status) => {
+  const sale = await Sale.findOne({
+    where: { id },
+  });
+  if (!sale) throw new NotFoundError('Not Found');
   await Sale.update({ status }, { where: { id } });
 };
 

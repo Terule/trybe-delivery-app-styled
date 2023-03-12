@@ -10,7 +10,7 @@ const { productsMock } = require('../../unit/mocks/product.mock');
 
 const { expect } = chai;
 chai.use(chaiHttp);
-
+ 
 describe('Testes de integração que utilizam Product', () => {
   afterEach(sinon.restore);
 
@@ -20,7 +20,7 @@ describe('Testes de integração que utilizam Product', () => {
     it('É possível recuperar todos os produtos existentes no Db', async () => {
       sinon.stub(Product, 'findAll').resolves(productsMock);
 
-      const { body, status } = await await chai.request(app).get('/customer/products').set({ authorization: tokenMock});
+      const { body, status } = await chai.request(app).get('/customer/products').set({ authorization: tokenMock});
 
       expect(body).to.deep.equal(productsMock);
       expect(status).to.equal(200);
@@ -28,7 +28,7 @@ describe('Testes de integração que utilizam Product', () => {
 
     it('Não é possível recuperar todos os produtos existentes no Db com token inválido', async () => {
 
-      const { body, status } = await await chai.request(app).get('/customer/products').set({ authorization: 'lalala' });
+      const { body, status } = await chai.request(app).get('/customer/products').set({ authorization: 'lalala' });
 
       expect(body).to.deep.equal({ message: 'Invalid token'});
       expect(status).to.equal(401);
