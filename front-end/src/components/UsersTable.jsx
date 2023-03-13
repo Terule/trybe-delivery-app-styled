@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { getUsers, deleteUser } from '../utils/fetchApi';
 
@@ -20,16 +20,18 @@ function UsersTable() {
   //   console.log(users);
   // }, []);
 
-  useEffect(async () => {
-    const result = await getUsers();
-    setUsers(result);
-  }, []);
-
-  const removeUser = async (id) => {
+  const removeUser = useCallback(async (id) => {
     const { token } = user;
     await deleteUser(token, id);
-  };
+  });
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const result = await getUsers();
+      setUsers(result);
+    };
+    fetchUsers();
+  }, [removeUser]);
   return (
     <div>
       <table>
@@ -57,9 +59,10 @@ function UsersTable() {
               <td data-testid={ `${ROUTE}__${ELEMENT}-role-${index}` }>
                 { element.role }
               </td>
-              <td data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }>
+              <td>
                 <button
                   type="button"
+                  data-testid={ `${ROUTE}__${ELEMENT}-remove-${index}` }
                   onClick={ () => removeUser(element.id) }
                 >
                   Excluir
