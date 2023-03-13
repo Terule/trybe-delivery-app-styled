@@ -28,6 +28,14 @@ function NavBar() {
           Meus Pedidos
         </Link>)}
 
+      { user.role === 'administrator' && (
+        <Link
+          data-testid={ `${ROUTE}__${ELEMENT}-link-orders` }
+          to="/admin/manage"
+        >
+          Gerenciar Usuários
+        </Link>)}
+
       { user.role === 'seller' && (
         <Link
           data-testid={ `${ROUTE}__${ELEMENT}-link-orders` }

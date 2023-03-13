@@ -18,9 +18,24 @@ const userLogin = async ({ email, password }) => {
   }
 };
 
-const createUser = async ({ name, email, password }) => {
+const createUser = async ({ name, email, password, role }) => {
   try {
-    const result = await api.post('/register', { name, email, password });
+    const result = await api.post('/register', { name, email, password, role });
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+const createUserByAdmin = async (token, { name, email, password, role }) => {
+  try {
+    const result = await api.post(
+      '/admin/manage',
+      { name, email, password, role },
+      { headers: {
+        Authorization: token,
+      } },
+    );
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -30,6 +45,15 @@ const createUser = async ({ name, email, password }) => {
 const getSeller = async () => {
   try {
     const result = await api.get('/seller');
+    return result.data;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
+const getUsers = async () => {
+  try {
+    const result = await api.get('/admin/manage');
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -89,6 +113,20 @@ const updateSaleStatus = async ({ id, status, token }) => {
   }
 };
 
+const deleteUser = async (token, id) => {
+  try {
+    const result = await api.delete(
+      `/admin/${id}`,
+      { headers: {
+        Authorization: token,
+      } },
+    );
+    return result;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 export {
   userLogin,
   createUser,
@@ -98,4 +136,7 @@ export {
   newSale,
   getSaleById,
   updateSaleStatus,
+  createUserByAdmin,
+  getUsers,
+  deleteUser,
 };
