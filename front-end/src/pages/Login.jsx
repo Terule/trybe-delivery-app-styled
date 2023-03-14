@@ -24,6 +24,9 @@ function Login() {
         case 'seller':
           history.push('/seller/orders');
           break;
+        case 'administrator':
+          history.push('/admin/manage');
+          break;
         default:
           history.push('/login');
         }
@@ -74,6 +77,7 @@ function Login() {
       });
       if (result.user.role === 'customer') history.push('/customer/products');
       if (result.user.role === 'seller') history.push('/seller/orders');
+      if (result.user.role === 'administrator') history.push('/admin/manage');
     }
   };
 

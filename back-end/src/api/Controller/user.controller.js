@@ -1,4 +1,5 @@
 const userService = require('../Service/user.service');
+const { verifyToken } = require('../../utils/jwt');
 
 const login = async (req, res, next) => {
     try {
@@ -20,6 +21,18 @@ const register = async (req, res, next) => {
     }
 };
 
+const registerByAdmin = async (req, res, next) => {
+    try {
+        const adminToken = req.headers.authorization;
+        verifyToken(adminToken);
+        const { email, password, role, name } = req.body;
+        const { token } = await userService.registerUser({ email, password, role, name });
+        return res.status(201).json({ token });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const getSeller = async (_req, res, next) => {
     try {
         const sellerList = await userService.getSeller();
@@ -29,8 +42,32 @@ const getSeller = async (_req, res, next) => {
     }
 };
 
+const getUsers = async (_req, res, next) => {
+    try {
+        const users = await userService.getUsers();
+        return res.status(200).json(users);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const adminToken = req.headers.authorization;
+        verifyToken(adminToken);
+        // const { id } = req.params;
+        await userService.deleteUser(req.params.id);
+        return res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     login,
     register,
     getSeller,
+    registerByAdmin,
+    getUsers,
+    deleteUser,
 };
