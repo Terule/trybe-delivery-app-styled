@@ -23,7 +23,6 @@ const getSaleById = async (req, res, next) => {
   try {
     verifyToken(token);
     const sale = await saleService.getSaleById(id);
-    console.log(sale);
     return res.status(200).json(sale);
   } catch (error) {
     next(error);
@@ -39,15 +38,15 @@ const getAllSales = async (req, res, next) => {
   } 
 };
 
-const getSaleBySellerId = async (req, res, next) => {
-  try {
-    const { sellerId } = req.body;
-    const saleList = await saleService.getSaleBySellerId(sellerId);
-    res.status(200).json(saleList);
-  } catch (error) {
-    next(error);
-  }
-};
+// const getSaleBySellerId = async (req, res, next) => {
+//   try {
+//     const { sellerId } = req.body;
+//     const saleList = await saleService.getSaleBySellerId(sellerId);
+//     res.status(200).json(saleList);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 const updateSaleStatus = async (req, res, next) => {
   const token = req.headers.authorization;
@@ -66,6 +65,5 @@ module.exports = {
     newSale,
     getAllSales,
     getSaleById,
-    getSaleBySellerId,
     updateSaleStatus,
 };
