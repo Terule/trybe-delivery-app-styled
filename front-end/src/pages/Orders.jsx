@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Box, Container, Grid } from '@mui/material';
 import NavBar from '../components/NavBar';
 import ClientOrder from '../components/ClientOrder';
 import { getAllSales } from '../utils/fetchApi';
@@ -11,6 +12,7 @@ function Orders() {
   useEffect(() => {
     const fetchSales = async () => {
       const sales = await getAllSales();
+      console.log(sales);
       if (user.role === 'customer') {
         const orders = sales.filter((sale) => user.id === sale.userId);
         setClientOrders(orders);
@@ -30,6 +32,10 @@ function Orders() {
       status={ sale.status }
       price={ sale.totalPrice }
       date={ sale.saleDate }
+      address={ sale.deliveryAddress }
+      number={ sale.deliveryNumber }
+      user={ sale.user }
+      products={ sale.products }
       isSeller={ user.role === 'seller' }
     />
   ));
@@ -39,9 +45,21 @@ function Orders() {
       <nav>
         <NavBar />
       </nav>
-      <main>
-        { clientOrderHtml }
-      </main>
+      <Box
+        sx={ {
+          backgroundColor: '#f8f8f8',
+          margin: 0,
+          paddingTop: 12,
+          paddingBottom: 7,
+          minHeight: 750,
+        } }
+      >
+        <Container maxWidth="xl">
+          <Grid container spacing={ 2 }>
+            { clientOrderHtml }
+          </Grid>
+        </Container>
+      </Box>
     </>
   );
 }

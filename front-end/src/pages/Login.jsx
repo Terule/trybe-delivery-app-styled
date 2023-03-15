@@ -119,8 +119,8 @@ function Login() {
         } }
       >
         <CardMedia
-          image={ logo }
           component="img"
+          image={ logo }
           width="150px"
           sx={ { alignSelf: 'center' } }
         />

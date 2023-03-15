@@ -30,8 +30,13 @@ const getSaleById = async (id) => {
 };
 
 const getAllSales = async () => {
-  const sales = await Sale.findAll();
-  if (!sales) throw new Error('Server internal error');
+  const sales = await Sale.findAll({
+    include: [
+      { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+      { model: User, as: 'seller', attributes: ['name'] },
+      { model: User, as: 'user', attributes: ['name'] },
+    ],
+  });
   return sales;
 };
 

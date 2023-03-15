@@ -1,6 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Container, CardHeader, IconButton, Typography } from '@mui/material';
+import {
+  Card,
+  Container,
+  CardHeader,
+  IconButton,
+  Typography,
+  Tooltip } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EmailIcon from '@mui/icons-material/Email';
 import Visibility from '@mui/icons-material/Visibility';
@@ -13,7 +19,7 @@ import CommonButton from '../components/common/CommonButton/CommomButton';
 import OutlinedInput from '../components/common/CommonOutlinedInput/CommonOutlinedInput';
 
 function Register() {
-  const { user, setUser } = useContext(AppContext);
+  const { setUser } = useContext(AppContext);
 
   const [registerInputs, setRegisterInputs] = React.useState({
     name: '',
@@ -59,17 +65,18 @@ function Register() {
     const result = await createUser({ email, password, name, role });
     console.log(result);
     if (result.message) {
-      return setErrorMessage({ isError: true, message: EMAIL_ERROR });
+      setErrorMessage({ isError: true, message: 'Email já cadastrado' });
+    } else {
+      setErrorMessage({ isError: false, message: '' });
+      setUser({
+        id: result.user.id,
+        name: result.user.name,
+        email: result.user.email,
+        role: result.user.role,
+        token: result.token,
+      });
+      navigate('/customer/products');
     }
-    setUser({
-      name,
-      email,
-      role,
-      token: result.token,
-    });
-    console.log(user);
-    setErrorMessage({ isError: false, message: '' });
-    navigate('/customer/products');
   };
 
   // const handleSubmitAdmin = async (e) => {
@@ -109,13 +116,15 @@ function Register() {
           title="Registrar"
           sx={ { alignSelf: 'center', width: '100%' } }
           action={
-            <IconButton
-              edge="end"
-              onClick={ () => navigate('/login') }
-              sx={ { paddingRight: '15px' } }
-            >
-              <ArrowBackIcon />
-            </IconButton>
+            <Tooltip title="Voltar">
+              <IconButton
+                edge="end"
+                onClick={ () => navigate('/login') }
+                sx={ { marginRight: '0px' } }
+              >
+                <ArrowBackIcon tooltip="Voltar" />
+              </IconButton>
+            </Tooltip>
           }
         />
         <OutlinedInput
@@ -141,7 +150,7 @@ function Register() {
         <OutlinedInput
           placeholder="Senha"
           name="password"
-          type="password"
+          type={ showPassword ? 'text' : 'password' }
           value={ registerInputs.password }
           error={ errorMessage.isError }
           iconStart={ <Key /> }

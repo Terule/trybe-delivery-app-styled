@@ -1,3 +1,7 @@
+import { Button,
+  FormControl,
+  Grid,
+  InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -41,68 +45,104 @@ export default function DeliveryForm({ seller, cart }) {
         products: cart.map((product) => ({ id: product.id, quantity: product.quantity })),
       },
     );
-    navigate(`orders/${saleId}`);
+    navigate(`/customer/orders/${saleId}`);
   };
 
   return (
-    <div>
-      <h2>Detalhes e Endereço para Entrega</h2>
-      <form onSubmit={ handleSubmit }>
-        <label
-          htmlFor="sellerName"
-        >
-          P. Vendedora Responsável:
-          <select
-            name="sellerName"
-            value={ inputData.sellerName }
-            data-testid="customer_checkout__select-seller"
-            onChange={ (e) => setInputData(
-              { ...inputData, sellerName: e.target.value },
-            ) }
+    <Paper
+      sx={ {
+        padding: '10px',
+        height: 'fit-content',
+      } }
+    >
+      <Grid container spacing={ 3 }>
+        <Grid item xs={ 4 }>
+          <FormControl
+            sx={ { width: 350 } }
           >
-            {seller.map((person) => (
-              <option
-                data-testid="customer_checkout__select-seller"
-                key={ person.name }
-              >
-                {person.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="deliveryAddress">
+            <InputLabel
+              htmlFor="sellerName"
+            >
+              P. Vendedora Responsável
+            </InputLabel>
+            <Select
+              sx={ { width: '100%' } }
+              size="small"
+              label="P. Vendedora Responsável"
+              name="sellerName"
+              value={ inputData.sellerName }
+              data-testid="customer_checkout__select-seller"
+              onChange={ (e) => setInputData(
+                { ...inputData, sellerName: e.target.value },
+              ) }
+            >
+              {seller && (
+                <MenuItem
+                  value=""
+                >
+                  Selecione
+                </MenuItem>
+              )}
+              {seller.map((person) => (
+                <MenuItem
+                  data-testid="customer_checkout__select-seller"
+                  key={ person.name }
+                  value={ person.name }
+                >
+                  {person.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={ 3 }>
+          <FormControl>
+            <TextField
+              sx={ { width: 250 } }
+              data-testid="customer_checkout__input-address"
+              variant="outlined"
+              label="Endereço"
+              size="small"
+              type="text"
+              required
+              name="deliveryAddress"
+              maxLength="100"
+              value={ inputData.deliveryAddress }
+              onChange={ handleChange }
+            />
+          </FormControl>
+        </Grid>
+        <Grid item xs={ 3 }>
+          <FormControl>
+            <TextField
+              sx={ { width: 250 } }
+              data-testid="customer_checkout__input-address-number"
+              type="text"
+              size="small"
+              label="Número"
+              required
+              name="deliveryNumber"
+              value={ inputData.deliveryNumber }
+              onChange={ handleChange }
+            />
+          </FormControl>
+        </Grid>
+        <Grid item s={ 3 }>
 
-          Endereço:
-          <input
-            data-testid="customer_checkout__input-address"
-            type="text"
-            name="deliveryAddress"
-            maxLength="100"
-            value={ inputData.deliveryAddress }
-            onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="deliveryNumber">
+          <FormControl>
+            <Button
+              data-testid="customer_checkout__button-submit-order"
+              onClick={ handleSubmit }
+              variant="contained"
+              type="submit"
+            >
+              FINALIZAR PEDIDO
+            </Button>
+          </FormControl>
+        </Grid>
+      </Grid>
 
-          Número:
-          <input
-            data-testid="customer_checkout__input-address-number"
-            type="text"
-            required
-            name="deliveryNumber"
-            value={ inputData.deliveryNumber }
-            onChange={ handleChange }
-          />
-        </label>
-        <button
-          data-testid="customer_checkout__button-submit-order"
-          onClick={ handleSubmit }
-          type="submit"
-        >
-          FINALIZAR PEDIDO
-        </button>
-      </form>
-    </div>
+    </Paper>
   );
 }
 

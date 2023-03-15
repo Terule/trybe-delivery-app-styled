@@ -1,3 +1,5 @@
+import { Box, Typography } from '@mui/material';
+import { Container } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
 import CheckoutTable from '../components/CheckoutTable';
 import DeliveryForm from '../components/DeliveryForm';
@@ -33,17 +35,51 @@ export default function Checkout() {
     { head: 'Remover Item' },
   ];
   return (
-    <div>
+    <Box
+      sx={ {
+        backgroundColor: '#f8f8f8',
+        margin: 0,
+        paddingTop: 15,
+        paddingBottom: 7,
+        minHeight: 750,
+      } }
+    >
       <NavBar />
-      <h3>Finalizar Pedido</h3>
-      <CheckoutTable
-        tableColumns={ tableColumns }
-        cart={ cart }
-        remove={ remove }
-        isCheckout
-        ROUTE={ ROUTE }
-      />
-      <DeliveryForm seller={ seller } cart={ cart } />
-    </div>
+      <Container>
+        <Typography
+          element="h1"
+          sx={ {
+            fontWeight: 700,
+            fontSize: 35,
+            alignSelf: 'center',
+            textDecoration: 'none',
+            marginBottom: 2,
+          } }
+        >
+          Finalizar pedido
+        </Typography>
+        <CheckoutTable
+          tableColumns={ tableColumns }
+          cart={ cart }
+          remove={ remove }
+          isCheckout
+          ROUTE={ ROUTE }
+        />
+        <Typography
+          element="h1"
+          sx={ {
+            fontWeight: 700,
+            fontSize: 35,
+            alignSelf: 'center',
+            textDecoration: 'none',
+            marginBottom: 2,
+            marginTop: 2,
+          } }
+        >
+          Detalhes e endereço de entrega
+        </Typography>
+        <DeliveryForm seller={ seller } cart={ cart } />
+      </Container>
+    </Box>
   );
 }

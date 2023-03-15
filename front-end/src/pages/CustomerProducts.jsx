@@ -1,12 +1,18 @@
+import {
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Box } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import ProductCard from '../components/ProductCard';
 import AppContext from '../context/AppContext';
 import { getProducts } from '../utils/fetchApi';
-
-const ROUTE = 'customer_products';
-const CHECKOUT_VALUE = 'checkout-bottom-value';
 
 function CustomerProducts() {
   const [productsData, setProductsData] = useState([]);
@@ -74,34 +80,91 @@ function CustomerProducts() {
   };
 
   return (
-    <div>
+    <Box
+      sx={ {
+        backgroundColor: '#f8f8f8',
+        margin: 0,
+        paddingTop: 15,
+        paddingBottom: 7,
+      } }
+    >
       <NavBar />
-      <div>
-        <button
-          type="button"
-          onClick={ onSubmit }
-          disabled={ isDisabled }
-          data-testid="customer_products__button-cart"
+      <Card
+        elevation={ 3 }
+        sx={ {
+          marginRight: '20px',
+          width: '300px',
+          position: 'fixed',
+          top: '120px',
+          left: '1575px',
+          right: '0',
+          zIndex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        } }
+      >
+        <CardContent
+          sx={ {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+          } }
         >
-          {'Ver Carrinho: R$ '}
-          <span
-            data-testid={ `${ROUTE}__${CHECKOUT_VALUE}` }
+          <Typography
+            sx={ {
+              fontWeight: 700,
+              fontSize: 35,
+              alignSelf: 'center',
+              textDecoration: 'none',
+            } }
           >
-            { total.toFixed(2).replace('.', ',') }
-          </span>
-
-        </button>
-      </div>
-      {productsData.map((product) => (
-        <ProductCard
-          key={ product.id }
-          product={ product }
-          minusClick={ minusClick }
-          plusClick={ plusClick }
-          handleChange={ handleChange }
-        />
-      ))}
-    </div>
+            Total:
+          </Typography>
+          <Typography
+            sx={ {
+              fontWeight: 700,
+              fontSize: 40,
+              alignSelf: 'center',
+              textDecoration: 'none',
+            } }
+          >
+            {`R$ ${total.toFixed(2).replace('.', ',')}`}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            type="button"
+            variant="contained"
+            size="large"
+            onClick={ onSubmit }
+            disabled={ isDisabled }
+            data-testid="customer_products__button-cart"
+            fullWidth
+            sx={ { fontWeight: 700 } }
+          >
+            Ver Carrinho
+          </Button>
+        </CardActions>
+      </Card>
+      <Container
+        sx={ {
+          display: 'flex',
+        } }
+      >
+        <Grid container spacing={ 2 }>
+          {productsData.map((product) => (
+            <ProductCard
+              key={ product.id }
+              product={ product }
+              minusClick={ minusClick }
+              plusClick={ plusClick }
+              handleChange={ handleChange }
+            />
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }
 

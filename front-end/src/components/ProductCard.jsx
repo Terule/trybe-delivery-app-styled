@@ -1,54 +1,58 @@
 import React from 'react';
 import { shape, number, string, func } from 'prop-types';
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  Grid,
+  IconButton,
+  TextField } from '@mui/material';
+import Remove from '@mui/icons-material/Remove';
+import Add from '@mui/icons-material/Add';
 // import { useHistory } from 'react-router-dom';
-
-const ROUTE = 'customer_products_';
-const CARD_TITLE = '_element-card-title';
-const CARD_PRICE = '_element-card-price';
-const CARD_IMAGE = '_img-card-bg-image';
-const CARD_ADD = '_button-card-add-item';
-const CARD_REMOVE = '_button-card-rm-item';
-const CARD_INPUT = '_input-card-quantity';
 
 function ProductCard({ product, minusClick, plusClick, handleChange }) {
   return (
-    <>
-      <div id={ product.id }>
-        <span
-          data-testid={ `${ROUTE}${CARD_PRICE}-${product.id}` }
-        >
-          {product.price.replace('.', ',')}
-        </span>
-        <img
-          src={ product.urlImage }
-          data-testid={ `${ROUTE}${CARD_IMAGE}-${product.id}` }
-          alt={ product.name }
+    <Grid item xs={ 4 }>
+      <Card
+        elevation={ 3 }
+        sx={ {
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '10px',
+        } }
+      >
+        <CardHeader
+          title={ product.name }
+          subheader={ `R$ ${product.price.replace('.', ',')}` }
         />
-      </div>
-      <div>
-        <span data-testid={ `${ROUTE}${CARD_TITLE}-${product.id}` }>{product.name}</span>
-        <button
-          type="button"
-          data-testid={ `${ROUTE}${CARD_REMOVE}-${product.id}` }
-          onClick={ () => minusClick(product.id) }
-        >
-          -
-        </button>
-        <input
-          type="text"
-          data-testid={ `${ROUTE}${CARD_INPUT}-${product.id}` }
-          value={ product.quantity }
-          onChange={ (e) => handleChange(e, product.id) }
+        <CardMedia
+          component="img"
+          image={ product.urlImage }
+          sx={ { height: 200, objectFit: 'contain' } }
         />
-        <button
-          type="button"
-          data-testid={ `${ROUTE}${CARD_ADD}-${product.id}` }
-          onClick={ () => plusClick(product.id) }
-        >
-          +
-        </button>
-      </div>
-    </>
+        <CardActions sx={ { alignSelf: 'center', marginTop: '10px' } }>
+          <IconButton
+            onClick={ () => minusClick(product.id) }
+          >
+            <Remove />
+          </IconButton>
+          <TextField
+            size="small"
+            value={ product.quantity }
+            onChange={ (e) => handleChange(e, product.id) }
+            sx={ { width: '50px', marginLeft: 1 } }
+            inputProps={ { style: { textAlign: 'center' } } }
+          />
+          <IconButton
+            onClick={ () => plusClick(product.id) }
+          >
+            <Add />
+          </IconButton>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }
 
