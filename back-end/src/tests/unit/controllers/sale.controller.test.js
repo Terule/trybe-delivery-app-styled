@@ -6,10 +6,12 @@ const tokenHandler = require('../../../utils/jwt');
 const { expect } = chai;
 chai.use(sinonChai);
 
+const jwt = require('jsonwebtoken');
+
 const saleController = require('../../../api/Controller/sale.controller');
 const saleService = require('../../../api/Service/sale.service');
 const { newSaleMock, productsOfNewSaleMock, newSaleSuccessfulRes, getSaleByIdSuccessfulRes, getAllSalesMock } = require('../mocks/sale.mock');
-const { tokenMock } = require('../mocks/token.mock');
+const { tokenMock, jwtVerifyMock } = require('../mocks/token.mock');
 // const InvalidToken = require('../../../utils/errors/invalidToken');
 
 describe('Sale Controller', async function () {
@@ -18,6 +20,7 @@ describe('Sale Controller', async function () {
     afterEach(sinon.restore);
 
     it('Cria uma nova venda com sucesso', async function () {
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
       const req = { headers: { authorization: tokenMock }, body: { saleData: newSaleMock, productsOfNewSaleMock } };
       const res = {};
       const next = sinon.stub();
@@ -42,6 +45,7 @@ describe('Sale Controller', async function () {
     afterEach(sinon.restore);
 
     it('Recupera uma nova venda pelo seu id com sucesso', async function () {
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
       const req = { headers: { authorization: tokenMock }, params: { id: 7 } };
       const res = {};
       const next = sinon.stub();
@@ -90,6 +94,7 @@ describe('Sale Controller', async function () {
     afterEach(sinon.restore);
 
     it('Atualiza uma venda com sucesso', async function () {
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
       const req = { headers: { authorization: tokenMock }, params: { id: 1 }, body: { status: 'Preparando'} };
       const res = {};
       const next = sinon.stub();

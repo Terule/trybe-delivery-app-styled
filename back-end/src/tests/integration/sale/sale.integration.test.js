@@ -3,8 +3,9 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { Sale } = require('../../../database/models')
 const app = require('../../../api/app');
+const jwt = require('jsonwebtoken');
 
-const { tokenMock } = require('../../unit/mocks/token.mock');
+const { tokenMock, jwtVerifyMock } = require('../../unit/mocks/token.mock');
 const { newSaleMock, productsOfNewSaleMock, newSaleSuccessfulRes, getSaleByIdSuccessfulRes, getAllSalesMock } = require('../../unit/mocks/sale.mock');
 
 
@@ -19,6 +20,7 @@ describe('Testes de integração que utilizam Sale', () => {
 
     it('É possível criar uma nova venda com sucesso', async () => {
       sinon.stub(Sale, 'create').resolves(newSaleSuccessfulRes);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await await chai.request(app).post('/sales').send({ saleData: newSaleMock, products: productsOfNewSaleMock }).set({ authorization: tokenMock});
 
@@ -28,6 +30,7 @@ describe('Testes de integração que utilizam Sale', () => {
 
     it('Não é possível É possível criar uma nova venda', async () => {
       sinon.stub(Sale, 'create').resolves(null);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await await chai.request(app).post('/sales').send({ saleData: newSaleMock, products: productsOfNewSaleMock }).set({ authorization: tokenMock});
 
@@ -41,6 +44,7 @@ describe('Testes de integração que utilizam Sale', () => {
 
     it('É possível buscar uma venda pelo id com sucesso', async () => {
       sinon.stub(Sale, 'findOne').resolves(getSaleByIdSuccessfulRes);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).get('/sales/7').set({ authorization: tokenMock});
       
@@ -50,6 +54,7 @@ describe('Testes de integração que utilizam Sale', () => {
 
     it('Não é possível buscar uma venda pelo id que não exista', async () => {
       sinon.stub(Sale, 'findOne').resolves(null);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).get('/sales/15').set({ authorization: tokenMock});
       
@@ -63,6 +68,7 @@ describe('Testes de integração que utilizam Sale', () => {
 
     it('É possível buscar de todas as vendas com sucesso', async () => {
       sinon.stub(Sale, 'findAll').resolves(getAllSalesMock);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).get('/customer/orders').set({ authorization: tokenMock});
       
@@ -86,6 +92,7 @@ describe('Testes de integração que utilizam Sale', () => {
     it('É possível buscar de todas as vendas com sucesso', async () => {
       sinon.stub(Sale, 'findOne').resolves(getSaleByIdSuccessfulRes);
       sinon.stub(Sale, 'update').resolves();
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).put('/sales/7').set({ authorization: tokenMock}).send({ status: 'Preparando' });
       
@@ -96,6 +103,7 @@ describe('Testes de integração que utilizam Sale', () => {
     it('Não é possível buscar uma venda pelo id que não exista', async () => {
       sinon.stub(Sale, 'findOne').resolves(null);
       sinon.stub(Sale, 'update').resolves();
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).put('/sales/15').set({ authorization: tokenMock}).send({ status: 'Preparando' });
       

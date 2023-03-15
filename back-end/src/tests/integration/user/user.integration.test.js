@@ -4,9 +4,9 @@ const chaiHttp = require('chai-http');
 const { User } = require('../../../database/models')
 const app = require('../../../api/app');
 
-// const jwt = require('../../../utils/jwt');
-const { findUserSuccessfulRes, customerEmail, customerPassword, registerUserSuccessfulReq, registerUserSuccessfulModelRes, registerUserAlreadyExistsReq, customerWrongEmail, getSellerSuccessfulModelRes} = require('../../unit/mocks/user.mock');
-const { tokenMock } = require('../../unit/mocks/token.mock');
+const jwt = require('jsonwebtoken');
+const { findUserSuccessfulRes, customerEmail, customerPassword, registerUserSuccessfulReq, registerUserSuccessfulModelRes, registerUserAlreadyExistsReq, customerWrongEmail, getSellerSuccessfulModelRes, getUsersMock} = require('../../unit/mocks/user.mock');
+const { tokenMock, jwtVerifyMock } = require('../../unit/mocks/token.mock');
 
 
 const { expect } = chai;
@@ -49,6 +49,27 @@ describe('Testes de integração que utilizam User', () => {
 
       expect(body).to.haveOwnProperty('token');
       expect(status).to.equal(201);
+    });
+
+    it('É possível realizar o registro de um usuário pelo admin', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+      sinon.stub(User, 'create').resolves(registerUserSuccessfulModelRes);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
+
+      const { body, status } = await chai.request(app).post('/admin/manage').send(registerUserSuccessfulReq);
+
+      expect(body).to.haveOwnProperty('token');
+      expect(status).to.equal(201);
+    });
+
+    it('Não é possível realizar o registro de um usuário que já existe pelo admin', async () => {
+      sinon.stub(User, 'findOne').resolves(findUserSuccessfulRes);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
+
+      const { body, status } = await chai.request(app).post('/admin/manage').send(registerUserAlreadyExistsReq);
+
+      expect(body).to.deep.equal({ message: 'Conflict' });
+      expect(status).to.equal(409);
     });
 
     it('Não é possível realizar o registro de um usuário que já existe', async () => {
@@ -107,6 +128,51 @@ describe('Testes de integração que utilizam User', () => {
 
       expect(body).to.deep.equal({ message: 'Server internal error' });
       expect(status).to.equal(500);
+    });
+  });
+
+  describe('Teste de integração para recuperar a lista de usuários', () => {
+    beforeEach(sinon.restore)
+
+    it('É possível recuperar recuperar a lista de usuários', async () => {
+      sinon.stub(User, 'findAll').resolves(getUsersMock);
+
+      const { body, status } = await chai.request(app).get('/admin/manage').send();
+
+      expect(body).to.deep.equal(getUsersMock);
+      expect(status).to.equal(200);
+    });
+
+    it('Não é possível recuperar a lista de usuários', async () => {
+      sinon.stub(User, 'findAll').resolves(null);
+
+      const { body, status } = await chai.request(app).get('/admin/manage').send();
+
+      expect(body).to.deep.equal({ message: 'Server internal error' });
+      expect(status).to.equal(500);
+    });
+  });
+
+  describe('Teste de integração para deletar um usuário', () => {
+    beforeEach(sinon.restore)
+
+    it('É possível deletar um usuário com sucesso', async () => {
+      sinon.stub(User, 'findOne').resolves(findUserSuccessfulRes);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
+
+      const { status } = await chai.request(app).delete('/admin/3').send();
+
+      expect(status).to.equal(204);
+    });
+
+    it('Não é possíveldeletar um usuário que não existe', async () => {
+      sinon.stub(User, 'findOne').resolves(null);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
+
+      const { body, status } = await chai.request(app).delete('/admin/4').send();
+
+      expect(body).to.deep.equal({ message: 'Not Found' });
+      expect(status).to.equal(404);
     });
   });
 });

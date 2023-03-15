@@ -9,8 +9,9 @@ chai.use(sinonChai);
 const productController = require('../../../api/Controller/product.controller');
 const productService = require('../../../api/Service/product.service');
 const { productsMock } = require('../mocks/product.mock');
-const { tokenMock } = require('../mocks/token.mock');
+const { tokenMock, jwtVerifyMock } = require('../mocks/token.mock');
 const InvalidToken = require('../../../utils/errors/invalidToken');
+const jwt = require('jsonwebtoken');
 
 describe('Product Controller', async function () {
   describe('Testes de produto', function () {
@@ -18,6 +19,7 @@ describe('Product Controller', async function () {
     afterEach(sinon.restore);
 
     it('Recupera todos os produtos existentes no Db', async function () {
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
       const req = { headers: { authorization: tokenMock } };
       const res = {};
       const next = sinon.stub();

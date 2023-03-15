@@ -65,6 +65,30 @@ const loginUserServiceSuccessfulRes = {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsIm5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJpZCI6MywiaWF0IjoxNjc4NDkwOTI0LCJleHAiOjE2NzkwOTU3MjR9.wfLqmYeClDe-UrVEEb81wbuTiOnxecX-UwEtrnmxuxQ"
 }
 
+const getUsersMock = [
+  {
+    "id": 2,
+    "name": "Fulana Pereira",
+    "email": "fulana@deliveryapp.com",
+    "password": "3c28d2b0881bf46457a853e0b07531c6",
+    "role": "seller"
+  },
+  {
+    "id": 3,
+    "name": "Cliente Zé Birita",
+    "email": "zebirita@email.com",
+    "password": "1c37466c159755ce1fa181bd247cb925",
+    "role": "customer"
+  },
+  {
+    "id": 4,
+    "name": "Cliente Teste",
+    "email": "teste@gmail.com",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "role": "customer"
+  }
+];
+
 const customerEmail = 'zebirita@email.com';
 const customerPassword = '$#zebirita#$';
 
@@ -74,4 +98,4 @@ const customerWrongPassword = '$#zebiri#$';
 module.exports = { 
   findUserSuccessfulRes, loginUserSuccessfulRes, customerEmail, 
   customerPassword, customerWrongEmail, customerWrongPassword, 
-  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes, loginUserServiceSuccessfulRes, registerUserAlreadyExistsReq };
+  registerUserSuccessfulReq, registerUserSuccessfulModelRes, getSellerSuccessfulModelRes, loginUserServiceSuccessfulRes, registerUserAlreadyExistsReq, getUsersMock };

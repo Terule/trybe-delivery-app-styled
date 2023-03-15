@@ -4,8 +4,9 @@ const chaiHttp = require('chai-http');
 const { Product } = require('../../../database/models')
 const app = require('../../../api/app');
 
-const { tokenMock } = require('../../unit/mocks/token.mock');
+const { tokenMock, jwtVerifyMock } = require('../../unit/mocks/token.mock');
 const { productsMock } = require('../../unit/mocks/product.mock');
+const jwt = require('jsonwebtoken');
 
 
 const { expect } = chai;
@@ -19,6 +20,7 @@ describe('Testes de integração que utilizam Product', () => {
 
     it('É possível recuperar todos os produtos existentes no Db', async () => {
       sinon.stub(Product, 'findAll').resolves(productsMock);
+      sinon.stub(jwt, 'verify').resolves(jwtVerifyMock);
 
       const { body, status } = await chai.request(app).get('/customer/products').set({ authorization: tokenMock});
 

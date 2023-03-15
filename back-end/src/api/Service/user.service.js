@@ -68,6 +68,8 @@ const ConflictError = require('../../utils/errors/conflictError');
         },
     });
 
+    if (!users) throw new Error('Server internal error');
+
     return users;
  };
 
