@@ -43,11 +43,7 @@ function NavBar() {
 
   const handleThemeChange = () => {
     setChecked((prev) => !prev);
-    if (checked) {
-      setTheme('light');
-    } else {
-      setTheme('dark');
-    }
+    if (checked) { setTheme('light'); } else { setTheme('dark'); }
   };
 
   return (
@@ -96,20 +92,12 @@ function NavBar() {
             <Menu
               id="menu-appbar"
               anchorEl={ anchorElNav }
-              anchorOrigin={ {
-                vertical: 'bottom',
-                horizontal: 'left',
-              } }
+              anchorOrigin={ { vertical: 'bottom', horizontal: 'left' } }
               keepMounted
-              transformOrigin={ {
-                vertical: 'top',
-                horizontal: 'left',
-              } }
+              transformOrigin={ { vertical: 'top', horizontal: 'left' } }
               open={ Boolean(anchorElNav) }
               onClose={ handleCloseNavMenu }
-              sx={ {
-                display: { xs: 'block', md: 'none' },
-              } }
+              sx={ { display: { xs: 'block', md: 'none' } } }
             >
               { user.role === 'customer' && (
                 <MenuItem
@@ -124,8 +112,7 @@ function NavBar() {
               { user.role === 'customer' && (
                 <MenuItem
                   onClick={ () => {
-                    handleCloseNavMenu();
-                    navigate('/customer/orders');
+                    handleCloseNavMenu(); navigate('/customer/orders');
                   } }
                 >
                   <Typography textAlign="center">Meus Pedidos</Typography>
@@ -202,26 +189,22 @@ function NavBar() {
             )}
           </Box>
           <Box sx={ { flexGrow: 0, display: 'flex', alignItems: 'center', gap: 3 } }>
-            <Box sx={ { display: 'flex', alignItems: 'center' } }>
-              <Icon>
-                <LightModeIcon fontSize="normal" />
-              </Icon>
-              <Tooltip title="Mudar tema">
-                <Switch
-                  checked={ checked }
-                  onChange={ handleThemeChange }
-                />
-              </Tooltip>
-              <Icon>
-                <DarkModeIcon fontSize="normal" />
-              </Icon>
-            </Box>
+            { user && (
+              <Box sx={ { display: 'flex', alignItems: 'center' } }>
+                <Icon>
+                  <LightModeIcon fontSize="normal" />
+                </Icon>
+                <Tooltip title="Mudar tema">
+                  <Switch checked={ checked } onChange={ handleThemeChange } />
+                </Tooltip>
+                <Icon>
+                  <DarkModeIcon fontSize="normal" />
+                </Icon>
+              </Box>
+            )}
             <Tooltip title="Abrir configurações">
               {user && (
-                <IconButton
-                  onClick={ handleOpenUserMenu }
-                  sx={ { p: 0 } }
-                >
+                <IconButton onClick={ handleOpenUserMenu } sx={ { p: 0 } }>
                   <Avatar alt={ user.name }>{getInitials(user.name)}</Avatar>
                 </IconButton>
               )}
@@ -230,36 +213,28 @@ function NavBar() {
               sx={ { mt: '45px' } }
               id="menu-appbar"
               anchorEl={ anchorElUser }
-              anchorOrigin={ {
-                vertical: 'top',
-                horizontal: 'right',
+              anchorOrigin={ { vertical: 'top', horizontal: 'right',
               } }
               keepMounted
-              transformOrigin={ {
-                vertical: 'top',
-                horizontal: 'right',
-              } }
+              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
               open={ Boolean(anchorElUser) }
               onClose={ handleCloseUserMenu }
             >
               {user && (
-                <MenuItem disabled color="black">
-                  <Typography>{user.name}</Typography>
-                </MenuItem>
-              )}
-              {user && (
-                <Divider />
-              )}
-              {user && (
-                <MenuItem
-                  onClick={ () => {
-                    handleCloseUserMenu();
-                    setUser(undefined);
-                    navigate('/login');
-                  } }
-                >
-                  <Typography textAlign="center">Sair</Typography>
-                </MenuItem>
+                <>
+                  <MenuItem disabled color="black">
+                    <Typography>{user.name}</Typography>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    onClick={ () => {
+                      handleCloseUserMenu(); setUser(undefined);
+                      navigate('/login');
+                    } }
+                  >
+                    <Typography textAlign="center">Sair</Typography>
+                  </MenuItem>
+                </>
               )}
             </Menu>
           </Box>
