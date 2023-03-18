@@ -13,6 +13,7 @@ function CommonOutlinedInput({
   error,
   onClick,
   onChange,
+  onKeyPress,
 }) {
   return (
     <OutlinedInput
@@ -41,6 +42,7 @@ function CommonOutlinedInput({
       type={ type }
       error={ error }
       onChange={ onChange }
+      onKeyPress={ onKeyPress }
     />
   );
 }
@@ -56,6 +58,7 @@ CommonOutlinedInput.propTypes = {
   error: bool,
   onClick: func,
   onChange: func,
+  onKeyPress: func,
 };
 
 CommonOutlinedInput.defaultProps = {
@@ -69,6 +72,7 @@ CommonOutlinedInput.defaultProps = {
   error: false,
   onClick: () => {},
   onChange: () => {},
+  onKeyPress: () => {},
 };
 
 export default CommonOutlinedInput;

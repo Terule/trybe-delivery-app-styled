@@ -1,9 +1,11 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CheckoutList from '../components/CheckoutList';
 import CheckoutTable from '../components/CheckoutTable';
 import NavBar from '../components/NavBar';
 import StatusBar from '../components/StatusBar';
+import StatusBarMobile from '../components/StatusBarMobile';
 import AppContext from '../context/AppContext';
 import { getSaleById, updateSaleStatus } from '../utils/fetchApi';
 
@@ -58,7 +60,7 @@ export default function OrderDetails() {
       sx={ {
         backgroundColor: '#f8f8f8',
         margin: 0,
-        paddingTop: 15,
+        paddingTop: 10,
         paddingBottom: 7,
         minHeight: 750,
       } }
@@ -69,7 +71,7 @@ export default function OrderDetails() {
           element="h1"
           sx={ {
             fontWeight: 700,
-            fontSize: 35,
+            fontSize: { xs: 25, md: 35 },
             alignSelf: 'center',
             textDecoration: 'none',
             marginBottom: 2,
@@ -80,22 +82,103 @@ export default function OrderDetails() {
         <Paper
           sx={ { padding: 3 } }
         >
-          { sale && (<StatusBar
-            sale={ sale }
-            user={ user }
-            handleStatus={ handleStatus }
-          />)}
           { sale && (
-            <CheckoutTable
-              tableColumns={ tableColumns }
-              cart={ sale.products }
-              remove={ remove }
-              isCheckout={ false }
-              ROUTE={ ROUTE }
-              totalValue={ +sale.totalPrice }
-            />
+            <>
+              <StatusBar
+                sale={ sale }
+                user={ user }
+                handleStatus={ handleStatus }
+              />
+              <StatusBarMobile
+                sale={ sale }
+                user={ user }
+                handleStatus={ handleStatus }
+              />
+            </>
           )}
+          { sale && (
+            <>
+              <CheckoutTable
+                tableColumns={ tableColumns }
+                cart={ sale.products }
+                remove={ remove }
+                isCheckout={ false }
+                ROUTE={ ROUTE }
+                totalValue={ +sale.totalPrice }
+              />
+              <CheckoutList
+                isCheckout={ false }
+                products={ sale.products }
+                remove={ remove }
+              />
+            </>
+          )}
+          <Box
+            sx={ {
+              display: { xs: 'flex', md: 'none' },
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              marginTop: 3,
+            } }
+          >
+            <Typography
+              element="div"
+              sx={ {
+                fontSize: { xs: 25, md: 35 },
+                marginRight: 3,
+              } }
+            >
+              Total
+            </Typography>
+            <Typography
+              element="div"
+              sx={ {
+                fontSize: { xs: 25, md: 35 },
+                textDecoration: 'none',
+              } }
+            >
+              { sale && `R$ ${sale.totalPrice.replace('.', ',')}` }
+            </Typography>
+          </Box>
         </Paper>
+        <Box>
+          <Typography
+            element="h1"
+            sx={ {
+              fontWeight: 700,
+              fontSize: { xs: 25, md: 35 },
+              alignSelf: 'center',
+              textDecoration: 'none',
+              marginBottom: 2,
+              marginTop: 2,
+            } }
+          >
+            Endereço de Entrega
+          </Typography>
+          <Paper
+            sx={ { padding: 3 } }
+          >
+            <Typography
+              sx={ {
+                fontSize: { xs: 20, md: 20 },
+                textDecoration: 'none',
+              } }
+            >
+              { 'Rua: ' }
+              { sale && sale.deliveryAddress }
+            </Typography>
+            <Typography
+              sx={ {
+                fontSize: { xs: 20, md: 20 },
+                textDecoration: 'none',
+              } }
+            >
+              { 'Número: ' }
+              { sale && sale.deliveryNumber }
+            </Typography>
+
+          </Paper>
+        </Box>
       </Container>
     </Box>
   );

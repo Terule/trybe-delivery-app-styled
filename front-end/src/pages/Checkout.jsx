@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { useContext, useEffect, useState } from 'react';
+import CheckoutList from '../components/CheckoutList';
 import CheckoutTable from '../components/CheckoutTable';
 import DeliveryForm from '../components/DeliveryForm';
 import NavBar from '../components/NavBar';
@@ -39,7 +40,7 @@ export default function Checkout() {
       sx={ {
         backgroundColor: '#f8f8f8',
         margin: 0,
-        paddingTop: 15,
+        paddingTop: 10,
         paddingBottom: 7,
         minHeight: 750,
       } }
@@ -50,7 +51,7 @@ export default function Checkout() {
           element="h1"
           sx={ {
             fontWeight: 700,
-            fontSize: 35,
+            fontSize: { xs: 25, md: 35 },
             alignSelf: 'center',
             textDecoration: 'none',
             marginBottom: 2,
@@ -65,11 +66,16 @@ export default function Checkout() {
           isCheckout
           ROUTE={ ROUTE }
         />
+        <CheckoutList
+          products={ cart }
+          remove={ remove }
+          isCheckout
+        />
         <Typography
           element="h1"
           sx={ {
             fontWeight: 700,
-            fontSize: 35,
+            fontSize: { xs: 25, md: 35 },
             alignSelf: 'center',
             textDecoration: 'none',
             marginBottom: 2,

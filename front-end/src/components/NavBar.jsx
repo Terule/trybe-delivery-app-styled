@@ -1,27 +1,22 @@
-import React, { useContext } from 'react';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Tooltip,
-  Typography } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { AppBar, Avatar, Box, Button, Container, Divider, Icon, IconButton, Menu,
+  MenuItem, Switch, Toolbar, Tooltip, Typography, useTheme } from '@mui/material';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import logo from '../assets/beer_logo.svg';
 
 function NavBar() {
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, setTheme } = useContext(AppContext);
+  const [checked, setChecked] = useState(
+    JSON.parse(localStorage.getItem('theme')) === 'dark',
+  );
+  const theme = useTheme();
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -46,6 +41,15 @@ function NavBar() {
     return initials.toUpperCase();
   };
 
+  const handleThemeChange = () => {
+    setChecked((prev) => !prev);
+    if (checked) {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  };
+
   return (
     <AppBar sx={ { width: '100%' } } color="primary">
       <Container maxWidth="xxl">
@@ -61,12 +65,12 @@ function NavBar() {
             noWrap
             component="a"
             href="/"
+            color={ theme.palette.mode === 'dark' ? 'primary' : 'white' }
             sx={ {
               mr: 3,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              color: 'inherit',
               textDecoration: 'none',
             } }
           >
@@ -80,8 +84,14 @@ function NavBar() {
               aria-haspopup="true"
               onClick={ handleOpenNavMenu }
               color="inherit"
+              disabled={ user.role === 'administrator' }
             >
-              {user.role && <MenuIcon />}
+              {user.role && <MenuIcon
+                style={ {
+                  color: theme.palette.mode === 'dark'
+                    ? theme.palette.primary.main : 'black',
+                } }
+              />}
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -144,13 +154,13 @@ function NavBar() {
             noWrap
             component="a"
             href=""
+            color={ theme.palette.mode === 'dark' ? 'primary' : 'white' }
             sx={ {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              color: 'inherit',
               textDecoration: 'none',
             } }
           >
@@ -191,10 +201,27 @@ function NavBar() {
               </Button>
             )}
           </Box>
-          <Box sx={ { flexGrow: 0 } }>
+          <Box sx={ { flexGrow: 0, display: 'flex', alignItems: 'center', gap: 3 } }>
+            <Box sx={ { display: 'flex', alignItems: 'center' } }>
+              <Icon>
+                <LightModeIcon fontSize="normal" />
+              </Icon>
+              <Tooltip title="Mudar tema">
+                <Switch
+                  checked={ checked }
+                  onChange={ handleThemeChange }
+                />
+              </Tooltip>
+              <Icon>
+                <DarkModeIcon fontSize="normal" />
+              </Icon>
+            </Box>
             <Tooltip title="Abrir configurações">
               {user && (
-                <IconButton onClick={ handleOpenUserMenu } sx={ { p: 0 } }>
+                <IconButton
+                  onClick={ handleOpenUserMenu }
+                  sx={ { p: 0 } }
+                >
                   <Avatar alt={ user.name }>{getInitials(user.name)}</Avatar>
                 </IconButton>
               )}

@@ -12,7 +12,6 @@ function Orders() {
   useEffect(() => {
     const fetchSales = async () => {
       const sales = await getAllSales();
-      console.log(sales);
       if (user.role === 'customer') {
         const orders = sales.filter((sale) => user.id === sale.userId);
         setClientOrders(orders);
@@ -47,11 +46,8 @@ function Orders() {
       </nav>
       <Box
         sx={ {
-          backgroundColor: '#f8f8f8',
-          margin: 0,
           paddingTop: 12,
-          paddingBottom: 7,
-          minHeight: 750,
+          paddingBottom: 3,
         } }
       >
         <Container maxWidth="xl">

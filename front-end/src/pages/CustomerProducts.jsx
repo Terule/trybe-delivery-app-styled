@@ -82,24 +82,21 @@ function CustomerProducts() {
   return (
     <Box
       sx={ {
-        backgroundColor: '#f8f8f8',
         margin: 0,
-        paddingTop: 15,
-        paddingBottom: 7,
+        paddingTop: 12,
+        paddingBottom: { xs: 13, md: 3 },
       } }
     >
       <NavBar />
       <Card
         elevation={ 3 }
         sx={ {
-          marginRight: '20px',
-          width: '300px',
           position: 'fixed',
-          top: '120px',
-          left: '1575px',
-          right: '0',
+          width: { xs: '100%', md: 300 },
+          top: { xs: 15, lg: 96 },
+          right: { xs: 15, lg: 15 },
           zIndex: 1,
-          display: 'flex',
+          display: { xs: 'none', lg: 'flex' },
           flexDirection: 'column',
         } }
       >
@@ -164,6 +161,39 @@ function CustomerProducts() {
           ))}
         </Grid>
       </Container>
+      {!isDisabled && (
+        <Button
+          type="button"
+          variant="contained"
+          size="large"
+          onClick={ onSubmit }
+          disabled={ isDisabled }
+          data-testid="customer_products__button-cart"
+          fullWidth
+          sx={ {
+            fontWeight: 700,
+            position: 'fixed',
+            bottom: { xs: 15, lg: 0 },
+            right: { xs: 15, lg: 0 },
+            zIndex: 1,
+            width: 'fit-content',
+            display: { xs: 'flex', lg: 'none' },
+            flexDirection: 'column',
+          } }
+        >
+          Ver Carrinho
+          <Typography
+            sx={ {
+              fontWeight: 700,
+              fontSize: 20,
+              alignSelf: 'center',
+              textDecoration: 'none',
+            } }
+          >
+            {`R$ ${total.toFixed(2).replace('.', ',')}`}
+          </Typography>
+        </Button>
+      )}
     </Box>
   );
 }

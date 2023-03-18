@@ -58,7 +58,7 @@ function ClientOrder({
   const navigate = useNavigate();
   const ROUTE = getRoute(isSeller).route;
   return (
-    <Grid item xs={ 4 }>
+    <Grid item lg={ 4 } sm={ 6 } xs={ 12 }>
       <Card sx={ { display: 'flex', flexDirection: 'column' } }>
         <Box sx={ { display: 'flex' } }>
           <CardActionArea
@@ -107,7 +107,13 @@ function ClientOrder({
           </CardActionArea>
           { isSeller && (
             <CardActions>
-              <IconButton onClick={ () => setShow((s) => !s) }>
+              <IconButton
+                sx={ {
+                  transform: show ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                } }
+                onClick={ () => setShow((s) => !s) }
+              >
                 <ExpandMoreIcon />
               </IconButton>
             </CardActions>

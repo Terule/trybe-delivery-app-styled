@@ -7,6 +7,7 @@ import {
   Link,
   CardMedia,
   CardHeader,
+  useTheme,
 } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import Visibility from '@mui/icons-material/Visibility';
@@ -23,6 +24,7 @@ function Login() {
   const { user, setUser } = useContext(AppContext);
   const [input, setInput] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState({ isError: false, message: '' });
+  const theme = useTheme();
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -108,7 +110,9 @@ function Login() {
       sx={ {
         display: 'flex',
         justifyContent: 'center',
-        padding: '80px 0 0 0' } }
+        padding: '80px 0 0 0',
+      } }
+
     >
       <Card
         sx={ {
@@ -126,7 +130,10 @@ function Login() {
         />
         <CardHeader
           title="Entrar"
-          sx={ { alignSelf: 'center' } }
+          sx={ {
+            alignSelf: 'center',
+            color: theme.palette.primary.main,
+            fontWeight: theme.typography.fontWeightBold } }
         />
         <OutlinedInput
           onChange={ onChangeHandler }
@@ -135,7 +142,7 @@ function Login() {
           type="email"
           error={ errorMessage.isError }
           sx={ { margin: '5px 0' } }
-          iconStart={ <EmailIcon /> }
+          iconStart={ <EmailIcon style={ { color: theme.palette.primary.main } } /> }
           placeholder="Email"
           size="small"
         />
@@ -147,12 +154,18 @@ function Login() {
           error={ errorMessage.isError }
           sx={ errorMessage.isError
             ? { margin: '5px 0 0 0' } : { margin: '5px 0 10px 0' } }
-          iconStart={ <Key /> }
-          iconEnd={ showPassword ? <VisibilityOff /> : <Visibility /> }
+          iconStart={ <Key style={ { color: theme.palette.primary.main } } /> }
+          iconEnd={ showPassword
+            ? <VisibilityOff style={ { color: theme.palette.primary.main } } />
+            : <Visibility style={ { color: theme.palette.primary.main } } /> }
           onClick={ handleClickShowPassword }
           placeholder="Senha"
           size="small"
-
+          onKeyPress={ (e) => {
+            if (e.key === 'Enter') {
+              handleSubmit(e);
+            }
+          } }
         />
         {errorMessage.isError && (
           <Typography

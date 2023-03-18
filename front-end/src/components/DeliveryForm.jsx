@@ -52,13 +52,12 @@ export default function DeliveryForm({ seller, cart }) {
     <Paper
       sx={ {
         padding: '10px',
-        height: 'fit-content',
       } }
     >
-      <Grid container spacing={ 3 }>
-        <Grid item xs={ 4 }>
+      <Grid container spacing={ 2 }>
+        <Grid item xs={ 12 } md={ 3 }>
           <FormControl
-            sx={ { width: 350 } }
+            sx={ { width: { xs: '100%', md: 250 } } }
           >
             <InputLabel
               htmlFor="sellerName"
@@ -95,10 +94,12 @@ export default function DeliveryForm({ seller, cart }) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={ 3 }>
-          <FormControl>
+        <Grid item xs={ 12 } md={ 3 }>
+          <FormControl
+            sx={ { width: { xs: '100%', md: 250 } } }
+          >
             <TextField
-              sx={ { width: 250 } }
+              sx={ { width: { xs: '100%', md: 250 } } }
               data-testid="customer_checkout__input-address"
               variant="outlined"
               label="Endereço"
@@ -112,10 +113,11 @@ export default function DeliveryForm({ seller, cart }) {
             />
           </FormControl>
         </Grid>
-        <Grid item xs={ 3 }>
-          <FormControl>
+        <Grid item xs={ 12 } md={ 3 }>
+          <FormControl
+            sx={ { width: { xs: '100%', md: 250 } } }
+          >
             <TextField
-              sx={ { width: 250 } }
               data-testid="customer_checkout__input-address-number"
               type="text"
               size="small"
@@ -127,9 +129,10 @@ export default function DeliveryForm({ seller, cart }) {
             />
           </FormControl>
         </Grid>
-        <Grid item s={ 3 }>
-
-          <FormControl>
+        <Grid item xs={ 12 } md={ 3 }>
+          <FormControl
+            sx={ { width: { xs: '100%', md: 250 } } }
+          >
             <Button
               data-testid="customer_checkout__button-submit-order"
               onClick={ handleSubmit }

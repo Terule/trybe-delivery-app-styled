@@ -29,7 +29,7 @@ function StatusBar({ sale, user, handleStatus }) {
   return (
     <Box
       sx={ {
-        display: 'flex',
+        display: { xs: 'none', lg: 'flex' },
         alignItems: 'center',
         justifyContent: 'space-between',
         marginBottom: 3,
@@ -43,12 +43,12 @@ function StatusBar({ sale, user, handleStatus }) {
           padding: 1,
         } }
       >
-        <Typography sx={ { fontSize: 18 } }>
-          {sale && 'PEDIDO Nº'}
+        <Typography sx={ { fontSize: { xs: 14, lg: 18 } } }>
+          {sale && 'PEDIDO'}
         </Typography>
 
-        <Typography sx={ { fontSize: 18 } }>
-          {sale && `${sale.id}`}
+        <Typography sx={ { fontSize: { xs: 14, lg: 18 } } }>
+          {sale && `#${sale.id}`}
         </Typography>
       </Box>
 
@@ -61,11 +61,11 @@ function StatusBar({ sale, user, handleStatus }) {
             padding: 1,
           } }
         >
-          <Typography sx={ { fontSize: 18 } }>
+          <Typography sx={ { fontSize: { xs: 14, lg: 18 } } }>
             {sale && 'VENDEDOR(A)'}
           </Typography>
 
-          <Typography sx={ { fontSize: 18 } }>
+          <Typography sx={ { xs: 14, lg: 18 } }>
             {sale && `${sale.seller.name}`}
           </Typography>
         </Box>
@@ -79,11 +79,11 @@ function StatusBar({ sale, user, handleStatus }) {
           padding: 1,
         } }
       >
-        <Typography sx={ { fontSize: 18 } }>
+        <Typography sx={ { fontSize: { xs: 14, lg: 18 } } }>
           {sale && 'DATA DA VENDA'}
         </Typography>
 
-        <Typography sx={ { fontSize: 18 } }>
+        <Typography sx={ { fontSize: { xs: 14, lg: 18 } } }>
           {sale && getDate(sale.saleDate)}
         </Typography>
       </Box>
@@ -91,7 +91,7 @@ function StatusBar({ sale, user, handleStatus }) {
         label={ sale && sale.status }
         color={ defineColor(sale.status) }
         size="small"
-        sx={ { width: 130, fontSize: 14 } }
+        sx={ { width: 130, fontSize: { xs: 14, lg: 14 } } }
       />
       { sale && user.role === 'seller' ? (
         <>

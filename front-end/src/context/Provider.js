@@ -8,28 +8,39 @@ function Provider({ children }) {
     'user',
     JSON.parse(localStorage.getItem('user')) || undefined,
   );
+  const [theme, setTheme] = usePersistState(
+    'theme',
+    localStorage.getItem('theme') || 'light',
+  );
   const [cart, setCart] = usePersistState('cart', []);
   const [seller, setSeller] = usePersistState('seller', []);
 
   const contextValue = useMemo(
     () => (
-      { user,
+      {
+        user,
         setUser,
         cart,
         setCart,
         seller,
-        setSeller }),
+        setSeller,
+        theme,
+        setTheme,
+      }),
     [setUser,
       user,
       cart,
       setCart,
       seller,
-      setSeller],
+      setSeller,
+      theme,
+      setTheme,
+    ],
   );
 
   return (
     <AppContext.Provider value={ contextValue }>
-      { children }
+      {children}
     </AppContext.Provider>
   );
 }
