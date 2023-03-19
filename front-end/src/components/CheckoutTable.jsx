@@ -16,6 +16,11 @@ const ELEMENT = 'element-order-table';
 const MAX_COL = 4;
 const MIN_COL = 3;
 
+/**
+ *
+ * @param {*} param0
+ * @returns
+ */
 export default function CheckoutTable({
   cart, remove, isCheckout, ROUTE, totalValue }) {
   const total = cart.reduce((acc, product) => {
