@@ -37,17 +37,25 @@ function CheckoutList({ products, isCheckout, remove }) {
                     {`Valor unitário: R$ ${product.price}`}
                   </Typography>
                   <br />
-                  <Typography
-                    sx={ { display: 'inline' } }
-                    component="span"
-                    variant="body2"
-                    color="text.primary"
-                  >
-                    {`Quantidade: ${product.SaleProduct.quantity}`}
-                  </Typography>
-                  <br />
-                  {`Sub-Total: ${(product.SaleProduct.quantity * product.price)
-                    .toFixed(2)}`}
+                  {products.length > 0 && (
+                    <>
+                      <Typography
+                        sx={ { display: 'inline' } }
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {`Quantidade: ${isCheckout ? product.quantity : product.SaleProduct.quantity}`}
+                      </Typography>
+                      <br />
+                      {`Sub-Total: ${(isCheckout
+                        ? `R$ ${(product.price * product.quantity)
+                          .toFixed(2).replace('.', ',')}`
+                        : `R$ ${(product.price * product.SaleProduct.quantity)
+                          .toFixed(2).replace('.', ',')}`)
+                      }`}
+                    </>
+                  )}
                 </>
               )}
             >

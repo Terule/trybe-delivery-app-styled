@@ -12,7 +12,7 @@ function Provider({ children }) {
     'theme',
     localStorage.getItem('theme') || 'light',
   );
-  const [cart, setCart] = usePersistState('cart', []);
+  const [cart, setCart] = usePersistState('cart', JSON.parse(localStorage.getItem('cart')));
   const [seller, setSeller] = usePersistState('seller', []);
 
   const contextValue = useMemo(
@@ -39,7 +39,7 @@ function Provider({ children }) {
   );
 
   return (
-    <AppContext.Provider value={ contextValue }>
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );

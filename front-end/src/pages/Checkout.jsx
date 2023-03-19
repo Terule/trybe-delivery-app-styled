@@ -84,7 +84,9 @@ export default function Checkout() {
         >
           Detalhes e endereço de entrega
         </Typography>
-        <DeliveryForm seller={ seller } cart={ cart } />
+        {cart && (
+          <DeliveryForm seller={ seller } cart={ cart } />
+        )}
       </Container>
     </Box>
   );
