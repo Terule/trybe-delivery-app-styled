@@ -70,6 +70,7 @@ function RegisterForm() {
     const result = await createUser({
       email, password, name, role,
     });
+    console.log(result);
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Email já cadastrado' });
     } else {
