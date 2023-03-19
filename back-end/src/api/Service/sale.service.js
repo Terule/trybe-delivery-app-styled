@@ -3,28 +3,28 @@ const NotFoundError = require('../../utils/errors/notFoundError');
 
 const newSale = async (
   { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber }, products) => {
-   const sale = await Sale.create({
+  const sale = await Sale.create({
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente',
-   });
-   if (!sale) throw new Error('Server internal error');
-   products.forEach(async (product) => {
-      await SaleProduct.create(
-        { saleId: sale.id, productId: product.id, quantity: product.quantity },
-      );
-   });
-   return sale.id;
+  });
+  if (!sale) throw new Error('Server internal error');
+  products.forEach(async (product) => {
+    await SaleProduct.create(
+      { saleId: sale.id, productId: product.id, quantity: product.quantity },
+    );
+  });
+  return sale.id;
 };
 
 const getSaleById = async (id) => {
-    const sale = await Sale.findOne({
-      where: { id },
-      include: [
-        { model: Product, as: 'products', through: { attributes: ['quantity'] } },
-        { model: User, as: 'seller', attributes: ['name'] },
-      ],
-    });
-    if (!sale) {
-      throw new NotFoundError('Not Found');
+  const sale = await Sale.findOne({
+    where: { id },
+    include: [
+      { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+      { model: User, as: 'seller', attributes: ['name'] },
+    ],
+  });
+  if (!sale) {
+    throw new NotFoundError('Not Found');
   }
   return sale.dataValues;
 };

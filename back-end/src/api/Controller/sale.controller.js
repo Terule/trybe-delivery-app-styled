@@ -10,7 +10,7 @@ const newSale = async (req, res, next) => {
     const sale = await saleService.newSale(
       { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber },
       products,
-      );
+    );
     return res.status(201).json(sale);
   } catch (error) {
     next(error);
@@ -31,11 +31,11 @@ const getSaleById = async (req, res, next) => {
 
 const getAllSales = async (req, res, next) => {
   try {
-      const sales = await saleService.getAllSales();
-      return res.status(200).json(sales);
+    const sales = await saleService.getAllSales();
+    return res.status(200).json(sales);
   } catch (error) {
-      next(error);
-  } 
+    next(error);
+  }
 };
 
 // const getSaleBySellerId = async (req, res, next) => {
@@ -62,8 +62,8 @@ const updateSaleStatus = async (req, res, next) => {
 };
 
 module.exports = {
-    newSale,
-    getAllSales,
-    getSaleById,
-    updateSaleStatus,
+  newSale,
+  getAllSales,
+  getSaleById,
+  updateSaleStatus,
 };

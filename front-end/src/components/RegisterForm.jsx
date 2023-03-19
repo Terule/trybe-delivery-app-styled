@@ -63,10 +63,9 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, name } = registerInputs;
+    const { email, password, name, role } = registerInputs;
 
     const result = await createUser({ email, password, name, role });
-    console.log(result);
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Email já cadastrado' });
     } else {
@@ -88,7 +87,6 @@ function RegisterForm() {
     const { email, password, name, role } = registerInputs;
 
     const result = await createUserByAdmin(token, { email, password, name, role });
-    console.log(result);
     if (user && user.role === 'administrator' && result.message) {
       return setErrorMessage({ isError: true, message: 'Email já cadastrado' });
     }
@@ -191,7 +189,7 @@ function RegisterForm() {
       <CommonButton
         disabled={ validateInputs() }
         onClick={ user && user.role === 'Administrator'
-          ? handleSubmit : handleSubmitAdmin }
+          ? handleSubmitAdmin : handleSubmit }
         marginTop="20px"
       >
         Registrar

@@ -1,9 +1,9 @@
 const Router = require('express');
 const { newSale,
-         getAllSales,
-         getSaleById,
-         updateSaleStatus,
-      } = require('../Controller/sale.controller');
+  getAllSales,
+  getSaleById,
+  updateSaleStatus,
+} = require('../Controller/sale.controller');
 
 const route = Router();
 
