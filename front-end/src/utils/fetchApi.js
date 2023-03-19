@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const BASE_URL = `${process.env.REACT_APP_HOSTNAME}:${process.env.REACT_APP_BACKEND_PORT}`;
+const HOST = process.env.REACT_APP_HOSTNAME || 'localhost';
+const PORT = process.env.REACT_APP_BACKEND_PORT || 3001;
+const PROTOCOL = process.env.REACT_APP_PROTOCOL || 'http';
+
+const BASE_URL = `${PROTOCOL}://${HOST}:${PORT}`;
 
 const api = axios.create({
   baseURL: BASE_URL,
