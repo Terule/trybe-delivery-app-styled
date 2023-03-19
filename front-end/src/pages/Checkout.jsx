@@ -38,7 +38,6 @@ export default function Checkout() {
   return (
     <Box
       sx={ {
-        backgroundColor: '#f8f8f8',
         margin: 0,
         paddingTop: 10,
         paddingBottom: 7,

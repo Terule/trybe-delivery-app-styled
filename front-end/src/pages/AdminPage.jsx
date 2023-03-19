@@ -27,7 +27,6 @@ function AdminPage() {
   return (
     <Box
       sx={ {
-        backgroundColor: '#f8f8f8',
         margin: 0,
         paddingTop: 12,
         paddingBottom: 7,
