@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { AppBar, Avatar, Box, Button, Container, Divider, Icon, IconButton, Menu,
-  MenuItem, Switch, Toolbar, Tooltip, Typography, useTheme } from '@mui/material';
+import {
+  AppBar, Avatar, Box, Button, Container, Divider, Icon, IconButton, Menu,
+  MenuItem, Switch, Toolbar, Tooltip, Typography, useTheme,
+} from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -47,12 +49,12 @@ function NavBar() {
   };
 
   return (
-    <AppBar sx={ { width: '100%' } } color="primary">
+    <AppBar sx={{ width: '100%' }} color="primary">
       <Container maxWidth="xxl">
         <Toolbar disableGutters>
           <Box
             component="img"
-            sx={ { display: { xs: 'none', md: 'flex' }, mr: 2, width: 50 } }
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 2, width: 50 }}
             alt="logo"
             src={ logo }
           />
@@ -62,17 +64,17 @@ function NavBar() {
             component="a"
             href="/"
             color={ theme.palette.mode === 'dark' ? 'primary' : 'white' }
-            sx={ {
+            sx={{
               mr: 3,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
               textDecoration: 'none',
-            } }
+            }}
           >
             Breja!
           </Typography>
-          <Box sx={ { flexGrow: 1, display: { xs: 'flex', md: 'none' } } }>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -82,22 +84,24 @@ function NavBar() {
               color="inherit"
               disabled={ user.role === 'administrator' }
             >
-              {user.role && <MenuIcon
-                style={ {
+              { user.role && (
+              <MenuIcon
+                style={{
                   color: theme.palette.mode === 'dark'
                     ? theme.palette.primary.main : 'black',
-                } }
-              />}
+                }}
+              />
+              ) }
             </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={ anchorElNav }
-              anchorOrigin={ { vertical: 'bottom', horizontal: 'left' } }
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
               keepMounted
-              transformOrigin={ { vertical: 'top', horizontal: 'left' } }
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
               open={ Boolean(anchorElNav) }
               onClose={ handleCloseNavMenu }
-              sx={ { display: { xs: 'block', md: 'none' } } }
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               { user.role === 'customer' && (
                 <MenuItem
@@ -108,7 +112,7 @@ function NavBar() {
                 >
                   <Typography textAlign="center">Produtos</Typography>
                 </MenuItem>
-              )}
+              ) }
               { user.role === 'customer' && (
                 <MenuItem
                   onClick={ () => {
@@ -117,7 +121,7 @@ function NavBar() {
                 >
                   <Typography textAlign="center">Meus Pedidos</Typography>
                 </MenuItem>
-              )}
+              ) }
               { user.role === 'seller' && (
                 <MenuItem
                   onClick={ () => {
@@ -127,12 +131,12 @@ function NavBar() {
                 >
                   <Typography textAlign="center">Pedidos</Typography>
                 </MenuItem>
-              )}
+              ) }
             </Menu>
           </Box>
           <Box
             component="img"
-            sx={ { display: { xs: 'flex', md: 'none' }, mr: 1, width: 50 } }
+            sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: 50 }}
             alt="logo"
             src={ logo }
           />
@@ -142,55 +146,58 @@ function NavBar() {
             component="a"
             href=""
             color={ theme.palette.mode === 'dark' ? 'primary' : 'white' }
-            sx={ {
+            sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
               textDecoration: 'none',
-            } }
+            }}
           >
             Breja!
           </Typography>
-          <Box sx={ { flexGrow: 1, display: { xs: 'none', md: 'flex' } } }>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             { user.role === 'customer' && (
               <Button
                 onClick={ () => {
                   handleCloseNavMenu();
                   navigate('/customer/products');
                 } }
-                sx={ { my: 2, color: 'white', display: 'block' } }
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Produtos
               </Button>
-            )}
+            ) }
             { user.role === 'customer' && (
               <Button
                 onClick={ () => {
                   handleCloseNavMenu();
                   navigate('/customer/orders');
                 } }
-                sx={ { my: 2, color: 'white', display: 'block' } }
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Meus Pedidos
               </Button>
-            )}
+            ) }
             { user.role === 'seller' && (
               <Button
                 onClick={ () => {
                   handleCloseNavMenu();
                   navigate('/seller/orders');
                 } }
-                sx={ { my: 2, color: 'white', display: 'block' } }
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Pedidos
               </Button>
-            )}
+            ) }
           </Box>
-          <Box sx={ { flexGrow: 0, display: 'flex', alignItems: 'center', gap: 3 } }>
+          <Box sx={{
+            flexGrow: 0, display: 'flex', alignItems: 'center', gap: 3,
+          }}
+          >
             { user && (
-              <Box sx={ { display: 'flex', alignItems: 'center' } }>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Icon>
                   <LightModeIcon fontSize="normal" />
                 </Icon>
@@ -201,29 +208,28 @@ function NavBar() {
                   <DarkModeIcon fontSize="normal" />
                 </Icon>
               </Box>
-            )}
+            ) }
             <Tooltip title="Abrir configurações">
-              {user && (
-                <IconButton onClick={ handleOpenUserMenu } sx={ { p: 0 } }>
-                  <Avatar alt={ user.name }>{getInitials(user.name)}</Avatar>
+              { user && (
+                <IconButton onClick={ handleOpenUserMenu } sx={{ p: 0 }}>
+                  <Avatar alt={ user.name }>{ getInitials(user.name) }</Avatar>
                 </IconButton>
-              )}
+              ) }
             </Tooltip>
-            {user && (
+            { user && (
               <Menu
-                sx={ { mt: '45px' } }
+                sx={{ mt: '45px' }}
                 id="menu-appbar"
                 anchorEl={ anchorElUser }
-                anchorOrigin={ { vertical: 'top', horizontal: 'right',
-                } }
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 keepMounted
-                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={ Boolean(anchorElUser) }
                 onClose={ handleCloseUserMenu }
               >
 
                 <MenuItem disabled color="black">
-                  <Typography>{user.name}</Typography>
+                  <Typography>{ user.name }</Typography>
                 </MenuItem>
                 <Divider />
                 <MenuItem
@@ -235,7 +241,7 @@ function NavBar() {
                   <Typography textAlign="center">Sair</Typography>
                 </MenuItem>
               </Menu>
-            )}
+            ) }
           </Box>
         </Toolbar>
       </Container>

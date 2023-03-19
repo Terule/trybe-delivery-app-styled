@@ -5,7 +5,7 @@ const verifyToken = (token) => {
     const payload = jwt(token);
     return payload;
   } catch (e) {
-    throw new InvalidToken('Invalid token');
+    throw new Error('Invalid token');
   }
 };
 

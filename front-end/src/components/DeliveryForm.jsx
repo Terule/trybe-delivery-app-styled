@@ -1,9 +1,9 @@
+import React, { useContext, useState } from 'react';
 import { Button,
   FormControl,
   Grid,
   InputLabel, MenuItem, Paper, Select, TextField } from '@mui/material';
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../context/AppContext';
 import { newSale } from '../utils/fetchApi';

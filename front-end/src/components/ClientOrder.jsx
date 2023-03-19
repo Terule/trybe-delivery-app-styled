@@ -44,14 +44,14 @@ function ClientOrder({
 
   const defineColor = (statusString) => {
     switch (statusString) {
-    case 'Preparando':
-      return 'warning';
-    case EM_TRANSITO:
-      return 'info';
-    case 'Entregue':
-      return 'success';
-    default:
-      return 'error';
+      case 'Preparando':
+        return 'warning';
+      case EM_TRANSITO:
+        return 'info';
+      case 'Entregue':
+        return 'success';
+      default:
+        return 'error';
     }
   };
 
@@ -161,8 +161,8 @@ function ClientOrder({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {products.map((item, index) => (
-                    <TableRow key={ index }>
+                  {products.map((item) => (
+                    <TableRow key={ item.name }>
                       <TableCell>{item.name}</TableCell>
                       <TableCell align="right">{item.SaleProduct.quantity}</TableCell>
                     </TableRow>))}

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider } from '@mui/system';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CustomerProducts from './pages/CustomerProducts';

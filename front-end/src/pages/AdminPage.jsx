@@ -6,7 +6,7 @@ import RegisterForm from '../components/RegisterForm';
 import UserList from '../components/UserList';
 import UsersTable from '../components/UsersTable';
 import AppContext from '../context/AppContext';
-import { getUsers } from '../utils/fetchApi';
+import { deleteUser, getUsers } from '../utils/fetchApi';
 
 function AdminPage() {
   const [users, setUsers] = useState([]);

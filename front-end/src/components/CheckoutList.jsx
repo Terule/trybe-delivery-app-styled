@@ -26,7 +26,7 @@ function CheckoutList({ products, isCheckout, remove }) {
             </ListItemAvatar>
             <ListItemText
               primary={ product.name }
-              secondary={
+              secondary={(
                 <>
                   <Typography
                     sx={ { display: 'inline' } }
@@ -49,7 +49,7 @@ function CheckoutList({ products, isCheckout, remove }) {
                   {`Sub-Total: ${(product.SaleProduct.quantity * product.price)
                     .toFixed(2)}`}
                 </>
-              }
+              )}
             >
               {product.name}
             </ListItemText>

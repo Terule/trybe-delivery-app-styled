@@ -14,14 +14,14 @@ function StatusBarMobile({ sale, user, handleStatus }) {
   };
   const defineColor = (status) => {
     switch (status) {
-    case 'Preparando':
-      return 'warning';
-    case EM_TRANSITO:
-      return 'info';
-    case 'Entregue':
-      return 'success';
-    default:
-      return 'error';
+      case 'Preparando':
+        return 'warning';
+      case EM_TRANSITO:
+        return 'info';
+      case 'Entregue':
+        return 'success';
+      default:
+        return 'error';
     }
   };
 
@@ -31,12 +31,12 @@ function StatusBarMobile({ sale, user, handleStatus }) {
     }
     if (user.role === 'seller') {
       switch (status) {
-      case 'Pendente':
-        return false;
-      case 'Preparando':
-        return false;
-      default:
-        return true;
+        case 'Pendente':
+          return false;
+        case 'Preparando':
+          return false;
+        default:
+          return true;
       }
     }
   };
@@ -45,12 +45,12 @@ function StatusBarMobile({ sale, user, handleStatus }) {
     if (user.role === 'customer' && sale.status === EM_TRANSITO) return true;
     if (user.role === 'seller') {
       switch (sale.status) {
-      case 'Pendente':
-        return true;
-      case 'Preparando':
-        return true;
-      default:
-        return false;
+        case 'Pendente':
+          return true;
+        case 'Preparando':
+          return true;
+        default:
+          return false;
       }
     }
   };
@@ -105,14 +105,14 @@ function StatusBarMobile({ sale, user, handleStatus }) {
             }
             if (user.role === 'seller') {
               switch (sale.status) {
-              case 'Pendente':
-                handleStatus('Preparando');
-                break;
-              case 'Preparando':
-                handleStatus(EM_TRANSITO);
-                break;
-              default:
-                break;
+                case 'Pendente':
+                  handleStatus('Preparando');
+                  break;
+                case 'Preparando':
+                  handleStatus(EM_TRANSITO);
+                  break;
+                default:
+                  break;
               }
             }
           } }

@@ -9,6 +9,7 @@ import {
   TableRow,
   Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
+import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ELEMENT = 'element-order-table';

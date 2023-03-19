@@ -15,14 +15,14 @@ function StatusBar({ sale, user, handleStatus }) {
 
   const defineColor = (status) => {
     switch (status) {
-    case 'Preparando':
-      return 'warning';
-    case EM_TRANSITO:
-      return 'info';
-    case 'Entregue':
-      return 'success';
-    default:
-      return 'error';
+      case 'Preparando':
+        return 'warning';
+      case EM_TRANSITO:
+        return 'info';
+      case 'Entregue':
+        return 'success';
+      default:
+        return 'error';
     }
   };
 

@@ -1,5 +1,5 @@
 import { Box, Container, Paper, Typography } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckoutList from '../components/CheckoutList';
 import CheckoutTable from '../components/CheckoutTable';
@@ -28,7 +28,7 @@ export default function OrderDetails() {
   const ROUTE = getRoute(user.role).route;
 
   const remove = () => {
-    console.log();
+    console.error();
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function OrderDetails() {
   const handleStatus = async (status) => {
     const result = await updateSaleStatus({ id, status, token: user.token });
     if (result.message) {
-      console.log(result.message);
+      console.error(result.message);
     }
     setSale({ ...sale, status });
   };

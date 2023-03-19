@@ -63,9 +63,13 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password, name, role } = registerInputs;
+    const {
+      email, password, name, role,
+    } = registerInputs;
 
-    const result = await createUser({ email, password, name, role });
+    const result = await createUser({
+      email, password, name, role,
+    });
     if (result.message) {
       setErrorMessage({ isError: true, message: 'Email já cadastrado' });
     } else {
@@ -84,9 +88,13 @@ function RegisterForm() {
   const handleSubmitAdmin = async (e) => {
     e.preventDefault();
     const { token } = user;
-    const { email, password, name, role } = registerInputs;
+    const {
+      email, password, name, role,
+    } = registerInputs;
 
-    const result = await createUserByAdmin(token, { email, password, name, role });
+    const result = await createUserByAdmin(token, {
+      email, password, name, role,
+    });
     if (user && user.role === 'administrator' && result.message) {
       return setErrorMessage({ isError: true, message: 'Email já cadastrado' });
     }
@@ -114,13 +122,13 @@ function RegisterForm() {
     >
       <CardHeader
         title="Registrar"
-        sx={ { alignSelf: 'center', width: '100%' } }
+        sx={{ alignSelf: 'center', width: '100%' }}
         action={ user && user.role === 'administrator' ? null : (
           <Tooltip title="Voltar">
             <IconButton
               edge="end"
               onClick={ () => navigate('/login') }
-              sx={ { marginRight: '0px' } }
+              sx={{ marginRight: '0px' }}
             >
               <ArrowBackIcon tooltip="Voltar" />
             </IconButton>
@@ -133,7 +141,7 @@ function RegisterForm() {
         type="text"
         value={ registerInputs.name }
         iconStart={ <Person /> }
-        sx={ { margin: '5px 0' } }
+        sx={{ margin: '5px 0' }}
         error={ errorMessage.isError }
         onChange={ handleChange }
       />
@@ -143,7 +151,7 @@ function RegisterForm() {
         type="email"
         value={ registerInputs.email }
         iconStart={ <EmailIcon /> }
-        sx={ { margin: '5px 0' } }
+        sx={{ margin: '5px 0' }}
         error={ errorMessage.isError }
         onChange={ handleChange }
       />
@@ -161,7 +169,7 @@ function RegisterForm() {
         onClick={ handleClickShowPassword }
         onKeyPress={ (e) => e.key === 'Enter' && handleSubmit(e) }
       />
-      {user && user.role === 'administrator' && (
+      { user && user.role === 'administrator' && (
         <Select
           size="small"
           name="role"
@@ -174,18 +182,18 @@ function RegisterForm() {
           <MenuItem value="administrator">Administrador</MenuItem>
           <MenuItem value="seller">Vendedor</MenuItem>
         </Select>
-      )}
-      {errorMessage.isError && (
+      ) }
+      { errorMessage.isError && (
         <Typography
           variant="caption"
           display="block"
           color="error"
-          sx={ { marginBottom: '10px' } }
+          sx={{ marginBottom: '10px' }}
         >
-          {errorMessage.message}
+          { errorMessage.message }
 
         </Typography>
-      )}
+      ) }
       <CommonButton
         disabled={ validateInputs() }
         onClick={ user && user.role === 'Administrator'

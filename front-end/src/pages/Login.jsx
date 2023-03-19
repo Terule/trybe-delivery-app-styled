@@ -37,17 +37,17 @@ function Login() {
       /* const logged = JSON.parse(localStorage.getItem('user')); */
       if (user) {
         switch (user.role) {
-        case 'customer':
-          navigate('/customer/products');
-          break;
-        case 'seller':
-          navigate('/seller/orders');
-          break;
-        case 'administrator':
-          navigate('/admin/manage');
-          break;
-        default:
-          navigate('/login');
+          case 'customer':
+            navigate('/customer/products');
+            break;
+          case 'seller':
+            navigate('/seller/orders');
+            break;
+          case 'administrator':
+            navigate('/admin/manage');
+            break;
+          default:
+            navigate('/login');
         }
       }
     };
@@ -107,33 +107,34 @@ function Login() {
 
   return (
     <Container
-      sx={ {
+      sx={{
         display: 'flex',
         justifyContent: 'center',
         padding: '80px 0 0 0',
-      } }
+      }}
 
     >
       <Card
-        sx={ {
+        sx={{
           display: 'flex',
           flexDirection: 'column',
           minWidth: '300px',
           padding: '20px',
-        } }
+        }}
       >
         <CardMedia
           component="img"
           image={ logo }
           width="150px"
-          sx={ { alignSelf: 'center' } }
+          sx={{ alignSelf: 'center' }}
         />
         <CardHeader
           title="Entrar"
-          sx={ {
+          sx={{
             alignSelf: 'center',
             color: theme.palette.primary.main,
-            fontWeight: theme.typography.fontWeightBold } }
+            fontWeight: theme.typography.fontWeightBold,
+          }}
         />
         <OutlinedInput
           onChange={ onChangeHandler }
@@ -141,8 +142,8 @@ function Login() {
           name="email"
           type="email"
           error={ errorMessage.isError }
-          sx={ { margin: '5px 0' } }
-          iconStart={ <EmailIcon style={ { color: theme.palette.primary.main } } /> }
+          sx={{ margin: '5px 0' }}
+          iconStart={ <EmailIcon style={{ color: theme.palette.primary.main }} /> }
           placeholder="Email"
           size="small"
         />
@@ -154,10 +155,10 @@ function Login() {
           error={ errorMessage.isError }
           sx={ errorMessage.isError
             ? { margin: '5px 0 0 0' } : { margin: '5px 0 10px 0' } }
-          iconStart={ <Key style={ { color: theme.palette.primary.main } } /> }
+          iconStart={ <Key style={{ color: theme.palette.primary.main }} /> }
           iconEnd={ showPassword
-            ? <VisibilityOff style={ { color: theme.palette.primary.main } } />
-            : <Visibility style={ { color: theme.palette.primary.main } } /> }
+            ? <VisibilityOff style={{ color: theme.palette.primary.main }} />
+            : <Visibility style={{ color: theme.palette.primary.main }} /> }
           onClick={ handleClickShowPassword }
           placeholder="Senha"
           size="small"
@@ -167,17 +168,17 @@ function Login() {
             }
           } }
         />
-        {errorMessage.isError && (
+        { errorMessage.isError && (
           <Typography
             variant="caption"
             display="block"
             color="error"
-            sx={ { marginBottom: '10px' } }
+            sx={{ marginBottom: '10px' }}
           >
-            {errorMessage.message}
+            { errorMessage.message }
 
           </Typography>
-        )}
+        ) }
         <CommonButton
           disabled={ validateInputs() }
           onClick={ handleSubmit }
@@ -188,10 +189,10 @@ function Login() {
         <Typography
           variant="caption"
           display="block"
-          sx={ { alignSelf: 'center', marginTop: '10px' } }
+          sx={{ alignSelf: 'center', marginTop: '10px' }}
         >
           Ainda não é cliente?
-          {' '}
+          { ' ' }
           <Link rel="noreferrer" href="/register">Cadastre-se aqui</Link>
         </Typography>
       </Card>

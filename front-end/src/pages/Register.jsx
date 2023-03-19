@@ -5,10 +5,11 @@ import RegisterForm from '../components/RegisterForm';
 function Register() {
   return (
     <Container
-      sx={ {
+      sx={{
         display: 'flex',
         justifyContent: 'center',
-        padding: '80px' } }
+        padding: '80px',
+      }}
     >
       <RegisterForm />
     </Container>
