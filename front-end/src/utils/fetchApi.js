@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = `${process.env.REACT_APP_HOSTNAME}:${process.env.REACT_APP_BACKEND_PORT}`;
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -32,9 +32,11 @@ const createUserByAdmin = async (token, { name, email, password, role }) => {
     const result = await api.post(
       '/admin/manage',
       { name, email, password, role },
-      { headers: {
-        Authorization: token,
-      } },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
     );
     return result.data;
   } catch (error) {
@@ -62,9 +64,11 @@ const getUsers = async () => {
 
 const getProducts = async (token) => {
   try {
-    const result = await api.get('/customer/products', { headers: {
-      Authorization: token,
-    } });
+    const result = await api.get('/customer/products', {
+      headers: {
+        Authorization: token,
+      },
+    });
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -74,7 +78,8 @@ const getProducts = async (token) => {
 const newSale = async ({ saleData, token, products }) => {
   try {
     const result = await api.post('/sales', {
-      saleData, products }, { headers: { Authorization: token } });
+      saleData, products,
+    }, { headers: { Authorization: token } });
     return result.data;
   } catch (error) {
     return error.toJSON();
@@ -117,9 +122,11 @@ const deleteUser = async (token, id) => {
   try {
     const result = await api.delete(
       `/admin/${id}`,
-      { headers: {
-        Authorization: token,
-      } },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
     );
     return result;
   } catch (error) {
