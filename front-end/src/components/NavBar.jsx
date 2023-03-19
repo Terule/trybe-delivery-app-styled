@@ -209,34 +209,33 @@ function NavBar() {
                 </IconButton>
               )}
             </Tooltip>
-            <Menu
-              sx={ { mt: '45px' } }
-              id="menu-appbar"
-              anchorEl={ anchorElUser }
-              anchorOrigin={ { vertical: 'top', horizontal: 'right',
-              } }
-              keepMounted
-              transformOrigin={ { vertical: 'top', horizontal: 'right' } }
-              open={ Boolean(anchorElUser) }
-              onClose={ handleCloseUserMenu }
-            >
-              {user && (
-                <>
-                  <MenuItem disabled color="black">
-                    <Typography>{user.name}</Typography>
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem
-                    onClick={ () => {
-                      handleCloseUserMenu(); setUser(undefined);
-                      navigate('/login');
-                    } }
-                  >
-                    <Typography textAlign="center">Sair</Typography>
-                  </MenuItem>
-                </>
-              )}
-            </Menu>
+            {user && (
+              <Menu
+                sx={ { mt: '45px' } }
+                id="menu-appbar"
+                anchorEl={ anchorElUser }
+                anchorOrigin={ { vertical: 'top', horizontal: 'right',
+                } }
+                keepMounted
+                transformOrigin={ { vertical: 'top', horizontal: 'right' } }
+                open={ Boolean(anchorElUser) }
+                onClose={ handleCloseUserMenu }
+              >
+
+                <MenuItem disabled color="black">
+                  <Typography>{user.name}</Typography>
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                  onClick={ () => {
+                    handleCloseUserMenu(); setUser(undefined);
+                    navigate('/login');
+                  } }
+                >
+                  <Typography textAlign="center">Sair</Typography>
+                </MenuItem>
+              </Menu>
+            )}
           </Box>
         </Toolbar>
       </Container>
