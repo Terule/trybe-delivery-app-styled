@@ -18,7 +18,7 @@ function App() {
     <ThemeProvider theme={ theme === 'light' ? light : dark }>
       <CssBaseline />
       <Routes>
-        <Route exact path="/" element={ <Navigate replace to="/login" /> } />
+        <Route exact path="/" element={ <Navigate to="/login" /> } />
         <Route exact path="/login" element={ <Login /> } />
         <Route exact path="/register" element={ <Register /> } />
         <Route exact path="/customer/products" element={ <CustomerProducts /> } />
