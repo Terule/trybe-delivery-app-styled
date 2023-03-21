@@ -193,7 +193,7 @@ function Login() {
         >
           Ainda não é cliente?
           { ' ' }
-          <Link rel="noreferrer" href="/register">Cadastre-se aqui</Link>
+          <Link href="/register">Cadastre-se aqui</Link>
         </Typography>
       </Card>
     </Container>
