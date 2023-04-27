@@ -27,7 +27,7 @@ const options = {
     timezone: 'Z',
   },
   logging: false,
-}
+};
 
 module.exports = {
   development: {
@@ -39,4 +39,4 @@ module.exports = {
   production: {
     ...options,
   },
-},
+};
