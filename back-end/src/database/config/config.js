@@ -20,10 +20,6 @@ const options = {
   dialect: 'mysql',
   ssl: true,
   dialectOptions: {
-    ssl: {
-      require: true,
-      ca: process.env.MYSQL_SSL_CA,
-    },
     timezone: 'Z',
   },
   logging: false,
