@@ -23,10 +23,11 @@ const options = {
     ssl: {
       require: true,
       ca: process.env.MYSQL_SSL_CA,
+    },
     timezone: 'Z',
   },
   logging: false,
-};
+}
 
 module.exports = {
   development: {
@@ -38,4 +39,4 @@ module.exports = {
   production: {
     ...options,
   },
-};
+},
