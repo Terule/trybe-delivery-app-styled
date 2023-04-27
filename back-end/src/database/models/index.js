@@ -10,9 +10,11 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize('mysql://sewu2oqhejk9of9fxiiu:pscale_pw_xQewQcFJGVEZFQlJgNrERBucdQVF3U4lqfOBrLfTYRx@aws.connect.psdb.cloud/breja?ssl={"rejectUnauthorized":true}'
+  , config);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize('mysql://sewu2oqhejk9of9fxiiu:pscale_pw_xQewQcFJGVEZFQlJgNrERBucdQVF3U4lqfOBrLfTYRx@aws.connect.psdb.cloud/breja?ssl={"rejectUnauthorized":true}'
+  , config);
 }
 
 fs
