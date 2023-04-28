@@ -78,9 +78,7 @@ function Login() {
     ];
     if (inputValidations.every((validation) => validation === true)) {
       disabled = false;
-      setErrorMessage({ isError: false, message: '' });
     }
-    setErrorMessage({ isError: true, message: 'Todos os campos devem ser preenchidos corretamente' });
     return disabled;
   };
 
