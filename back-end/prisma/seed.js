@@ -65,7 +65,7 @@ async function main() {
       url_image: 'https://breja-back-end.onrender.com/images/antarctica_pilsen_300ml.jpg',
     },
   });
-  
+
   await prisma.product.upsert({
     where: { name: 'Brahma 600ml' },
     update: {},
@@ -77,42 +77,12 @@ async function main() {
   });
 
   await prisma.product.upsert({
-    where: { name: 'Skol 600ml' },
+    where: { name: 'Skol 269ml' },
     update: {},
     create: {
-      name: 'Skol 600ml',
-      price: 7.50,
-      url_image: 'https://breja-back-end.onrender.com/images/skol_600ml.jpg',
-    },
-  });
-
-  await prisma.product.upsert({
-    where: { name: 'Brahma Duplo Malte 350ml' },
-    update: {},
-    create: {
-      name: 'Brahma Duplo Malte 350ml',
-      price: 2.79,
-      url_image: 'https://breja-back-end.onrender.com/images/brahma_duplo_malte_350ml.jpg',
-    },
-  });
-
-  await prisma.product.upsert({
-    where: { name: 'Becks 330ml' },
-    update: {},
-    create: {
-      name: 'Becks 330ml',
-      price: 4.99,
-      url_image: 'https://breja-back-end.onrender.com/images/becks_330ml.jpg',
-    },
-  });
-
-  await prisma.product.upsert({
-    where: { name: 'Brahma 350ml' },
-    update: {},
-    create: {
-      name: 'Brahma 350ml',
-      price: 2.49,
-      url_image: 'https://breja-back-end.onrender.com/images/brahma_350ml.jpg',
+      name: 'Skol 269ml',
+      price: 2.19,
+      url_image: 'https://breja-back-end.onrender.com/images/skol_269ml.jpg',
     },
   });
 
@@ -127,32 +97,52 @@ async function main() {
   });
 
   await prisma.product.upsert({
+    where: { name: 'Becks 330ml' },
+    update: {},
+    create: {
+      name: 'Becks 330ml',
+      price: 4.99,
+      url_image: 'https://breja-back-end.onrender.com/images/becks_330ml.jpg',
+    },
+  });
+
+  await prisma.product.upsert({
+    where: { name: 'Brahma Duplo Malte 350ml' },
+    update: {},
+    create: {
+      name: 'Brahma Duplo Malte 350ml',
+      price: 2.79,
+      url_image: 'https://breja-back-end.onrender.com/images/brahma_duplo_malte_350ml.jpg',
+    },
+  });
+
+  await prisma.product.upsert({
+    where: { name: 'Becks 600ml' },
+    update: {},
+    create: {
+      name: 'Becks 600ml',
+      price: 8.89,
+      url_image: 'https://breja-back-end.onrender.com/images/becks_600ml.jpg',
+    },
+  });
+
+  await prisma.product.upsert({
+    where: { name: 'Skol Beats Senses 269ml' },
+    update: {},
+    create: {
+      name: 'Skol Beats Senses 269ml',
+      price: 3.57,
+      url_image: 'https://breja-back-end.onrender.com/images/skol_beats_senses_269ml.jpg',
+    },
+  });
+
+  await prisma.product.upsert({
     where: { name: 'Stella Artois 275ml' },
     update: {},
     create: {
       name: 'Stella Artois 275ml',
       price: 3.49,
       url_image: 'https://breja-back-end.onrender.com/images/stella_artois_275ml.jpg',
-    },
-  });
-
-  await prisma.product.upsert({
-    where: { name: 'Eisenbahn Pilsen 355ml' },
-    update: {},
-    create: {
-      name: 'Eisenbahn Pilsen 355ml',
-      price: 3.99,
-      url_image: 'https://breja-back-end.onrender.com/images/eisenbahn_pilsen_355ml.jpg',
-    },
-  });
-
-  await prisma.product.upsert({
-    where: { name: 'Brahma Zero 350ml' },
-    update: {},
-    create: {
-      name: 'Brahma Zero 350ml',
-      price: 2.49,
-      url_image: 'https://breja-back-end.onrender.com/images/brahma_zero_350ml.jpg',
     },
   });
 }

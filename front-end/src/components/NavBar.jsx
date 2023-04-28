@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar, Avatar, Box, Button, Container, Divider, Icon, IconButton, Menu,
   MenuItem, Switch, Toolbar, Tooltip, Typography, useTheme,
 } from '@mui/material';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import MenuIcon from '@mui/icons-material/Menu';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../context/AppContext';
 import logo from '../assets/beer_logo.svg';
+import AppContext from '../context/AppContext';
 
 function NavBar() {
   const { user, setUser, setTheme } = useContext(AppContext);
@@ -38,9 +38,12 @@ function NavBar() {
   };
 
   const getInitials = (name) => {
-    const full = name.split(' ');
-    const initials = full.shift().charAt(0) + full.pop().charAt(0);
-    return initials.toUpperCase();
+    // Split the name into an array of words
+    const words = name.split(' ');
+    // Map over the words array and return the first letter of each word
+    const initials = words.map((word) => word.charAt(0));
+    // Join the initials into a single string and return it, or use the first letter of the first word if there is only one word
+    return initials.length > 1 ? initials.join('').toUpperCase()git a : words[0].charAt(0).toUpperCase();
   };
 
   const handleThemeChange = () => {
