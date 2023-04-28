@@ -43,7 +43,7 @@ function NavBar() {
     // Map over the words array and return the first letter of each word
     const initials = words.map((word) => word.charAt(0));
     // Join the initials into a single string and return it, or use the first letter of the first word if there is only one word
-    return initials.length > 1 ? initials.join('').toUpperCase()git a : words[0].charAt(0).toUpperCase();
+    return initials.length > 1 ? initials.join('').toUpperCase() : words[0].charAt(0).toUpperCase();
   };
 
   const handleThemeChange = () => {
