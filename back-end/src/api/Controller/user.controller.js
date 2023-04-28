@@ -56,7 +56,7 @@ const deleteUser = async (req, res, next) => {
     const adminToken = req.headers.authorization;
     verifyToken(adminToken);
     // const { id } = req.params;
-    await userService.deleteUser(req.params.id);
+    await userService.deleteUser(+req.params.id);
     return res.sendStatus(204);
   } catch (error) {
     next(error);

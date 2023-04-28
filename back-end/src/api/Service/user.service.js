@@ -37,13 +37,15 @@ const registerUser = async ({ email, password, role = 'customer', name }) => {
   const encryptedPassword = md5(password);
 
   const newUser = await prisma.user.create({
-    name,
-    email,
-    password: encryptedPassword,
-    role,
+    data: {
+      name,
+      email,
+      password: encryptedPassword,
+      role,
+    },
   });
 
-  const { password: _, ...userWithoutPassword } = newUser.dataValues;
+  const { password: _, ...userWithoutPassword } = newUser;
 
   const token = createToken({ ...userWithoutPassword });
   return { userWithoutPassword, token };
