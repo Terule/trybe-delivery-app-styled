@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../src/database/breja.db"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique(map: "email")
+  password String
+  role     String
+
+  salesBuyer  Sale[] @relation(name: "salesBuyer")
+  salesSeller Sale[] @relation(name: "salesSeller")
+
+  @@map("users")
+}
+
+model Product {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique(map: "name")
+  price     Decimal
+  url_image String
+
+  SaleProduct SaleProduct[]
+
+  @@map("products")
+}
+
+model Sale {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  seller_id        Int
+  total_price      Decimal
+  delivery_address String
+  delivery_number  String
+  status           String
+  sale_date        DateTime @default(now())
+
+  user         User          @relation(name: "salesBuyer", fields: [user_id], references: [id])
+  seller User          @relation(name: "salesSeller", fields: [seller_id], references: [id])
+  products  SaleProduct[]
+
+  @@map("sales")
+}
+
+model SaleProduct {
+  id        Int @id @default(autoincrement())
+  saleId    Int
+  productId Int
+  quantity  Int
+
+  sales    Sale    @relation(fields: [saleId], references: [id])
+  products Product @relation(fields: [productId], references: [id])
+
+  @@map("sales_products")
+}

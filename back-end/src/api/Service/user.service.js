@@ -1,13 +1,14 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const { validate } = require('email-validator');
 const md5 = require('md5');
-const { Op } = require('sequelize');
-const { User } = require('../../database/models');
 const { createToken } = require('../../utils/jwt');
 const NotFoundError = require('../../utils/errors/notFoundError');
 const ConflictError = require('../../utils/errors/conflictError');
 
 const loginUser = async (email, password) => {
-  const user = await User.findOne({
+  const user = await prisma.user.findUnique({
     where: { email },
   });
   if (!user) {
@@ -20,12 +21,12 @@ const loginUser = async (email, password) => {
     throw new NotFoundError('Not Found');
   }
   const token = createToken({ email, role: user.role, name: user.name, id: user.id });
-  const { password: _, ...userWithoutPassword } = user.dataValues;
+  const { password: _, ...userWithoutPassword } = user;
   return { user: userWithoutPassword, token };
 };
 
 const registerUser = async ({ email, password, role = 'customer', name }) => {
-  const user = await User.findOne({
+  const user = await prisma.user.findUnique({
     where: { email },
   });
   if (user) throw new ConflictError('Conflict');
@@ -35,7 +36,7 @@ const registerUser = async ({ email, password, role = 'customer', name }) => {
   }
   const encryptedPassword = md5(password);
 
-  const newUser = await User.create({
+  const newUser = await prisma.user.create({
     name,
     email,
     password: encryptedPassword,
@@ -49,7 +50,7 @@ const registerUser = async ({ email, password, role = 'customer', name }) => {
 };
 
 const getSeller = async () => {
-  const sellerList = await User.findAll({
+  const sellerList = await prisma.user.findMany({
     where: { role: 'seller' },
   });
 
@@ -59,9 +60,9 @@ const getSeller = async () => {
 };
 
 const getUsers = async () => {
-  const users = await User.findAll({
+  const users = await prisma.user.findMany({
     where: {
-      [Op.or]: [
+      OR: [
         { role: 'seller' },
         { role: 'customer' },
       ],
@@ -74,13 +75,13 @@ const getUsers = async () => {
 };
 
 const deleteUser = async (id) => {
-  const checkingUser = await User.findOne({
+  const checkingUser = await prisma.user.findUnique({
     where: { id },
   });
   if (!checkingUser) {
     throw new NotFoundError('Not Found');
   }
-  await User.destroy({
+  await prisma.user.delete({
     where: { id },
   });
 };
