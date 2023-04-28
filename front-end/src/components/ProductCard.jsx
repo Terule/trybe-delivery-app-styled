@@ -29,7 +29,7 @@ function ProductCard({ product, minusClick, plusClick, handleChange }) {
         />
         <CardMedia
           component="img"
-          image={ product.urlImage }
+          image={ product.url_image }
           sx={ { height: 200, objectFit: 'contain' } }
         />
         <CardActions sx={ { alignSelf: 'center', marginTop: '10px' } }>
