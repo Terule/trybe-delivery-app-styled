@@ -2,12 +2,13 @@ import { Paper } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
+import NewProductForm from '../components/NewProductForm';
+import ProductsTable from '../components/ProductsTable';
 import RegisterForm from '../components/RegisterForm';
 import UserList from '../components/UserList';
 import UsersTable from '../components/UsersTable';
 import AppContext from '../context/AppContext';
 import { deleteProduct, deleteUser, getProducts, getUsers } from '../utils/fetchApi';
-import NewProductForm from '../components/NewProductForm';
 
 function AdminPage() {
   const [users, setUsers] = useState([]);
@@ -59,7 +60,7 @@ function AdminPage() {
         } }
       >
         <Paper>
-          <UsersTable users={ users } removeProduct={ removeProduct } />
+          <ProductsTable users={ users } removeProduct={ removeProduct } />
           <UserList users={ users } removeProduct={ removeProduct } />
         </Paper>
         <RegisterForm />
@@ -75,7 +76,7 @@ function AdminPage() {
         } }
       >
         <Paper>
-          <UsersTable users={ users } removeUser={ removeUser } />
+          <UsersTable users={ products } removeUser={ removeUser } />
           <UserList users={ users } removeUser={ removeUser } />
         </Paper>
         <NewProductForm />
