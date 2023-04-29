@@ -48,6 +48,20 @@ function AdminPage() {
           <UserList users={ users } removeUser={ removeUser } />
         </Paper>
         <RegisterForm />
+        <Container
+        sx={ {
+          display: 'flex',
+          gap: 2,
+          justifyContent: 'center',
+          flexDirection: { xs: 'column-reverse', md: 'row' },
+          maxWidth: { xs: 'sm', md: 'xl' },
+        } }
+      >
+        <Paper>
+          <UsersTable users={ users } removeUser={ removeUser } />
+          <UserList users={ users } removeUser={ removeUser } />
+        </Paper>
+        <RegisterForm />
       </Container>
     </Box>
   );

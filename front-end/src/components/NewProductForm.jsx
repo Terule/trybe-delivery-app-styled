@@ -17,7 +17,6 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { createUser, createUserByAdmin } from '../utils/fetchApi';
 import CommonButton from './common/CommonButton/CommomButton';
 import OutlinedInput from './common/CommonOutlinedInput/CommonOutlinedInput';
-import { UploadFile } from '@mui/icons-material';
 
 function NewProductForm() {
   const { user, setUser } = useContext(AppContext);
@@ -145,14 +144,16 @@ function NewProductForm() {
         error={ errorMessage.isError }
         onChange={ handleChange }
       />
-      <Button>
+      <Button
+        variant="outlined"
+      >
         <OutlinedInput
           placeholder="Imagem"
           name="file"
           type="file"
           value={ registerInputs.file }
           error={ errorMessage.isError }
-          iconStart={ <UploadFile /> }
+          iconStart={ <UploadFileIcon /> }
         // iconEnd={ showPassword ? <VisibilityOff /> : <Visibility /> }
           sx={ errorMessage.isError
             ? { margin: '5px 0 0 0' } : { margin: '5px 0 10px 0' } }
