@@ -138,6 +138,22 @@ const deleteUser = async (token, id) => {
   }
 };
 
+const deleteProduct = async (token, id) => {
+  try {
+    const result = await api.delete(
+      `/admin/products/${id}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+    return result;
+  } catch (error) {
+    return error.toJSON();
+  }
+};
+
 export {
   userLogin,
   createUser,
@@ -150,4 +166,5 @@ export {
   createUserByAdmin,
   getUsers,
   deleteUser,
+  deleteProduct,
 };

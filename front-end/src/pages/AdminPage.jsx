@@ -6,15 +6,22 @@ import RegisterForm from '../components/RegisterForm';
 import UserList from '../components/UserList';
 import UsersTable from '../components/UsersTable';
 import AppContext from '../context/AppContext';
-import { deleteUser, getUsers } from '../utils/fetchApi';
+import { deleteProduct, deleteUser, getProducts, getUsers } from '../utils/fetchApi';
+import NewProductForm from '../components/NewProductForm';
 
 function AdminPage() {
   const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([]);
   const { user } = useContext(AppContext);
 
-  const removeUser = useCallback(async (id) => { // eslint-disable-line
+  const removeUser = useCallback(async (id) => {
     const { token } = user;
     await deleteUser(token, id);
+  });
+
+  const removeProduct = useCallback(async (id) => {
+    const { token } = user;
+    await deleteProduct(token, id);
   });
 
   useEffect(() => {
@@ -24,6 +31,14 @@ function AdminPage() {
     };
     fetchUsers();
   }, [removeUser]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await getProducts();
+      setProducts(result);
+    };
+    fetchProducts();
+  }, [removeProduct]);
   return (
     <Box
       sx={ {
@@ -44,8 +59,8 @@ function AdminPage() {
         } }
       >
         <Paper>
-          <UsersTable users={ users } removeUser={ removeUser } />
-          <UserList users={ users } removeUser={ removeUser } />
+          <UsersTable users={ users } removeProduct={ removeProduct } />
+          <UserList users={ users } removeProduct={ removeProduct } />
         </Paper>
         <RegisterForm />
       </Container>
@@ -56,13 +71,14 @@ function AdminPage() {
           justifyContent: 'center',
           flexDirection: { xs: 'column-reverse', md: 'row' },
           maxWidth: { xs: 'sm', md: 'xl' },
+          marginTop: 5,
         } }
       >
         <Paper>
           <UsersTable users={ users } removeUser={ removeUser } />
           <UserList users={ users } removeUser={ removeUser } />
         </Paper>
-        <RegisterForm />
+        <NewProductForm />
       </Container>
     </Box>
   );
